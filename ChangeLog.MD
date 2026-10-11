@@ -3,6 +3,10 @@
 
 # CHANGELOG
 
+## 0.8.5 (HSprite adjustments) - By ZSolarDev
+
+* Cleaned up bitmap ordering code in `HSprite` a bit. I put it into a `replaceBitmap()` function and modified it a little.
+
 ## 0.8.4 (Functional audio) - By ZSolarDev
 
 * Replaced the `'<???>'` string in my crash handler with `'<??' + '?>'`, because when compiling to MacOS targets, the compiler would treat it as a trigraph and replace it with `'<?}'`.
