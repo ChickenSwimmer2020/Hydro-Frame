@@ -352,7 +352,8 @@ class Main extends Sprite {
 		function pushStack(stackItem:StackItem) {
 			switch (stackItem) {
 				case Method(classname, method):
-					error += 'Called from ${(classname == null ? '<???>' : classname)}::$method ';
+					// I need '<??' + '?>' instead of '<???>' so that doesnt turn it into '<?}' because of trigraphs complaining on MacOS
+					error += 'Called from ${(classname == null ? '<??' + '?>' : classname)}::$method ';
 				case FilePos(s, file, line, _):
 					if (s != null) {
 						switch (s) {
