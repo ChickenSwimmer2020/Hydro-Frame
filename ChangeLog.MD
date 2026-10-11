@@ -3,6 +3,19 @@
 
 # CHANGELOG
 
+## 0.8.5 (HSprite adjustments) - By ZSolarDev
+
+* Cleaned up bitmap ordering code in `HSprite` a bit. I put it into a `replaceBitmap()` function and modified it a little.
+
+## 0.8.4 (Functional audio) - By ZSolarDev
+
+* Replaced the `'<???>'` string in my crash handler with `'<??' + '?>'`, because when compiling to MacOS targets, the compiler would treat it as a trigraph and replace it with `'<?}'`.
+* Removed `.vscode/launch.json`, it was old and unused.
+* Audio is now functional.
+  * We had added audio loading before, but ever since `cne-lime`/`cne-openfl`, it didn't work. However, Chicken and I hadn't bat an eye as the switch came with a whole plethora of issues. But once those were fixed, we remembered the complete lack of audio. In conclusion, after ages of traces through a bunch of files down to openfl's audio and caching, then through lime's audio, then caching, then assets, then native wav lading, I had finally found where everything was failing.
+  * This bug was due to some sort of issue when using `drlibs` to load wav's from files. I'm unsure how it was failing, but I do know that the `NativeCFFI` call was returning `null`. The path was completely valid, and the wav file had worked back before when we had been using `lime` for audio loading, rather than `cne-lime` for audio loading, which uses `drlibs`.
+  * I fixed this by shadowing `WaveDecoder` in our own source code, and replacing with `NativeCFFI.lime_drlibs_wav_from_file(path)` with `fromBytes(File.getBytes(path))`.
+
 ## 0.8.3 (Text box input bug fix) - By ZSolarDev
 
 * Fixed a bug where `HTextInputBox` wouldn't render text.

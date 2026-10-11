@@ -181,24 +181,34 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 	 * @since 0.8.0
 	 */
 	public function reRender():HSprite {
-		var highestIdx = 0;
-		if (bitmapIsChild) {
-			highestIdx = getChildIndex(_bitmap);
-			removeChild(_bitmap);
-		}
-
-		for (clearObj in clearObjects)
-			if (highestIdx < getChildIndex(clearObj))
-				highestIdx = getChildIndex(clearObj);
-
-		_bitmap = new Bitmap(_bitmapData, null, antialiasing);
-		addChildAt(_bitmap, highestIdx);
-		bitmapIsChild = true;
-
+		replaceBitmap(_bitmapData, false, true);
 		return this;
 	}
 
 	var bitmapIsChild:Bool = false;
+
+	private function replaceBitmap(data:BitmapData, clearClearObjects:Bool, trackClearObjects:Bool):Void {
+		var idx = 0;
+		if (bitmapIsChild) {
+			idx = getChildIndex(_bitmap);
+			removeChild(_bitmap);
+		}
+
+		if (clearClearObjects) {
+			for (clearObj in clearObjects)
+				removeChild(clearObj);
+			clearObjects.resize(0);
+		}
+
+		if (trackClearObjects)
+			for (clearObj in clearObjects)
+				if (idx < getChildIndex(clearObj))
+					idx = getChildIndex(clearObj);
+
+		_bitmap = new Bitmap(data, null, antialiasing);
+		addChildAt(_bitmap, idx);
+		bitmapIsChild = true;
+	}
 
 	/**
 	 * load a graphic
@@ -229,18 +239,7 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 					_bitmapData = Graphics; // sprite auto-disposes later i guess
 		}
 
-		var oldIdx = 0;
-		if (bitmapIsChild) {
-			oldIdx = getChildIndex(_bitmap);
-			removeChild(_bitmap);
-		}
-
-		for (clearObj in clearObjects)
-			removeChild(clearObj);
-
-		_bitmap = new Bitmap(Graphics, null, antialiasing);
-		addChildAt(_bitmap, oldIdx);
-		bitmapIsChild = true;
+		replaceBitmap(Graphics, true, false);
 
 		// graphics.beginBitmapFill(Graphics, new Matrix(), false, antialiasing);
 		// graphics.drawRect(0, 0, Graphics.width, Graphics.height);
@@ -418,18 +417,7 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 		src.filters = null;
 
 		// 6. redraw this sprite's fill so it shows the new pixels
-		var oldIdx = 0;
-		if (bitmapIsChild) {
-			oldIdx = getChildIndex(_bitmap);
-			removeChild(_bitmap);
-		}
-
-		for (clearObj in clearObjects)
-			removeChild(clearObj);
-
-		_bitmap = new Bitmap(_bitmapData, null, antialiasing);
-		addChildAt(_bitmap, oldIdx);
-		bitmapIsChild = true;
+		replaceBitmap(_bitmapData, true, false);
 		// graphics.clear();
 		// graphics.beginBitmapFill(_bitmapData, new Matrix(), false, antialiasing);
 		// graphics.drawRect(0, 0, _bitmapData.width, _bitmapData.height);
