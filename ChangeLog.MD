@@ -3,6 +3,15 @@
 
 # CHANGELOG
 
+## 0.8.3 (Text box input bug fix) - By ZSolarDev
+
+* Fixed a bug where `HTextInputBox` wouldn't render text.
+  * This was due to `HSprite` expecting for `_bitmap` to be the first child of itself, and discarding previous children on `makeGraphic()`/`loadGraphic()`/`applyLocalFilter()`.
+  * This was fixed by initializing `oldIdx` as `0` instead of `-1`, and always doing `addChildAt()` instead of doing `addChild()` in the case that `oldIdx` remains `-1`.
+* Fixed a bug where `HTextInputBox` wouldn't accept input.
+  * This one was interesting. Each text input box would have an event registered on stage click and mouse click. Mouse click would only run if the mouse was hovering over the text input box and clicked, but stage click ran regardless. The intended behavior was that on mouse click, if you werent over any text boxes, it would set the static `selectedTextBox` to null, deselecting any text boxes. However, the way it was implemented was flawed. On mouse click, it would set a static `selectedTextBox` to itself. Then on stage click, it would check if the mouse was hovering over either itself, or if it was hovering over another display object and that display object was a child of itself. However, the stage click logic was incorrect. Another text input box would not be a child of this input box. This means that the entire check would fail if the mouse didn't click this own input box. Now this incorrect condition wouldn't be noticable as long as there weren't multiple text boxes, which is how I assume this snuck by Chicken. But on multiple, even if you select one textbox, the other one's stage mouse down event would set `selectedTextBox` to null.
+  * This was fixed by replacing the second condition in the stage mouse down event's or from `(Std.isOfType(e.target, DisplayObject) && contains(cast e.target))` to `Std.isOfType(e.target, HTextInputBox)`.
+
 ## 0.8.2 (Compatibility with cne-openfl) - By ZSolarDev
 
 * Fixed a bug where `ScrollableArea` would not scroll when the mouse wasn't hovering over any *children* (not the rect).

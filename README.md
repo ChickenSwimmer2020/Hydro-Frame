@@ -1,4 +1,4 @@
-<!-- Version: 0.8.2 -->
+<!-- Version: 0.8.3 -->
 <!-- markdownlint-disable MD033 -->
 <h1 align="center">Hydro-Frame</h1> <!--Hey can we get a design for this? i wanna use an image kinda like what foxlite did. -ChickenSwimmer2020 -->
 <blockquote>Hydro-Frame IS NOT AUTHORIZED, ENDORSED, OR SPONSORED BY ADOBE, PUBLISHER OF ADOBE® ANIMATE®</blockquote>

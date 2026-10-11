@@ -229,7 +229,7 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 					_bitmapData = Graphics; // sprite auto-disposes later i guess
 		}
 
-		var oldIdx = -1;
+		var oldIdx = 0;
 		if (bitmapIsChild) {
 			oldIdx = getChildIndex(_bitmap);
 			removeChild(_bitmap);
@@ -239,10 +239,7 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 			removeChild(clearObj);
 
 		_bitmap = new Bitmap(Graphics, null, antialiasing);
-		if (oldIdx != -1)
-			addChildAt(_bitmap, oldIdx);
-		else
-			addChild(_bitmap);
+		addChildAt(_bitmap, oldIdx);
 		bitmapIsChild = true;
 
 		// graphics.beginBitmapFill(Graphics, new Matrix(), false, antialiasing);
@@ -421,7 +418,7 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 		src.filters = null;
 
 		// 6. redraw this sprite's fill so it shows the new pixels
-		var oldIdx = -1;
+		var oldIdx = 0;
 		if (bitmapIsChild) {
 			oldIdx = getChildIndex(_bitmap);
 			removeChild(_bitmap);
@@ -431,10 +428,7 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 			removeChild(clearObj);
 
 		_bitmap = new Bitmap(_bitmapData, null, antialiasing);
-		if (oldIdx != -1)
-			addChildAt(_bitmap, oldIdx);
-		else
-			addChild(_bitmap);
+		addChildAt(_bitmap, oldIdx);
 		bitmapIsChild = true;
 		// graphics.clear();
 		// graphics.beginBitmapFill(_bitmapData, new Matrix(), false, antialiasing);

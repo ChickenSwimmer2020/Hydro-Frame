@@ -18,7 +18,7 @@ class HTextInputBox extends HText {
 		addChild(placeholderText);
 
 		onSubmit = oS;
-		selectable = false; // we handle input ourselves, no native focus needed
+		// selectable = false; // we handle input ourselves, no native focus needed
 		addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		addEventListener(Event.ADDED_TO_STAGE, onAdded);
 		addEventListener(Event.ENTER_FRAME, onFrame);
@@ -26,16 +26,16 @@ class HTextInputBox extends HText {
 	}
 
 	function onAdded(_:Event) {
-		stage.addEventListener(KeyboardEvent.KEY_DOWN, onkeyPressed);
+		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onStageMouseDown);
 	}
 
-    function onFrame(_:Event) {
-        placeholderText.visible = (text == "");
-    }
+	function onFrame(_:Event) {
+		placeholderText.visible = (text == "");
+	}
 
 	override public function destroy() {
-		stage.removeEventListener(KeyboardEvent.KEY_DOWN, onkeyPressed);
+		stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
 		stage.removeEventListener(MouseEvent.MOUSE_DOWN, onStageMouseDown);
 		removeEventListener(Event.ENTER_FRAME, onFrame);
 		if (selectedTextBox == this)
@@ -47,12 +47,12 @@ class HTextInputBox extends HText {
 		selectedTextBox = this;
 
 	function onStageMouseDown(e:MouseEvent) {
-		if (e.target == this || (Std.isOfType(e.target, DisplayObject) && contains(cast e.target)))
+		if (e.target == this || Std.isOfType(e.target, HTextInputBox))
 			return;
 		selectedTextBox = null;
 	}
 
-	public function onkeyPressed(event:KeyboardEvent) {
+	public function onKeyPressed(event:KeyboardEvent) {
 		if (selectedTextBox != this)
 			return;
 		switch (event.keyCode) {

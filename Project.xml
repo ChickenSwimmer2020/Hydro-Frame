@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://lime.openfl.org/project/1.0.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
-    <meta title="Hydro-Frame" description="An HAXE/OPENFL based animation software made to rival Adobe Animate" package="com.chickenswimmer2020.Hydro-Frame" version="0.8.2" company="ChickenSwimmer2020" build-number="0"/>
+    <meta title="Hydro-Frame" description="An HAXE/OPENFL based animation software made to rival Adobe Animate" package="com.chickenswimmer2020.Hydro-Frame" version="0.8.3" company="ChickenSwimmer2020" build-number="0"/>
     <app file="Hydro-Frame" main="Main"/>
     
     
