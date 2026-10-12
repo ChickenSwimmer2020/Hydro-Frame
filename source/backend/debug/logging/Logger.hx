@@ -41,7 +41,7 @@ class Logger {
 		Sys.println(str);
 		#else
 		// throw new haxe.exceptions.NotImplementedException();
-		vanillaTrace(str);
+		haxe.Log.vanillaTrace(str);
 		#end
 	}
 }
