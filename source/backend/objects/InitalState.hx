@@ -56,6 +56,8 @@ class StateSystemInit extends Sprite {
 		addChild(state);
 		stateFormula = {clazz: newState, args: args};
 		currentState = state.toString().replace("[", "").replace(']', "").replace('object', "").trim();
+		
+		state.create();
 		return state;
 	}
 
