@@ -4,12 +4,12 @@ import openfl.ui.Keyboard.*;
 
 /**
  * Dummy screen to test SVG Rendering
- * @since SVG_Rendering
+ * @since 0.8.7
  */
 class SVGScreen extends HState {
 	/**
 	 * using scratch SVG files to test SVG Rendering
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	var scratchCat:HSVG;
 

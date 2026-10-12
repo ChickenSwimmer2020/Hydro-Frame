@@ -2,12 +2,12 @@ package backend.utils;
 
 /**
  * Uiltity file for window management
- * @since SVG_Rendering
+ * @since 0.8.7
  */
 class WindowUtil {
 	/**
 	 * Variable representing `openfl.Lib.application.window`
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static var window(get, never):Window;
 
@@ -16,7 +16,7 @@ class WindowUtil {
 
 	/**
 	 * Variable representing the window width
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static var window_width(get, never):Int;
 
@@ -25,7 +25,7 @@ class WindowUtil {
 
 	/**
 	 * Variable representing the window height
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static var window_height(get, never):Int;
 
@@ -34,7 +34,7 @@ class WindowUtil {
 
 	/**
 	 * Variable representing the window title
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static var window_title(get, set):String;
 
@@ -48,7 +48,7 @@ class WindowUtil {
 	 * Method for resizing the window to Float dimensions (rounding up)
 	 * @param width Target Width (if not provided or is `null` it will stay as it currently is)
 	 * @param height Target Height (if not provided or is `null` it will stay as it currently is)
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static function resizeWindow(?width:Null<Float>, ?height:Null<Float>) {
 		#if sys
@@ -64,7 +64,7 @@ class WindowUtil {
 
 	/**
 	 * Method for quickly centering the window
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static function centerWindow() {
 		setWindowX(Capabilities.screenResolutionX / 2 - window.width / 2);
@@ -73,7 +73,7 @@ class WindowUtil {
 
 	/**
 	 * Method for toggling fullscreen
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static function toggleFullscreen() {
 		window.fullscreen = !window.fullscreen;
@@ -81,7 +81,7 @@ class WindowUtil {
 
 	/**
 	 * Method for quickly centering the window
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static function setTitle(title:String) {
 		window_title = title ?? 'N / A';
@@ -90,7 +90,7 @@ class WindowUtil {
 	/**
 	 * Method for setting the window X position to an integer value
 	 * @param x new value
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	overload inline public static extern function setWindowX(x:Int) {
 		#if sys window.x = x; #end
@@ -99,7 +99,7 @@ class WindowUtil {
 	/**
 	 * Method for setting the window X position to a float value (rounding up)
 	 * @param x new value
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	overload inline public static extern function setWindowX(x:Float) {
 		#if sys window.x = Math.round(x); #end
@@ -108,7 +108,7 @@ class WindowUtil {
 	/**
 	 * Method for setting the window Y position to an integer value
 	 * @param y new value
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	overload inline public static extern function setWindowY(y:Int) {
 		#if sys window.y = y; #end
@@ -117,7 +117,7 @@ class WindowUtil {
 	/**
 	 * Method for setting the window Y position to a float value (rounding up)
 	 * @param y new value
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	overload inline public static extern function setWindowY(y:Float) {
 		#if sys window.y = Math.round(y); #end

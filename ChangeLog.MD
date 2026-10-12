@@ -3,6 +3,25 @@
 
 # CHANGELOG
 
+## 0.8.7 (SVG Rendering) - By Maki
+
+* Added `SVGScreen`
+* Added `HSVG`
+* Added `WindowUtil`
+* Added `SVG`
+* `HMenuBar` now uses `WindowUtil.window_width` instead of `Lib.application.window.width`
+* `InitialState` now calls `create` on child states
+* `HWindowManager` now uses `WindowUtil`
+* `HState` now has an overidable `create` function
+* `DefineMacro` (idk, ask maki.)
+* `SplashScreen` now uses `WindowUtil.resizeWindow` instead of manual calls
+* buncha changes on Main
+* `InitState`'s call to enable the F11 fullscreen system now uses `WindowUtil`
+* `Import` was optimized (holy shit thanks maki)
+* Test .svg sprites (stolen from scratch lol)
+* `Project.xml` was rewritten/reformatted
+* `gitignore` now ignores files titled `Unreleased.md`
+
 ## 0.8.6 (Plugins/Skins) - By ChickenSwimmer2020
 
 > This REALLY should have been part of 0.8.3 but updates got out of hand

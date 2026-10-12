@@ -7,12 +7,12 @@ import format.SVG;
 
 /**
  * SVG Sprite
- * @since SVG_Rendering
+ * @since 0.8.7
  */
 class HSVG extends HSprite {
 	/**
 	 * Create an HSVG Sprite using an SVG file
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static function fromFile(filepath:String) {
 		return new HSVG().addCostume(new Path(filepath).file, Assets.getText(filepath));
@@ -20,7 +20,7 @@ class HSVG extends HSprite {
 
 	/**
 	 * Create an HSVG Sprite using multiple SVG file paths
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static function fromFiles(filepaths:Array<String>) {
 		var hsvg = new HSVG();
@@ -34,19 +34,19 @@ class HSVG extends HSprite {
 
 	/**
 	 * For loading and rendering the actual SVG
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public var svg(default, null):SVG;
 
 	/**
 	 * Current costume name
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public var costume(default, null):String = null;
 
 	/**
 	 * Map of all availible costume names and their data
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public var costumes(default, null):Map<String, String> = [];
 
@@ -54,7 +54,7 @@ class HSVG extends HSprite {
 	 * Add costume of name "`name`" with the data of `costume` if both are not null
 	 * @param name new costume name
 	 * @param costume new costume data
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public function addCostume(name:String, costume:String):HSVG {
 		if (name == null) {
@@ -78,7 +78,7 @@ class HSVG extends HSprite {
 	/**
 	 * Remove `costume` from the costumes map if it's not in use
 	 * @param costume target costume
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public function removeCostume(costume:String) {
 		if (costume == costume) {
@@ -92,7 +92,7 @@ class HSVG extends HSprite {
 	/**
 	 * Switch costume to `costume` if it exists
 	 * @param costume target costume
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public function switchToCostume(costume:String) {
 		if (!costumes.exists(costume)) {

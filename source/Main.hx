@@ -96,7 +96,7 @@ class Main extends Sprite {
 
 	/**
 	 * The starting state, controls where you go when starting up the app
-	 * @since SVG_Rendering
+	 * @since 0.8.7
 	 */
 	public static var startingState(get, never):Class<HState>;
 
