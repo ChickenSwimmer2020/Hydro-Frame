@@ -8,6 +8,10 @@ import format.SVG;
  * @since SVG_Rendering
  */
 class HSVG extends HSprite {
+	/**
+	 * Create an HSVG Sprite using a SVG Filepath
+	 * @since SVG_Rendering
+	 */
 	public static function fromFile(filepath:String) {
 		return new HSVG(Assets.getText(filepath) ?? '');
 	}
