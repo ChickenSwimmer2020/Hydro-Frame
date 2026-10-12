@@ -16,7 +16,8 @@ class SVGScreen extends HState {
 	override function create() {
 		super.create();
 
-		add(scratchCat = HSVG.fromFile('assets/scratch/costume1.svg'));
+		add(scratchCat = HSVG.fromFiles(['assets/scratch/costume1.svg', 'assets/scratch/costume2.svg']));
+		scratchCat.switchToCostume('costume1');
 
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 	}
@@ -35,6 +36,8 @@ class SVGScreen extends HState {
 
 		if ([DOWN, S].contains(event.keyCode))
 			scratchCat.y += movementSpeed;
+
+		scratchCat.switchToCostume(scratchCat.costume == 'costume1' ? 'costume2' : 'costume1');
 
 		// scratchCat.reRender();
 

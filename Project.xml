@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 
     <set name="VERSION" value="0.8.6" />
-    <haxedef name="VERSION_SUFFIX" value="_SVG_RENDERING_2" />
+    <haxedef name="VERSION_SUFFIX" value="_SVG_RENDERING_3" />
 
     <meta title="Hydro-Frame" />
     <meta description="An HAXE/OPENFL based animation software made to rival Adobe Animate" />
