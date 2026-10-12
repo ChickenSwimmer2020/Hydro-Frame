@@ -363,7 +363,7 @@ class HWindow extends HGroup<HSprite> {
 				add(b);
 			}
 
-			Application.current.window.stage.addEventListener(MouseEvent.MOUSE_MOVE, dragBar_onMove);
+			WindowUtil.window.stage.addEventListener(MouseEvent.MOUSE_MOVE, dragBar_onMove);
 			TBHeight = 20;
 		}
 
@@ -475,8 +475,8 @@ class HWindow extends HGroup<HSprite> {
 	override public function destroy() {
 		this.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 
-		if (!isBorderless && Application.current != null && Application.current.window != null) {
-			Application.current.window.stage.removeEventListener(MouseEvent.MOUSE_MOVE, dragBar_onMove);
+		if (!isBorderless && Application.current != null && WindowUtil.window != null) {
+			WindowUtil.window.stage.removeEventListener(MouseEvent.MOUSE_MOVE, dragBar_onMove);
 		}
 
 		HWindowManager.windows.remove(this);

@@ -20,7 +20,7 @@ class InitState extends HState {
 
 		// overrides for normal application actions with keys.
 		Main.addKeyPressed("toggleFullscreenWithF11", Keyboard.F11, false, (_:KeyboardEvent) -> {
-			Application.current.window.fullscreen = !Application.current.window.fullscreen;
+			WindowUtil.toggleFullscreen();
 		});
 		// we have to do these here so they dont start on the splash screen.
 		HSoundManager.playMusic("assets/sounds/Vectors.wav", UPrefs.mainMenuMuted.value ? 0.0 : 0.35);
