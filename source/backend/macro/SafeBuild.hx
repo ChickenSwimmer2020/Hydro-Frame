@@ -7,13 +7,19 @@ import haxe.macro.ExprTools;
 import haxe.macro.Type;
 
 @:dox(hide) @:noCompletion class SafeBuild {
+	/**
+	 * List of class names to ignore when running `build()`
+	 * @since Pretty_Logging
+	 */
+	static var classesToIgnore:Array<String> = ['Safe', 'MethodUtil'];
+
 	@:dox(hide) @:noCompletion public static function build():Array<Field> {
 		var local = Context.getLocalClass();
 		if (local == null)
 			return null;
 
 		var cls = local.get();
-		if (cls.name == 'Safe' || cls.name == 'MethodUtil')
+		if (classesToIgnore.contains(cls.name))
 			return null;
 
 		switch (cls.kind) {

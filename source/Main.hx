@@ -115,6 +115,10 @@ class Main extends Sprite {
 	public function new() {
 		super();
 
+		#if PRETTY_LOGGING
+		haxe.Log.trace = Logger.log;
+		#end
+
 		#if (sys && !mac)
 		desktopbackgroundImage = HSprite.getDesktopWallpaper(1280, 720); // fix for a crash on startup with mac.
 		#end
@@ -155,7 +159,7 @@ class Main extends Sprite {
 
 		Mouse.hide();
 
-		UPrefs.currentSkin = new Skin("Default"); //init the skinning system.
+		UPrefs.currentSkin = new Skin("Default"); // init the skinning system.
 	}
 
 	/**

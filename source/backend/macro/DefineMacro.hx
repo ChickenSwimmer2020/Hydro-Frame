@@ -14,4 +14,13 @@ class DefineMacro {
 	public static macro function defineValue(define:String, ?ifNull:String = '') {
 		return macro $v{haxe.macro.Context.definedValue(define) ?? ifNull};
 	}
+
+	/**
+	 * Returns if the provided define is defined
+	 * @param define provided define
+	 * @since Pretty_Logging
+	 */
+	public static macro function defined(define:String) {
+		return macro $v{haxe.macro.Context.defined(define)};
+	}
 }
