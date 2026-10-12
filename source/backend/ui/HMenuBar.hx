@@ -42,23 +42,23 @@ class HMenuBar extends HSprite {
 		super(0, 0);
 		this.align = align;
 		var targetPos:HPoint = new HPoint(0, 0);
-		var targetSize:HPoint = new HPoint(Lib.application.window.width, TBHeight);
+		var targetSize:HPoint = new HPoint(WindowUtil.window_width, TBHeight);
 		switch (align) {
 			case LEFT:
 				targetPos.set(0, 0); // position doesnt change, but the dimensions will
-				targetSize.set(TBHeight, Lib.application.window.height);
+				targetSize.set(TBHeight, WindowUtil.window_height);
 
 			case RIGHT:
-				targetPos.set(Lib.application.window.width - TBHeight, 0);
-				targetSize.set(TBHeight, Lib.application.window.height);
+				targetPos.set(WindowUtil.window_width - TBHeight, 0);
+				targetSize.set(TBHeight, WindowUtil.window_height);
 
 			case BOTTOM:
-				targetPos.set(0, Lib.application.window.height - TBHeight);
-				targetSize.set(Lib.application.window.width, TBHeight);
+				targetPos.set(0, WindowUtil.window_height - TBHeight);
+				targetSize.set(WindowUtil.window_width, TBHeight);
 
 			default:
 				targetPos.set(0, 0);
-				targetSize.set(Lib.application.window.width, TBHeight);
+				targetSize.set(WindowUtil.window_width, TBHeight);
 		}
 		backing = new HSprite(targetPos.x, targetPos.y).makeGraphic(Math.floor(targetSize.x), Math.floor(targetSize.y), HColor.MENUBAR_BACKGROUND);
 		add(backing);

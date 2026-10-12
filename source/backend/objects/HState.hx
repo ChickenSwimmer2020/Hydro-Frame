@@ -55,6 +55,12 @@ class HState extends Sprite {
 	}
 
 	/**
+	 * For when the state is switched to
+	 * @since SVG_Render
+	 */
+	public function create() {}
+
+	/**
 	 * add a new object to the state
 	 * @param basic basic to add
 	 * @return Dynamic the basic that was added

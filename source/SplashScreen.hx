@@ -17,14 +17,7 @@ class SplashScreen extends HState {
 
 	public function startIntro() {
 		HSoundManager.playSound("assets/sounds/Startup.wav");
-		#if sys
-		Main.pWidth = 640; // basically, FlxG.width and FlxG.height but interchangable.
-		Main.pHeight = 360;
-		Lib.application.window.width = 640;
-		Lib.application.window.height = 360;
-		Lib.application.window.x = Math.floor(Capabilities.screenResolutionX / 2 - Lib.application.window.width / 2);
-		Lib.application.window.y = Math.floor(Capabilities.screenResolutionY / 2 - Lib.application.window.height / 2);
-		#end
+		WindowUtil.resizeWindow(640, 360);
 		introSprite.screenCenter();
 
 		// FlashReader.parseFlaFile('IntroAnim.fla');
@@ -60,14 +53,7 @@ class SplashScreen extends HState {
 				HTimer.start(0.75, () -> {
 					final onWindowComplete:Void->Void = () -> {
 						Mouse.hide();
-						#if sys
-						Main.pWidth = 1280;
-						Main.pHeight = 720;
-						Lib.application.window.width = 1280;
-						Lib.application.window.height = 720;
-						Lib.application.window.x = Math.floor(Capabilities.screenResolutionX / 2 - Lib.application.window.width / 2);
-						Lib.application.window.y = Math.floor(Capabilities.screenResolutionY / 2 - Lib.application.window.height / 2);
-						#end
+						WindowUtil.resizeWindow(1280, 720);
 						Main.StateSystem.switchState(InitState);
 					};
 					Mouse.show(); // so you can see what ur doing.
@@ -124,5 +110,7 @@ class SplashScreen extends HState {
 		introSprite.graphics.lineTo(-37, 0);
 		introSprite.graphics.lineTo(0, -37);
 		introSprite.graphics.endFill();
+		
+		introSprite.screenCenter();
 	}
 }

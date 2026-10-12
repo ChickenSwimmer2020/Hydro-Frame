@@ -93,34 +93,57 @@ class Main extends Sprite {
 	public static var StateSystem:StateSystemInit; // defaults to splashscreen since thats literally the only thing it does on init
 
 	/**
+	 * The starting state, controls where you go when starting up the app
+	 * @since SVG_Rendering
+	 */
+	public static var startingState(get, never):Class<HState>;
+
+	static function get_startingState() {
+		#if SVG_SCREEN
+		return engine.rendering.svg.SVGScreen;
+		#end
+
+		return SplashScreen;
+	}
+
+	/**
 	 * Entry point of Hydro-Frame for launching, this is what does stuff before any state loads.
 	 * @since 0.0.0
 	 */
 	public function new() {
 		super();
-		StateSystem = new StateSystemInit(null);
-		#if (mac)
+
+		#if (sys && !mac)
 		desktopbackgroundImage = HSprite.getDesktopWallpaper(1280, 720); // fix for a crash on startup with mac.
 		#end
+
 		Native.flashTaskbar();
 		Log.throwErrors = false; // STOP CRASHING MEH!!
+
 		instance = this;
+
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
-		Lib.application.window.onClose.add(onClosing);
+
+		WindowUtil.window.onClose.add(onClosing);
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrashing);
+
 		stage.addEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 		stage.addEventListener(Event.RESIZE, onStageResize);
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		stage.addEventListener(MouseEvent.CLICK, onMouseClick);
+
 		onStageResize(null); // apply once at startup
-		Application.current.window.title = '${Application.current.window.title}: [${Application.current.meta.get("version")}]';
+
+		final VERSION_SUFFIX = backend.macro.DefineMacro.defineValue('VERSION_SUFFIX');
+		WindowUtil.setTitle('${WindowUtil.window_title} [ ${Application.current.meta.get("version")}$VERSION_SUFFIX ]');
 
 		HTween.globalParent = this; // so that new Tween() will auto-destroy and not cause memory leaks.
+
 		windowManager = new HWindowManager();
 
-		addChild(StateSystem);
-		StateSystem.switchState(SplashScreen); // wait fuck this might work!
+		addChild(StateSystem = new StateSystemInit(null));
+		StateSystem.switchState(startingState);
 
 		#if debug
 		stats = new DebugDisplay();
@@ -131,10 +154,6 @@ class Main extends Sprite {
 		#end
 
 		Mouse.hide();
-
-		#if (sys && !mac)
-		desktopbackgroundImage = HSprite.getDesktopWallpaper(1280, 720);
-		#end
 	}
 
 	/**
@@ -332,7 +351,7 @@ class Main extends Sprite {
 		stage.removeEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 		stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		stage.removeEventListener(Event.RESIZE, onStageResize);
-		Lib.application.window.onClose.remove(onClosing);
+		WindowUtil.window.onClose.remove(onClosing);
 	}
 
 	@:unwrapSafe
@@ -352,7 +371,7 @@ class Main extends Sprite {
 		function pushStack(stackItem:StackItem) {
 			switch (stackItem) {
 				case Method(classname, method):
-					error += 'Called from ${(classname == null ? '<??' + '?>' : classname)}::$method '; 
+					error += 'Called from ${(classname == null ? '<??' + '?>' : classname)}::$method ';
 				case FilePos(s, file, line, _):
 					if (s != null) {
 						switch (s) {
@@ -376,25 +395,24 @@ class Main extends Sprite {
 
 		if (!isFatal) {
 			function runNonFatal():Int {
-				switch (Application.current.window.alert(ERROR, error, 'Error', ['Exit', 'Retry', 'Continue'])) {
+				switch (WindowUtil.window.alert(ERROR, error, 'Error', ['Exit', 'Retry', 'Continue'])) {
 					case 0:
 						return 0;
 					case 1:
 						return 1;
 					case 2:
-						return Application.current.window.alert(WARNING, 'Are you sure? This could cause undefined behavior.', 'Continue?',
+						return WindowUtil.window.alert(WARNING, 'Are you sure? This could cause undefined behavior.', 'Continue?',
 							['Go Back', 'Continue']) == 1 ? 2 : runNonFatal();
 				}
 				return 0;
 			}
 			return runNonFatal();
 		} else {
-			switch (Application.current.window.alert(ERROR, error, 'FATAL ERROR', ['Exit', 'Retry'])) {
+			switch (WindowUtil.window.alert(ERROR, error, 'FATAL ERROR', ['Exit', 'Retry'])) {
 				case 0:
 					return 0;
 				case 1:
-					return Application.current.window.alert(WARNING, 'Are you sure? This could cause undefined behavior.', 'RETRY',
-						['Exit', 'Retry']) == 1 ? 1 : 0;
+					return WindowUtil.window.alert(WARNING, 'Are you sure? This could cause undefined behavior.', 'RETRY', ['Exit', 'Retry']) == 1 ? 1 : 0;
 			}
 		}
 
