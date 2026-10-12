@@ -1,5 +1,8 @@
 package;
 
+import backend.plugins.SkinLoader;
+import backend.plugins.Skin;
+
 class InitState extends HState {
 	var wallpaperBackground:HSprite;
 	var toolBar:HMenuBar;
@@ -9,6 +12,12 @@ class InitState extends HState {
 
 	public function new() {
 		super();
+		//TESTING STUFF //fine ill just do it here.
+			FileSystem.createDirectory("plugins");
+			FileSystem.createDirectory("plugins/skins");
+			SkinLoader.write("plugins/skins/default.hfsf", Skin.defaultThemes);
+		//TESTING STUFF
+
 		// overrides for normal application actions with keys.
 		Main.addKeyPressed("toggleFullscreenWithF11", Keyboard.F11, false, (_:KeyboardEvent) -> {
 			Application.current.window.fullscreen = !Application.current.window.fullscreen;

@@ -3,6 +3,48 @@
 
 # CHANGELOG
 
+## 0.8.6 (Plugins/Skins) - By ChickenSwimmer2020
+
+> This REALLY should have been part of 0.8.3 but updates got out of hand
+>
+> I took WAY to long to get this out :/
+
+* New binary Skinning system, loads data for themes and such
+* Plugin system shell
+* Project.xml has Adobe Animate now has registered symbols
+* `HScript` is now a required library
+
+### Native
+
+* `flashTaskbar` is FINALLY functional on windows.
+
+### HPoint
+
+* `set()` now returns `HPoint`
+
+### HDropdown
+
+* FINALLY properly shows on a `HSprite` when called.
+
+### UPrefs
+
+* Works with the new `Skin` system
+* New Function `getSelected`
+* * This is designed for the maps of `String->Bool` in `UPrefs`, so that you can actually get the selected value.
+
+### HColor
+
+* Uses the new `Skin` system
+
+### InitState
+
+* Added some testing stuff todo with skins.
+
+### Main
+
+* Doesnt try to flash taskbar anymore.
+* Initilizes `UPrefs.currentSkin`
+
 ## 0.8.5 (HSprite adjustments) - By ZSolarDev
 
 * Cleaned up bitmap ordering code in `HSprite` a bit. I put it into a `replaceBitmap()` function and modified it a little.

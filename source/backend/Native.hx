@@ -2,19 +2,47 @@ package backend;
 
 #if (windows)
 @:headerCode("#pragma comment(lib, \"dwmapi.lib\")
-    ")
+")
 @:cppFileCode('
-        #include <windows.h>
-        #include <dwmapi.h>
-        #pragma comment(lib, "dwmapi.lib")
+	#include <windows.h>
+	#include <dwmapi.h>
+	#pragma comment(lib, "dwmapi.lib")
 
-        static int getAccentNative() {
-            DWORD color = 0;
-            BOOL opaque = FALSE;
-            if (FAILED(DwmGetColorizationColor(&color, &opaque)))
-                return 0;
-            return (int)color;
-        }
+	static int getAccentNative() {
+		DWORD color = 0;
+		BOOL opaque = FALSE;
+		if (FAILED(DwmGetColorizationColor(&color, &opaque)))
+			return 0;
+		return (int)color;
+	}
+
+	static void flashTaskbarNative(int count) {
+		HWND hwnd = NULL;
+
+		// find this process\'s own top-level window (no separate function needed)
+		EnumWindows([](HWND h, LPARAM lp) -> BOOL {
+			DWORD pid = 0;
+			GetWindowThreadProcessId(h, &pid);
+			if (pid == GetCurrentProcessId() && IsWindowVisible(h) && GetWindow(h, GW_OWNER) == NULL) {
+				*(HWND*)lp = h;
+				return FALSE; // found it, stop enumerating
+			}
+			return TRUE;
+		}, (LPARAM)&hwnd);
+
+		if (hwnd) {
+			FLASHWINFO fInfo = {0};
+			fInfo.cbSize = sizeof(FLASHWINFO);
+			fInfo.hwnd = hwnd;
+			fInfo.uCount = count;
+			if(count==0){
+				fInfo.dwFlags = FLASHW_ALL | FLASHW_TIMERNOFG;
+			}else fInfo.dwFlags = FLASHW_ALL;
+			fInfo.dwTimeout = 0; // default flash rate
+
+			FlashWindowEx(&fInfo);
+		}
+	}
 ')
 #end
 
@@ -29,9 +57,9 @@ class Native {
 	 * Flash the taskbar
 	 * @since 0.0.04
 	 */
-	public static inline function flashTaskbar() {
+	public static function flashTaskbar(?count:Int=0) {
 		#if (windows)
-		trace("flashTaskbar: Not Implemented");
+		untyped __cpp__('flashTaskbarNative((int){0});', count);
 		#elseif linux
 		trace("flashTaskbar: Not Implemented");
 		#elseif (ios||android)

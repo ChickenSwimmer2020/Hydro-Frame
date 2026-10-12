@@ -1,5 +1,7 @@
 package;
 
+import backend.plugins.Skin;
+import backend.plugins.SkinLoader;
 import backend.utils.MethodUtil;
 import haxe.CallStack;
 import openfl.events.UncaughtErrorEvent;
@@ -102,7 +104,6 @@ class Main extends Sprite {
 		#if (mac)
 		desktopbackgroundImage = HSprite.getDesktopWallpaper(1280, 720); // fix for a crash on startup with mac.
 		#end
-		Native.flashTaskbar();
 		Log.throwErrors = false; // STOP CRASHING MEH!!
 		instance = this;
 		stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -135,6 +136,7 @@ class Main extends Sprite {
 		#if (sys && !mac)
 		desktopbackgroundImage = HSprite.getDesktopWallpaper(1280, 720);
 		#end
+		UPrefs.currentSkin = new Skin("Default"); //init the skinning system.
 	}
 
 	/**

@@ -17,9 +17,10 @@ class HPoint {
 		this.y = y;
 	}
 
-	public function set(x:Float, y:Float) {
+	public function set(x:Float, y:Float):HPoint {
 		this.x = x;
 		this.y = y;
+		return this;
 	}
 
 	public function toOpenflPoint():Point

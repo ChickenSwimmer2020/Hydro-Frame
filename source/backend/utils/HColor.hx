@@ -1,5 +1,4 @@
 package backend.utils;
-
 /**
  * color class for easy access. basically FlxColor but worse.
  * @since 0.1.0
@@ -15,16 +14,30 @@ abstract HColor(Int) from Int from UInt to Int to UInt {
 	public static inline final DEBUGGER_BACKGROUND:HColor = 0x99000000;
 	public static inline final DEBUGGER_CONSOLE_TEXT:HColor = 0xFF00FF00;
 	#end
+	private static function getColorFromSkin(a:String):Null<HColor> {
+		if((UPrefs.currentSkin.data.themes[UPrefs.getSelected(UPrefs.uiTheme.value)].get(a))!=null) return (UPrefs.currentSkin.data.themes[UPrefs.getSelected(UPrefs.uiTheme.value)].get(a));
+		else throw 'Failed to get color $a from ${UPrefs.currentSkin.toString()}[${UPrefs.getSelected(UPrefs.uiTheme.value)}]!!';
+		return null;
+	}
 	// ui related colors
-	public static inline final LOADINGIND_MAINCOLOR:HColor = 0xFF7c58e2;
-	public static inline final MAINMENU_PROJECTSLIST_DARKEN:HColor = 0x6A000000;
-	public static inline final MENUBAR_BACKGROUND:HColor = 0xFF7B7B7B;
-	public static inline final MENUBAR_DROPDOWN_BACKGROUND:HColor = 0xFF262626;
-	public static inline final MENUBAR_DROPDOWN_SEPERATOR:HColor = 0xFF000000;
-	public static inline final BUTTON_IDLE:HColor = 0xFFFFFFFF;
-	public static inline final BUTTON_HOVER:HColor = 0xFFA3A3A3;
-	public static inline final BUTTON_CLICK:HColor = 0xFF818181;
-	public static inline final BUTTON_DISABLED:HColor = 0xFF5A5A5A;
+	public static var LOADINGIND_MAINCOLOR(get, never):HColor;
+	public static function get_LOADINGIND_MAINCOLOR():HColor return getColorFromSkin("LOADINGIND_MAINCOLOR")??0xFF7c58e2;
+	public static var MAINMENU_PROJECTSLIST_DARKEN(get, never):HColor;
+	public static function get_MAINMENU_PROJECTSLIST_DARKEN():HColor return getColorFromSkin("MAINMENU_PROJECTSLIST_DARKEN")??0x6A000000;
+	public static var MENUBAR_BACKGROUND(get, never):HColor;
+	public static function get_MENUBAR_BACKGROUND():HColor return getColorFromSkin("MENUBAR_BACKGROUND")??0xFF7B7B7B;
+	public static var MENUBAR_DROPDOWN_BACKGROUND(get, never):HColor;
+	public static function get_MENUBAR_DROPDOWN_BACKGROUND():HColor return getColorFromSkin("MENUBAR_DROPDOWN_BACKGROUND")??0xFF262626;
+	public static var MENUBAR_DROPDOWN_SEPERATOR(get, never):HColor;
+	public static function get_MENUBAR_DROPDOWN_SEPERATOR():HColor return getColorFromSkin("MENUBAR_DROPDOWN_SEPERATOR")??0xFF000000;
+	public static var BUTTON_IDLE(get, never):HColor;
+	public static function get_BUTTON_IDLE():HColor return getColorFromSkin("BUTTON_IDLE")??0xFFFFFFFF;
+	public static var BUTTON_HOVER(get, never):HColor;
+	public static function get_BUTTON_HOVER():HColor return getColorFromSkin("BUTTON_HOVER")??0xFFA3A3A3;
+	public static var BUTTON_CLICK(get, never):HColor;
+	public static function get_BUTTON_CLICK():HColor return getColorFromSkin("BUTTON_CLICK")??0xFF818181;
+	public static var BUTTON_DISABLED(get, never):HColor;
+	public static function get_BUTTON_DISABLED():HColor return getColorFromSkin("BUTTON_DISABLED")??0xFF5A5A5A;
 
 	public function new(v:Int = 0xFF000000)
 		this = v;

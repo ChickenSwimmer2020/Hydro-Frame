@@ -1,10 +1,13 @@
 package backend;
 
+import backend.plugins.Skin;
+
 /**
  * User Preferences system.
  * @since 0.3.0
  */
 class UPrefs {
+    public static var currentSkin:Null<Skin>; //for accessing color c
     /**
      * Default Preferences
      * * These get written to the UPrefs file if the file isnt found.
@@ -44,7 +47,7 @@ class UPrefs {
     public static var undoLevels:Preference<Int> = new Preference("undoLevels", 100);
     public static var autoRecovery:Preference<Bool> = new Preference("autoRecovery", true);
     public static var autoRecoveryTime:Preference<Int> = new Preference("autoRecoveryTime", 10);
-    public static var uiTheme:Preference<Map<String, Bool>> = new Preference("uiTheme", ["Darkest"=>false, "Dark"=>true, "Light"=>false, "Lightest"=>false]);
+    public static var uiTheme:Preference<Map<String, Bool>> = new Preference("uiTheme", ["Midnight"=>false, "Dark"=>true, "Bright"=>false, "Ultra Bright"=>false]);
     public static var uiAppearance:Preference<Map<String, Bool>> = new Preference("uiAppearance", ["Comfortable"=>true, "Compact"=>false]);
     public static var enableShading:Preference<Bool> = new Preference("enableShading", true);
     public static var hideStageBorder:Preference<Bool> = new Preference("hideStageBorder", false);
@@ -78,6 +81,17 @@ class UPrefs {
             return m;
         }
         return v;
+    }
+
+    /**
+     * check through a mapped preference for the selected index
+     * @param a 
+     * @return String selected key
+     * @since 0.8.3
+     */
+    public static function getSelected(a:Map<String, Bool>):String {
+        for(key=>value in a) !value?continue:return key;
+        return "";
     }
 
     /**
