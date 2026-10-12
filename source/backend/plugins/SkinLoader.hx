@@ -7,7 +7,7 @@ import backend.plugins.Skin.SkinData;
 
 /**
  * Allows loading skin files.
- * @since 0.8.3
+ * @since 0.8.6
  */
 class SkinLoader {
     public static function load(path:String):SkinData {
@@ -60,7 +60,7 @@ class SkinLoader {
      * @param path path to write too
      * @param data skin data to save
      * @return Bytes
-     * @since 0.8.3
+     * @since 0.8.6
      * NOTES: this is probably really fucky and bad, but i dont know how binary works so gimmie a break solar.
      */
     public static function write(path:String, data:SkinData) {

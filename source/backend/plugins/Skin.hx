@@ -7,7 +7,7 @@ typedef SkinData = {
 }; 
 /**
  * Wrapper class, similar to Plugin.
- * @since 0.8.3
+ * @since 0.8.6
  */
 class Skin {
     public static final defaultThemes:SkinData = {
@@ -47,7 +47,7 @@ class Skin {
     /**
      * Read skin data from a file
      * @return SkinData
-     * @since 0.8.3
+     * @since 0.8.6
      */
     public function getSkinFile(name:String):SkinData {
         if(FileSystem.exists('plugins/skins/$name.hfsf')) {
@@ -64,7 +64,7 @@ class Skin {
     /**
      * Write a skin file to an actual file //TODO: skin editor. (should we make this a seperate program?)
      * @return Bool
-     * @since 0.8.3
+     * @since 0.8.6
      */
     public function writeToSkinFile():Bool {
 
