@@ -4,14 +4,13 @@
     xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 
     <set name="VERSION" value="0.8.7" />
-    <haxedef name="VERSION_SUFFIX" value="" />
+    <haxedef name="VERSION_SUFFIX" value="_PRETTY_LOGGING" />
 
     <meta title="Hydro-Frame" />
     <meta description="An HAXE/OPENFL based animation software made to rival Adobe Animate" />
     <meta package="com.chickenswimmer2020.Hydro-Frame" company="ChickenSwimmer2020" />
     <meta version="${VERSION}" build-number="0" />
     <app file="Hydro-Frame" main="Main" />
-
 
     <source path="source" />
     <error if="hashlink||hl||html5"
@@ -42,4 +41,6 @@
     <icon path="assets/images/ICON48.png" size="48" />
     <icon path="assets/images/ICON32.png" size="32" />
     <icon path="assets/images/ICON16.png" size="16" />
+
+    <haxedef name="PRETTY_LOGGING" unless="DISABLE_PRETTY_LOGGING" />
 </project>

@@ -1,9 +1,12 @@
 package;
 
 #if !macro
-#if debug
 // debugging imports
+#if debug
 import backend.debug.*;
+#end
+#if PRETTY_LOGGING
+import backend.debug.logging.*;
 #end
 // backend imports
 import backend.*;
