@@ -140,7 +140,7 @@ class Main extends Sprite {
 		onStageResize(null); // apply once at startup
 
 		final VERSION_SUFFIX = backend.macro.DefineMacro.defineValue('VERSION_SUFFIX');
-		WindowUtil.setTitle('${WindowUtil.window_title} [ ${Application.current.meta.get("version")}$VERSION_SUFFIX ]');
+		WindowUtil.setTitle('${WindowUtil.window_title} [ ${Application.current.meta.get("version")}${(VERSION_SUFFIX.length > 1) ? VERSION_SUFFIX : ''} ]');
 
 		HTween.globalParent = this; // so that new Tween() will auto-destroy and not cause memory leaks.
 
