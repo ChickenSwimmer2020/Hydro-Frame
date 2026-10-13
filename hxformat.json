@@ -1,5 +1,4 @@
 {
-	"$schema": "https://raw.githubusercontent.com/HaxeCheckstyle/haxe-formatter/master/schema.json",
 	"indentation": {
 		"character": "tab",
 		"tabWidth": 4,
@@ -27,23 +26,19 @@
 		"caseBody": "next",
 		"returnBody": "same",
 		"expressionIf": "keep",
-		"expressionIfElse": "keep",
 		"expressionTry": "same",
 		"expressionCase": "keep"
 	},
 	"whitespace": {
 		"typeHintColonPolicy": "none",
-		"typeExtensionColonPolicy": "none",
 		"objectFieldColonPolicy": "after",
 		"functionTypeHaxe3Policy": "none",
 		"functionTypeHaxe4Policy": "around",
 		"arrowFunctionsPolicy": "around",
 		"ternaryPolicy": "around",
-		"mapArrowPolicy": "around",
 		"semicolonPolicy": "onlyAfter",
 		"commaPolicy": "after",
 		"binopPolicy": "around",
-		"unaryOpPolicy": "none",
 		"ifPolicy": "after",
 		"doPolicy": "after",
 		"forPolicy": "after",
@@ -70,17 +65,13 @@
 		"finalNewline": true,
 		"maxAnywhereInFile": 1,
 		"afterPackage": 1,
-		"beforeUsing": 1,
 		"afterFileHeaderComment": 1,
 		"classEmptyLines": {
 			"beginType": 0,
 			"endType": 0,
 			"afterVars": 1,
 			"betweenVars": 0,
-			"betweenFunctions": 1,
-			"afterFieldsWithDocComments": "one",
-			"beginFunction": 0,
-			"endFunction": 0
+			"betweenFunctions": 1
 		}
 	},
 	"wrapping": {
