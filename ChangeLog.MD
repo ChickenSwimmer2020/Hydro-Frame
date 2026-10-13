@@ -38,7 +38,7 @@
   * I would have simple moved to the `cne` branch, but it didn't build on Windows due to a missing `imgui` header. Not only that, but it only would go as high as OpenGL 4.1.0 on Windows targets. Thus, I made a fork that started at newest OpenGL versions and downgraded until it could succesfully initialize. Based on the `develop` branch. It went as high as 4.6.0 on Windows, and as high as 4.1.0 on MacOS.
   * This means, to update, simply run `haxelib git lime https://github.com/ZSolarDev/cne-lime develop; haxelib run lime setup -y`. I have it ship with the `cpp` and `hl` binaries already. It doesn't currently ship with the `mac` binaries, so those still need to be build locally. I do need to get to getting them built from Rex eventually.
 * The colors on my `cne-lime` branch didn't show correctly. I fixed this by adding some code to manually fix it in the beginning of `Main`, before `super()` is called.
-* ***MACOS IS NOT FULLY SUPPORTED.*** Images don't seem to be loading from file properly, and the stage doesn't scale with the window correctly. Those should be the final bugs to fix, on MacoS.
+* ***MACOS IS NOT FULLY SUPPORTED.*** Images don't seem to be loading from file properly, and the stage doesn't scale with the window correctly. Those should be the final bugs to fix, on MacOS.
 
 ### Other changes
 
