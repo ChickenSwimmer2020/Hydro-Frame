@@ -18,7 +18,7 @@ class DefineMacro {
 	/**
 	 * Returns if the provided define is defined
 	 * @param define provided define
-	 * @since Pretty_Logging
+	 * @since 0.8.8
 	 */
 	public static macro function defined(define:String) {
 		return macro $v{haxe.macro.Context.defined(define)};

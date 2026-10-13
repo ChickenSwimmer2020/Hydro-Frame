@@ -56,7 +56,7 @@ class HState extends Sprite {
 
 	/**
 	 * For when the state is switched to
-	 * @since SVG_Render
+	 * @since 0.8.7
 	 */
 	public function create() {}
 

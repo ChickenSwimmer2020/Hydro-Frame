@@ -55,7 +55,7 @@ class Native {
 	/**
 	 * SYS EXCLUSIVE
 	 * Flash the taskbar
-	 * @since 0.0.04
+	 * @since 0.4.0
 	 */
 	public static function flashTaskbar(?count:Int=0) {
 		#if (windows)
@@ -72,7 +72,7 @@ class Native {
 	 * Get the System accent color
 	 * * ! LINUX/MACOS UNTESTED AS OF 0.6.0 !
 	 * * ! Someone please test this.
-	 * @since 0.0.04
+	 * @since 0.4.0
 	 */
 	public static function getAccentColor():HColor {
 		#if (windows)

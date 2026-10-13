@@ -9,7 +9,7 @@ import haxe.macro.Type;
 @:dox(hide) @:noCompletion class SafeBuild {
 	/**
 	 * List of class names to ignore when running `build()`
-	 * @since Pretty_Logging
+	 * @since 0.8.8
 	 */
 	static var classesToIgnore:Array<String> = ['Safe', 'MethodUtil'];
 

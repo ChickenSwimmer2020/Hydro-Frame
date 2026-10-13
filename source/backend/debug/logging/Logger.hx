@@ -3,13 +3,13 @@ package backend.debug.logging;
 /**
  * Log Management Class
  * 
- * @since Pretty_Logging
+ * @since 0.8.8
  */
 class Logger {
 	/**
 	 * List of logged logs
 	 * 
-	 * @since Pretty_Logging
+	 * @since 0.8.8
 	 */
 	static var logs(default, null):Array<String> = [];
 
@@ -17,7 +17,7 @@ class Logger {
 	 * Log command
 	 * @param message Log message
 	 * @param posInfos Class information
-	 * @since Pretty_Logging
+	 * @since 0.8.8
 	 */
 	public static function log(message:Dynamic, ?posInfos:PosInfos) {
 		var str:String = '';
