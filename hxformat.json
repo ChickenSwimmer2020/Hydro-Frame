@@ -1,11 +1,89 @@
 {
-    "lineEnds": {
-        "blockCurly": {
-            "leftCurly": "both",
-            "emptyCurly": "noBreak"
+	"$schema": "https://raw.githubusercontent.com/HaxeCheckstyle/haxe-formatter/master/schema.json",
+	"indentation": {
+		"character": "tab",
+		"tabWidth": 4,
+		"conditionalPolicy": "aligned"
+	},
+	"lineEnds": {
+		"leftCurly": "after",
+		"rightCurly": "both",
+		"emptyCurly": "noBreak",
+		"blockCurly": {
+			"emptyCurly": "noBreak"
+		}
+	},
+	"sameLine": {
+		"ifElse": "same",
+		"ifBody": "next",
+		"elseBody": "next",
+		"elseIf": "same",
+		"forBody": "next",
+		"whileBody": "next",
+		"functionBody": "next",
+		"doWhile": "same",
+		"tryBody": "next",
+		"tryCatch": "same",
+		"caseBody": "next",
+		"returnBody": "same",
+		"expressionIf": "keep",
+		"expressionIfElse": "keep",
+		"expressionTry": "same",
+		"expressionCase": "keep"
+	},
+	"whitespace": {
+		"typeHintColonPolicy": "none",
+		"typeExtensionColonPolicy": "none",
+		"objectFieldColonPolicy": "after",
+		"functionTypeHaxe3Policy": "none",
+		"functionTypeHaxe4Policy": "around",
+		"arrowFunctionsPolicy": "around",
+		"ternaryPolicy": "around",
+		"mapArrowPolicy": "around",
+		"semicolonPolicy": "onlyAfter",
+		"commaPolicy": "after",
+		"binopPolicy": "around",
+		"unaryOpPolicy": "none",
+		"ifPolicy": "after",
+		"doPolicy": "after",
+		"forPolicy": "after",
+		"whilePolicy": "after",
+		"switchPolicy": "after",
+		"tryPolicy": "after",
+		"catchPolicy": "after",
+		"parenConfig": {
+        	"conditionParens": {
+        		"openingPolicy": "before",
+        		"closingPolicy": "none"
+        	},
+        	"expressionParens": {
+        		"openingPolicy": "none",
+        		"closingPolicy": "none"
+        	},
+        	"anonFuncParamParens": {
+        		"openingPolicy": "none",
+        		"closingPolicy": "none"
+        	}
         }
-    },
-    "indentation": {
-        "character": "    "
-    }
+	},
+	"emptyLines": {
+		"finalNewline": true,
+		"maxAnywhereInFile": 1,
+		"afterPackage": 1,
+		"beforeUsing": 1,
+		"afterFileHeaderComment": 1,
+		"classEmptyLines": {
+			"beginType": 0,
+			"endType": 0,
+			"afterVars": 1,
+			"betweenVars": 0,
+			"betweenFunctions": 1,
+			"afterFieldsWithDocComments": "one",
+			"beginFunction": 0,
+			"endFunction": 0
+		}
+	},
+	"wrapping": {
+		"maxLineLength": 160
+	}
 }

@@ -1,7 +1,6 @@
 package backend;
 
 import openfl.display.Bitmap;
-import openfl.display3D.textures.TextureBase;
 
 /**
  * used for creation of local filters
@@ -356,7 +355,7 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 	 * @since 0.1.0
 	 */
 	public function removeGlobalFilter(index:Int):Bool
-		return ((filters[index] != null) ? filters.remove(filters[index]) : false);
+		return((filters[index] != null) ? filters.remove(filters[index]) : false);
 
 	/**
 	 * Apply a filter to a local area of the sprite

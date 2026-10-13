@@ -89,7 +89,7 @@ class HSound implements IDestroyable {
 
 	function set_pitch(v:Float):Float {
 		if (_channel != null) {
-			@:privateAccess if (_channel.__audioSource != null)
+			@:privateAccess if(_channel.__audioSource != null)
 				_channel.__audioSource.pitch = v;
 		}
 
@@ -287,7 +287,7 @@ class HSound implements IDestroyable {
 	}
 
 	inline function calcTransformVolume():Float
-		return (1.0 * _volume * _volumeAdjust);
+		return(1.0 * _volume * _volumeAdjust);
 
 	function startSound(StartTime:Float):Void {
 		if (_sound == null)

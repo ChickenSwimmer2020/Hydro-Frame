@@ -1,5 +1,7 @@
 package backend.macro;
 
+import haxe.macro.Context;
+
 /**
  * A macro for helping with defines
  * @since 0.8.7
@@ -12,7 +14,7 @@ class DefineMacro {
 	 * @since 0.8.7
 	 */
 	public static macro function defineValue(define:String, ?ifNull:String = '') {
-		return macro $v{haxe.macro.Context.definedValue(define) ?? ifNull};
+		return macro $v{Context.definedValue(define) ?? ifNull};
 	}
 
 	/**
@@ -21,6 +23,6 @@ class DefineMacro {
 	 * @since 0.8.8
 	 */
 	public static macro function defined(define:String) {
-		return macro $v{haxe.macro.Context.defined(define)};
+		return macro $v{Context.defined(define)};
 	}
 }

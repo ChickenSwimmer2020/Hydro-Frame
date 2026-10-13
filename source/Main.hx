@@ -1,9 +1,10 @@
 package;
 
+import backend.macro.DefineMacro;
 import backend.plugins.Skin;
-import backend.plugins.SkinLoader;
 import backend.utils.MethodUtil;
 import haxe.CallStack;
+import openfl.display3D.textures.TextureBase;
 import openfl.events.UncaughtErrorEvent;
 
 class Main extends Sprite {
@@ -45,7 +46,7 @@ class Main extends Sprite {
 	public static function removeKeyPressed(a:String):Bool {
 		onKeyPressed.remove(a);
 		trace('removed "$a" from keyboard listener.');
-		return (onKeyPressed.get(a) == null);
+		return onKeyPressed.get(a) == null;
 		return false;
 	}
 
@@ -103,6 +104,10 @@ class Main extends Sprite {
 	static function get_startingState() {
 		#if SVG_SCREEN
 		return engine.rendering.svg.SVGScreen;
+		#else
+		#if NAUTICINK_SCREEN
+		return engine.rendering.nauticink.NauticScreen;
+		#end
 		#end
 
 		return SplashScreen;
@@ -113,6 +118,12 @@ class Main extends Sprite {
 	 * @since 0.0.0
 	 */
 	public function new() {
+		// To fix the color flipping.
+		@:privateAccess {
+			TextureBase.__supportsBGRA = true;
+			TextureBase.__textureFormat = 0x80E1; // GL_BGRA
+		}
+
 		super();
 
 		#if PRETTY_LOGGING

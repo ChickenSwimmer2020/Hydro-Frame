@@ -1,25 +1,27 @@
 package engine.rendering.svg;
 
+import format.SVG;
 import format.svg.SVGData;
 import haxe.io.Path;
-import lime.utils.Assets;
-import format.SVG;
 
 /**
- * SVG Sprite
+ * An `HSprite` that renders an SVG.
+ * An `HSVG` cannot load graphics via `loadGraphic()`.
+ * 
  * @since 0.8.7
  */
 class HSVG extends HSprite {
 	/**
-	 * Create an HSVG Sprite using an SVG file
+	 * Creates an `HSVG` using an SVG file.
+	 * 
 	 * @since 0.8.7
 	 */
-	public static function fromFile(filepath:String) {
-		return new HSVG().addCostume(new Path(filepath).file, Assets.getText(filepath));
-	}
+	public static function fromFile(filepath:String)
+		return new HSVG().addCostume(new Path(filepath).file, File.getContent(filepath));
 
 	/**
-	 * Create an HSVG Sprite using multiple SVG file paths
+	 * Creates an `HSVG` using multiple SVG file paths.
+	 * 
 	 * @since 0.8.7
 	 */
 	public static function fromFiles(filepaths:Array<String>) {
@@ -27,33 +29,39 @@ class HSVG extends HSprite {
 
 		for (filepath in filepaths)
 			if (filepath != null && Assets.exists(filepath))
-				hsvg.addCostume(new Path(filepath).file, Assets.getText(filepath));
+				hsvg.addCostume(new Path(filepath).file, File.getContent(filepath));
 
 		return hsvg;
 	}
 
 	/**
-	 * For loading and rendering the actual SVG
+	 * For loading and rendering the actual SVG.
+	 * 
 	 * @since 0.8.7
 	 */
 	public var svg(default, null):SVG;
 
 	/**
-	 * Current costume name
+	 * Current costume name. Get the costume data from `costumes`.
+	 * 
+	 * @see `costumes`
 	 * @since 0.8.7
 	 */
 	public var costume(default, null):String = null;
 
 	/**
-	 * Map of all availible costume names and their data
+	 * Map of all availible costume names and their data.
+	 * A costume is a string of XML SVG data.
+	 * 
 	 * @since 0.8.7
 	 */
 	public var costumes(default, null):Map<String, String> = [];
 
 	/**
-	 * Add costume of name "`name`" with the data of `costume` if both are not null
-	 * @param name new costume name
-	 * @param costume new costume data
+	 * Add costume of name "`name`" with the data of `costume` if both are not null.
+	 * 
+	 * @param name The name of the costume.
+	 * @param costume The XML SVG data of the costume.
 	 * @since 0.8.7
 	 */
 	public function addCostume(name:String, costume:String):HSVG {
@@ -76,12 +84,13 @@ class HSVG extends HSprite {
 	}
 
 	/**
-	 * Remove `costume` from the costumes map if it's not in use
-	 * @param costume target costume
+	 * Remove `costume` from the costumes map if it's not in use.
+	 * 
+	 * @param costume The costume to remove.
 	 * @since 0.8.7
 	 */
 	public function removeCostume(costume:String) {
-		if (costume == costume) {
+		if (costume == this.costume) {
 			trace('Refusing to remove current costume');
 			return;
 		}
@@ -90,8 +99,9 @@ class HSVG extends HSprite {
 	}
 
 	/**
-	 * Switch costume to `costume` if it exists
-	 * @param costume target costume
+	 * Switch costume to `costume` if it exists.
+	 * 
+	 * @param costume The costume to switch to.
 	 * @since 0.8.7
 	 */
 	public function switchToCostume(costume:String) {
@@ -106,22 +116,42 @@ class HSVG extends HSprite {
 		this.costume = costume;
 	}
 
+	/**
+	 * Create a new `HSVG`.
+	 * 
+	 * @param x The x position.
+	 * @param y The y position.
+	 * @since 0.8.7
+	 */
 	override public function new(x = 0.0, y = 0.0) {
 		super(x, y, null);
 
 		svg = new SVG(null);
 	}
 
-	override function reRender():HSVG {
-		this.graphics.clear();
+	/**
+	 * Re-renders this `HSVG` and puts it on top.
+	 * Clears `clearObjects`.
+	 * 
+	 * @return `HSVG` This `HSVG`, for chaining.
+	 * @since 0.8.7
+	 */
+	override public function reRender():HSVG {
+		graphics.clear();
 
-		if (svg != null)
-			svg.render(this.graphics, 0, 0, width, height);
+		if (svg?.data != null)
+			svg.render(graphics, 0, 0, cast svg.data.width, cast svg.data.height);
 
 		super.reRender();
 		return this;
 	}
 
+	/**
+	 * An `HSVG` cannot load graphics via `loadGraphic()`.
+	 * 
+	 * @return `HSVG` This `HSVG`, for chaining.
+	 * @since 0.8.7
+	 */
 	override function loadGraphic(graphic:OneOfThree<String, Image, BitmapData>, takeOwnership:Bool = false):HSVG {
 		trace('loadGraphic unsupported by HSVG');
 		return this;

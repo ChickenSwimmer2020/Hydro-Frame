@@ -19,6 +19,7 @@ import backend.objects.HWindowManager;
 // utils
 import backend.utils.Type;
 import backend.utils.*;
+import engine.utils.HColor;
 // ui
 import backend.ui.*;
 // openfl imports
@@ -53,7 +54,6 @@ import haxe.*;
 // usings
 using backend.utils.DrawUtil;
 using backend.utils.ArrayUtil;
-using backend.utils.HMath;
+using engine.utils.HMath;
 using StringTools;
-
 #end

@@ -48,7 +48,7 @@ class Locale { // overrall, very simple system. for now.
 					case "WINUser":
 						return Sys.getEnv("USERNAME");
 					case "PCName":
-						return Sys.getEnv(#if (windows) "COMPUTERNAME" #else "HOSTNAME" #end);
+						return Sys.getEnv(#if (windows)"COMPUTERNAME" #else "HOSTNAME" #end);
 					case "Custom":
 						return UPrefs.customReferenceName.value ?? "[[USER]]";
 					default:

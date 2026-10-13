@@ -57,12 +57,12 @@ class Native {
 	 * Flash the taskbar
 	 * @since 0.4.0
 	 */
-	public static function flashTaskbar(?count:Int=0) {
+	public static function flashTaskbar(?count:Int = 0) {
 		#if (windows)
 		untyped __cpp__('flashTaskbarNative((int){0});', count);
 		#elseif linux
 		trace("flashTaskbar: Not Implemented");
-		#elseif (ios||android)
+		#elseif (ios || android)
 		trace("flashTaskbar: Unsupported!");
 		#end
 	}

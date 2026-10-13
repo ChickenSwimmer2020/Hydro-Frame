@@ -72,9 +72,9 @@ class SplashScreen extends HState {
 						var customtextInput:HTextInputBox = cast(referallWindow.addContent(new HTextInputBox(0, 105, 20, 320, null, "{Custom Name Here}", 12,
 							null)), HTextInputBox);
 						#if (sys)
-						referallWindow.addContent(new HButton('"${Sys.getEnv(#if (windows) "COMPUTERNAME" #else "HOSTNAME" #end)}"',
+						referallWindow.addContent(new HButton('"${Sys.getEnv(#if (windows)"COMPUTERNAME" #else "HOSTNAME" #end)}"',
 							new Rectangle(0, 145, 106, 20), (_:HButton) -> {
-								trace('User wants to be referred to as: "${Sys.getEnv(#if (windows) "COMPUTERNAME" #else "HOSTNAME" #end)}"!');
+								trace('User wants to be referred to as: "${Sys.getEnv(#if (windows)"COMPUTERNAME" #else "HOSTNAME" #end)}"!');
 								UPrefs.perferredReference.value = ["Custom" => false, "WINUser" => false, "PCName" => true, "NOT SELECTED" => false];
 								referallWindow.destroy();
 								onWindowComplete();
@@ -85,7 +85,7 @@ class SplashScreen extends HState {
 							onWindowComplete();
 						}));
 						#end
-						referallWindow.addContent(new HButton("Custom", new Rectangle(#if (sys) 214 #else 0 #end, 145, #if (sys) 106 #else 180 #end, 20),
+						referallWindow.addContent(new HButton("Custom", new Rectangle(#if (sys)214 #else 0 #end, 145, #if (sys)106 #else 180 #end, 20),
 							(_:HButton) -> {
 								UPrefs.perferredReference.value = ["Custom" => true, "WINUser" => false, "PCName" => false, "NOT SELECTED" => false];
 								UPrefs.customReferenceName.value = customtextInput.text;
@@ -110,7 +110,7 @@ class SplashScreen extends HState {
 		introSprite.graphics.lineTo(-37, 0);
 		introSprite.graphics.lineTo(0, -37);
 		introSprite.graphics.endFill();
-		
+
 		introSprite.screenCenter();
 	}
 }

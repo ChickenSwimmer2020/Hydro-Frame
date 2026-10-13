@@ -20,7 +20,7 @@ class DrawUtil {
 	 */
 	public static function addRect(spr:HSprite, rect:Rectangle, color:HColor):HSprite {
 		@:privateAccess
-		if (spr._bitmap != null) {
+		if(spr._bitmap != null) {
 			@:privateAccess
 			var bitmap:Bitmap = new Bitmap(new BitmapData(cast rect.width, cast rect.height, true, color));
 			bitmap.x = rect.x;
@@ -55,7 +55,7 @@ class DrawUtil {
 		var nSpr = new Sprite();
 		nSpr.graphics.lineStyle(thickness, outlineColor.rgb ?? HColor.BLACK.rgb, outlineColor.a ?? 1.0); // set line style
 		nSpr.graphics.beginFill(fillColor.rgb, fillColor.a);
-		for (command in (Reflect.field(HDrawableIcons, icon) : Array<HDrawableIconCommand>)) {
+		for (command in(Reflect.field(HDrawableIcons, icon) : Array<HDrawableIconCommand>)) {
 			switch (command.t) {
 				case MOVE:
 					nSpr.graphics.moveTo(command.a.x, command.a.y);

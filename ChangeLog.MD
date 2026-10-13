@@ -3,6 +3,53 @@
 
 # CHANGELOG
 
+## 0.9.0 (NauticInk brush engine) - By ZSolarDev
+
+### The brush engine, NauticInk
+
+* Added `engine.nauticink`.
+  * Started work on the NauticInk brush engine. We are missing a lot of features here, but I am working on it. The math was tedious.
+  * Added `NauticInk` under `engine.nauticink`.
+    * This basically manages the entire engine. You can select one brush at a time, and register multiple renderers to render everything belonging to that brush.
+  * Added `NauticBrush` under `engine.nauticink.brush`.
+  * Added `engine.nauticink.brush.v1`.
+    * This is the current V1 implementation of the NauticInk engine. I only made V1 because I expect to make future reworks of this engine and have it selectable, in case people enjoy different versions. This is because this is literally my first time making something like this.
+    * Added `NauticStroke` under `engine.nauticink.brush.v1`.
+    * Added `NauticCapStyle` under `engine.nauticink.brush.v1` (unused atm).
+    * Added `NauticBrushV1` under `engine.nauticink.brush.v1`.
+    * Added `NauticBrushPreset` under `engine.nauticink.brush.v1`. (no smoothing or pressure atm).
+  * Added `engine.nauticink.brush.data`.
+    * Added `NauticStrokePoint` under `engine.nauticink.brush.data`.
+    * Added `NauticBrushConfig` under `engine.nauticink.brush.data`.
+  * Added `engine.rendering.nauticink`.
+    * Added `NauticRenderer` under `engine.rendering.nauticink`.
+    * Added `NauticScreen` under `engine.rendering.nauticink`.
+      * This is basically a small demo for testing the NauticInk engine. It's simple to use, check it out.
+      * Added the `NAUTICINK_SCREEN` define. When defined, Hydro-Frame will load into the NauticInk testing state.
+
+  * Moved `HColor` and `HMath` into `engine.utils` for use in `NauticInk`. Updated `Import` to match.
+  * Added `GfxGraphics` under `format.gfx`.
+    * This was due to a quirk in openfl's SVG rendering which used an even-odd fill. It messed up `NauticStroke`, making overlaps invert themselves. I fixed this by shadowing and modifying `GfxGraphics`.
+
+### MacOS support
+
+* On 0.8.0, MacOS stopped building. It would crash on startup.
+  * This was due to an issue with `cne-lime`'s `develop` branch. It wouldn't request any specific version. On my and others Windows machines, this would default to the highest available version. But on MacOS, it would unfortunately do the opposite, loading up OpenGL 2.1 Metal. Obviously, this is not supported by `lime`, causing a crash the moment an unavailable gl function was called, which unfortunately was the very first call made.
+  * I would have simple moved to the `cne` branch, but it didn't build on Windows due to a missing `imgui` header. Not only that, but it only would go as high as OpenGL 4.1.0 on Windows targets. Thus, I made a fork that started at newest OpenGL versions and downgraded until it could succesfully initialize. Based on the `develop` branch. It went as high as 4.6.0 on Windows, and as high as 4.1.0 on MacOS.
+  * This means, to update, simply run `haxelib git lime https://github.com/ZSolarDev/cne-lime develop; haxelib run lime setup -y`. I have it ship with the `cpp` and `hl` binaries already. It doesn't currently ship with the `mac` binaries, so those still need to be build locally. I do need to get to getting them built from Rex eventually.
+* The colors on my `cne-lime` branch didn't show correctly. I fixed this by adding some code to manually fix it in the beginning of `Main`, before `super()` is called.
+* ***MACOS IS NOT FULLY SUPPORTED.*** Images don't seem to be loading from file properly, and the stage doesn't scale with the window correctly. Those should be the final bugs to fix, on MacoS.
+
+### Other changes
+
+* Cleaned up `HSVG`.
+* Fixed a bug in `HSVG` where it would render with its own `width` and `height` rather than the svg's `width` and `height`.
+* Removed unused import in `HSprite` (`openfl.display3D.textures.TextureBase`).
+* Removed inline imports in `DefineMacro` (`haxe.macro.Context` -> `Context`).
+* Removed `Contributers.MD` because it was never updated, and is unnecessary.
+* Updated `hxformat.json` to match more closely to the current formatting.
+* Reformatted the source folder with the new `hxformat.json`.
+
 ## 0.8.8 (Pretty Logging) - By Maki
 
 * Removed `format.SVG` (the changes I did to it weren't functional)
@@ -106,7 +153,7 @@
 * Fixed a bug where the desktop background image would be blue.
   * This was due to statically loading the BitmapData instead of waiting for openfl to initialize. This wasn't an issue before switching to `cne-openfl`.
   * This was fixed by only getting the desktop background image at the end of `Main`.
-* Removed inline imports in `HTween`(`openfl.display.DisplayObjectContainer` -> `DisplayObjectContainer`).
+* Removed inline imports in `HTween` (`openfl.display.DisplayObjectContainer` -> `DisplayObjectContainer`).
 
 ### Reworked `HSprite`
 

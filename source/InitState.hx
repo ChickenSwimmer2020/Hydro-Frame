@@ -1,7 +1,7 @@
 package;
 
-import backend.plugins.SkinLoader;
 import backend.plugins.Skin;
+import backend.plugins.SkinLoader;
 
 class InitState extends HState {
 	var wallpaperBackground:HSprite;
@@ -12,11 +12,11 @@ class InitState extends HState {
 
 	public function new() {
 		super();
-		//TESTING STUFF //fine ill just do it here.
-			FileSystem.createDirectory("plugins");
-			FileSystem.createDirectory("plugins/skins");
-			SkinLoader.write("plugins/skins/default.hfsf", Skin.defaultThemes);
-		//TESTING STUFF
+		// TESTING STUFF //fine ill just do it here.
+		FileSystem.createDirectory("plugins");
+		FileSystem.createDirectory("plugins/skins");
+		SkinLoader.write("plugins/skins/default.hfsf", Skin.defaultThemes);
+		// TESTING STUFF
 
 		// overrides for normal application actions with keys.
 		Main.addKeyPressed("toggleFullscreenWithF11", Keyboard.F11, false, (_:KeyboardEvent) -> {

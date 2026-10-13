@@ -50,7 +50,7 @@ class HTabMenu extends HSprite {
 		group.destroy();
 		scaleButtons();
 
-		return (groups.get(a) == null && buttons.get(a) == null);
+		return(groups.get(a) == null && buttons.get(a) == null);
 	}
 
 	public var activeGroup(default, set):String = "";

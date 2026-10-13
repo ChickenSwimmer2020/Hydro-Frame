@@ -206,10 +206,10 @@ class AEase {
 		return t * t * t * t * t;
 
 	public static inline function quintOut(t:Float):Float
-		return (t = t - 1) * t * t * t * t + 1;
+		return(t = t - 1) * t * t * t * t + 1;
 
 	public static inline function quintInOut(t:Float):Float
-		return ((t *= 2) < 1) ? (t * t * t * t * t) / 2 : ((t -= 2) * t * t * t * t + 2) / 2;
+		return((t *= 2) < 1) ? (t * t * t * t * t) / 2 : ((t -= 2) * t * t * t * t + 2) / 2;
 
 	public static inline function smoothStepIn(t:Float):Float
 		return 2 * smoothStepInOut(t / 2);
@@ -283,7 +283,7 @@ class AEase {
 		if (t < 1)
 			return t * t * (2.70158 * t - 1.70158) / 2;
 		t--;
-		return (1 - (--t) * (t) * (-2.70158 * t - 1.70158)) / 2 + .5;
+		return(1 - (--t) * (t) * (-2.70158 * t - 1.70158)) / 2 + .5;
 	}
 
 	public static inline function elasticIn(t:Float):Float
@@ -291,7 +291,7 @@ class AEase {
 			10 * (t -= 1)) * Math.sin((t - (ELASTIC_PERIOD / (2 * Math.PI) * Math.asin(1 / ELASTIC_AMPLITUDE))) * (2 * Math.PI) / ELASTIC_PERIOD));
 
 	public static inline function elasticOut(t:Float):Float
-		return (ELASTIC_AMPLITUDE * Math.pow(2,
+		return(ELASTIC_AMPLITUDE * Math.pow(2,
 			-10 * t) * Math.sin((t - (ELASTIC_PERIOD / (2 * Math.PI) * Math.asin(1 / ELASTIC_AMPLITUDE))) * (2 * Math.PI) / ELASTIC_PERIOD)
 			+ 1);
 

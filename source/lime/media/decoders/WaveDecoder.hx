@@ -5,7 +5,6 @@ import haxe.Int64;
 import haxe.io.Bytes;
 import lime.utils.ArrayBuffer;
 import lime.media.AudioDecoder;
-
 #if (lime_cffi && lime_drlibs)
 import lime._internal.backend.native.NativeCFFI;
 
@@ -22,13 +21,12 @@ import lime._internal.backend.native.NativeCFFI;
 /**
 
 **/
-class WaveDecoder extends AudioDecoder
-{
-	public static function fromBytes(bytes:Bytes):WaveDecoder
-	{
+class WaveDecoder extends AudioDecoder {
+	public static function fromBytes(bytes:Bytes):WaveDecoder {
 		#if (lime_cffi && lime_drlibs)
 		var handle = NativeCFFI.lime_drlibs_wav_from_bytes(bytes);
-		if (handle == null) return null;
+		if (handle == null)
+			return null;
 
 		var decoder = new WaveDecoder(handle);
 		decoder.__bytes = bytes;
@@ -39,18 +37,16 @@ class WaveDecoder extends AudioDecoder
 	}
 
 	public static function fromFile(path:String):WaveDecoder
-        return fromBytes(File.getBytes(path));
+		return fromBytes(File.getBytes(path));
 
 	@:noCompletion private var handle:Dynamic;
 
-	@:noCompletion private function new(handle:Dynamic)
-	{
+	@:noCompletion private function new(handle:Dynamic) {
 		super();
 		this.handle = handle;
 
 		#if (lime_cffi && lime_drlibs)
-		if (handle != null)
-		{
+		if (handle != null) {
 			var data = NativeCFFI.lime_drlibs_wav_info(handle);
 			bitsPerSample = data.bitsPerSample;
 			channels = data.channels;
@@ -59,26 +55,26 @@ class WaveDecoder extends AudioDecoder
 		#end
 	}
 
-	override function dispose():Void
-	{
+	override function dispose():Void {
 		super.dispose();
 		#if (lime_cffi && lime_drlibs)
-		if (handle != null) NativeCFFI.lime_drlibs_wav_uninit(handle);
+		if (handle != null)
+			NativeCFFI.lime_drlibs_wav_uninit(handle);
 		#end
 		handle = null;
 	}
 
-	override function clone():WaveDecoder
-	{
+	override function clone():WaveDecoder {
 		#if (lime_cffi && lime_drlibs)
-		if (__path != null) return WaveDecoder.fromFile(__path);
-		else if (__bytes != null) return WaveDecoder.fromBytes(__bytes);
+		if (__path != null)
+			return WaveDecoder.fromFile(__path);
+		else if (__bytes != null)
+			return WaveDecoder.fromBytes(__bytes);
 		#end
 		return null;
 	}
 
-	override function decode(buffer:ArrayBuffer, pos:Int, len:Int, word:Int):Int
-	{
+	override function decode(buffer:ArrayBuffer, pos:Int, len:Int, word:Int):Int {
 		#if (lime_cffi && lime_drlibs)
 		pos = NativeCFFI.lime_drlibs_wav_decode(handle, buffer, pos, len, word);
 		eof = pos < len;
@@ -88,11 +84,9 @@ class WaveDecoder extends AudioDecoder
 		#end
 	}
 
-	override function seek(samples:Int64):Bool
-	{
+	override function seek(samples:Int64):Bool {
 		#if (lime_cffi && lime_drlibs)
-		if (NativeCFFI.lime_drlibs_wav_seek(handle, samples.low, samples.high) == 1)
-		{
+		if (NativeCFFI.lime_drlibs_wav_seek(handle, samples.low, samples.high) == 1) {
 			eof = false;
 			return true;
 		}
@@ -100,11 +94,9 @@ class WaveDecoder extends AudioDecoder
 		return false;
 	}
 
-	override function rewind():Bool
-	{
+	override function rewind():Bool {
 		#if (lime_cffi && lime_drlibs)
-		if (NativeCFFI.lime_drlibs_wav_seek(handle, 0, 0) == 1)
-		{
+		if (NativeCFFI.lime_drlibs_wav_seek(handle, 0, 0) == 1) {
 			eof = false;
 			return true;
 		}
@@ -112,8 +104,7 @@ class WaveDecoder extends AudioDecoder
 		return false;
 	}
 
-	override function tell():Int64
-	{
+	override function tell():Int64 {
 		#if (lime_cffi && lime_drlibs)
 		var data = NativeCFFI.lime_drlibs_wav_tell(handle);
 		return Int64.make(data.high, data.low);
@@ -122,8 +113,7 @@ class WaveDecoder extends AudioDecoder
 		#end
 	}
 
-	override function total():Int64
-	{
+	override function total():Int64 {
 		#if (lime_cffi && lime_drlibs)
 		var data = NativeCFFI.lime_drlibs_wav_total(handle);
 		return Int64.make(data.high, data.low);
@@ -132,8 +122,7 @@ class WaveDecoder extends AudioDecoder
 		#end
 	}
 
-	override function seekable():Bool
-	{
+	override function seekable():Bool {
 		#if (lime_cffi && lime_drlibs)
 		return true;
 		#else

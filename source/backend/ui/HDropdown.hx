@@ -26,9 +26,9 @@ class HDropdown extends HSprite {
 		if (dropdownOpen)
 			return;
 		var button = target;
-        //TODO: fix not positioning based on stage position.
+		// TODO: fix not positioning based on stage position.
 		var targetPosition:HPoint = new HPoint(0, 0);
-		targetPosition.set(target.getBounds(Main.instance).x+(isSub?button.width:0), target.getBounds(Main.instance).y+(isSub?0:button.height));
+		targetPosition.set(target.getBounds(Main.instance).x + (isSub ? button.width : 0), target.getBounds(Main.instance).y + (isSub ? 0 : button.height));
 
 		dropdownBG = new HSprite(targetPosition.x,
 			targetPosition.y).makeGraphic(Math.floor(overWidth ?? button.width), Math.floor(button.height * (options.length - 1)),

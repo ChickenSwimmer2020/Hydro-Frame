@@ -63,7 +63,7 @@ class HText extends HSprite implements IDestroyable {
 		return field.text;
 
 	public function set_text(t:String):String
-		return (field.text = t);
+		return(field.text = t);
 
 	public var textWidth(get, never):Float;
 
@@ -81,7 +81,7 @@ class HText extends HSprite implements IDestroyable {
 		return HColor.fromInt(field.textColor);
 
 	public function set_textColor(a:HColor):HColor
-		return (field.textColor = a);
+		return(field.textColor = a);
 
 	public var defaultTextFormat(get, set):TextFormat;
 

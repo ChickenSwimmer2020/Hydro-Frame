@@ -34,7 +34,7 @@ class HProjectFileParser {
 			case NULL_PROJECT:
 				throw 'This Hydro-Frame project file is null.';
 			default:
-				return ({
+				return({
 					meta: Json.parse(raw.getContent('meta.json')),
 					raw: raw
 				} : HProject);
