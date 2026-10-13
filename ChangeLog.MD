@@ -3,6 +3,18 @@
 
 # CHANGELOG
 
+## 0.8.8 (Pretty Logging) - By Maki
+
+* Removed `format.SVG` (the changes I did to it weren't functional)
+* Added `backend.debug.logging.Logger`
+* Added `defined(define)` to `DefineMacro`
+* `PRETTY_LOGGING` is defined by default
+* `DISABLE_PRETTY_LOGGING` undefines `PRETTY_LOGGING`
+* Added `classesToIgnore` variable to `SafeBuild`
+* `haxe.Log.trace` is replaced by `Logger.log` if `PRETTY_LOGGING` is defined
+* Logs now appear in the format : "[`fileName`:`lineNumber`] : `log`"
+* Fixed `VERSION_SUFFIX` being blank and the version suffix in the app title being "1"
+
 ## 0.8.7 (SVG Rendering) - By Maki
 
 * Added `SVGScreen`
@@ -13,7 +25,7 @@
 * `InitialState` now calls `create` on child states
 * `HWindowManager` now uses `WindowUtil`
 * `HState` now has an overidable `create` function
-* `DefineMacro` (idk, ask maki.)
+* `DefineMacro` for assistance with defines
 * `SplashScreen` now uses `WindowUtil.resizeWindow` instead of manual calls
 * buncha changes on Main
 * `InitState`'s call to enable the F11 fullscreen system now uses `WindowUtil`
