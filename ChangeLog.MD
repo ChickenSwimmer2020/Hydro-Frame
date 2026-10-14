@@ -3,10 +3,11 @@
 
 # CHANGELOG
 
-## 0.9.2 (OCD Update) 
+## 0.9.2 (OCD + Hyperfixation Update)  - By V207 / Maki
 
-### V207 / Maki
+* One Massive cleanup
 
+* [MACOS] `InitState` wallpaper background exists again
 * The editor now compiles again
 * The version suffix has been replaced with git information
 
