@@ -6,3 +6,4 @@
 * batch file that auto-scans for trademark infringement so adobe cant sue us 90 feet under
 * batch/sh autobuilder for every supported platform
 * fix building for android/ios. also find ios tester. also also find android tester.
+* Add setting to toggle on/off using desktop wallpaper on background for main menu
