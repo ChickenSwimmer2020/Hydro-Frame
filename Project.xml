@@ -34,6 +34,8 @@
     <undefine name="openfl-disable-handle-error" />
     <define name="openfl_enable_handle_error" />
 
+    <haxeflag name="--dce" value="full" unless="debug" />
+
     <haxeflag name="--macro" value="backend.macro.Stamper.run()" />
 
     <icon path="assets/images/ICON512.png" size="512" />
