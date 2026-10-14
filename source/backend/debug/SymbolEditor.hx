@@ -27,8 +27,8 @@ class SymbolEditor extends HState {
 	final MIN_PX:Float = 0.5;
 	final MAX_PX:Float = 4000;
 
-	public function new() {
-		super();
+	override function create() {
+		super.create();
 		trace("Editor launched");
 		Main.addKeyPressed("SymbolGeneratorExitKey", Keyboard.ESCAPE, true, (_:KeyboardEvent) -> {
 			Main.StateSystem.switchState(InitState);

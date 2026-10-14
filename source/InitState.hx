@@ -10,8 +10,8 @@ class InitState extends HState {
 
 	public static var appliedDarkenOnlyOnce:Bool = false;
 
-	public function new() {
-		super();
+	override function create() {
+		super.create();
 		// TESTING STUFF //fine ill just do it here.
 		FileSystem.createDirectory("plugins");
 		FileSystem.createDirectory("plugins/skins");

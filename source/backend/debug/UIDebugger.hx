@@ -7,8 +7,8 @@ class UIDebugger extends HState {
 	var testingDropdown:HMenuBar;
 	var testingInput:HTextInputBox;
 
-	public function new() {
-		super();
+	override function create() {
+		super.create();
 		Main.addKeyPressed("UIDebuggerExitKey", Keyboard.ESCAPE, true, (_:KeyboardEvent) -> {
 			Main.StateSystem.switchState(InitState);
 		});

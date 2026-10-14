@@ -3,6 +3,13 @@
 
 # CHANGELOG
 
+## Undetermined
+
+### V207 / Maki
+
+* Version suffix is now "MMV", standing for "Modified Main Version"
+* `InitState`, `SplashScreen`, `SymbolEditor`, and `UIDebugger` now have their `new()` code in `create()`
+
 ## 0.9.0 (NauticInk brush engine) - By ZSolarDev
 
 ### The brush engine, NauticInk

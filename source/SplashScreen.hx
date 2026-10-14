@@ -5,8 +5,8 @@ import engine.project.HProjectFactory;
 class SplashScreen extends HState {
 	var introSprite:HSprite;
 
-	public function new() {
-		super();
+	override function create() {
+		super.create();
 		introSprite = new HSprite(0, 0).makeGraphic(100, 100, HColor.TRANSPARENT);
 		add(introSprite);
 
