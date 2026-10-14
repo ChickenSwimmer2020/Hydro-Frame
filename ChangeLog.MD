@@ -5,6 +5,8 @@
 
 ## 0.9.2 (OCD Update) 
 
+* The version suffix has been replaced with git information
+
 ## 0.9.1 (OCD Trip) - By V207 / Maki
 
 * `Main.instance.removeFromMainStage` has been removed (just use `Main.instance.removeChild`)

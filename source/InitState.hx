@@ -29,7 +29,7 @@ class InitState extends HState {
 
 		wallpaperBackground = new HSprite(0, 0);
 		#if (sys && !mac)
-		loadGraphic(HSprite.getDesktopWallpaper(1280, 720), true);
+		wallpaperBackground.loadGraphic(HSprite.getDesktopWallpaper(1280, 720), true);
 		#end
 		add(wallpaperBackground);
 

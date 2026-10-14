@@ -1,5 +1,6 @@
 package;
 
+import backend.macro.GitMacro;
 import backend.macro.DefineMacro;
 import backend.plugins.Skin;
 import backend.utils.MethodUtil;
@@ -49,8 +50,7 @@ class Main extends Sprite {
 		WindowUtil.window.onClose.add(onClosing);
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrashing);
 
-		final VERSION_SUFFIX = backend.macro.DefineMacro.defineValue('VERSION_SUFFIX');
-		WindowUtil.setTitle('${WindowUtil.window_title} [ ${Application.current.meta.get("version")}${(VERSION_SUFFIX.length > 1) ? VERSION_SUFFIX : ''} ]');
+		WindowUtil.setTitle('${WindowUtil.window_title} [ ${Application.current.meta.get("version")}${#if GIT_INFO ' (${GitMacro.gitBranch()}/${GitMacro.gitHash()})' #else '' #end} ]');
 
 		windowManager = new HWindowManager();
 
@@ -203,7 +203,7 @@ class Main extends Sprite {
 		}
 		#end
 
-		if (onKeyPressed != null) {
+		if (onKeyPressed != null)
 			for (label => info in onKeyPressed) {
 				if (label == null || info == null)
 					continue;
@@ -237,12 +237,11 @@ class Main extends Sprite {
 					continue;
 				}
 			}
-		}
 
 		if (!HDropdown.dropdownOpen)
-			continue;
+			return;
 
-		// dropdownCommands();
+		// dropdownCommands(e);
 	}
 
 	/**
@@ -251,7 +250,7 @@ class Main extends Sprite {
 	 * 
 	 * @since 0.9.1
 	 */
-	function dropdownCommands() {
+	function dropdownCommands(e:KeyboardEvent) {
 		for (keys => targetOption in HDropdown.dropdownKeys) {
 			if (!keys.contains(e.keyCode) && (!e.shiftKey && (!e.altKey && !e.controlKey))) {
 				if (HDropdown.canCloseInstace)

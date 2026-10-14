@@ -44,4 +44,7 @@
     <icon path="assets/images/ICON16.png" size="16" />
 
     <haxedef name="PRETTY_LOGGING" unless="DISABLE_PRETTY_LOGGING" />
+
+    <haxedef name="DISABLE_GIT_INFO" unless="debug" />
+    <haxedef name="GIT_INFO" unless="DISABLE_GIT_INFO" />
 </project>
