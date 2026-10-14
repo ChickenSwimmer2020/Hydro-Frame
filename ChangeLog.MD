@@ -10,6 +10,7 @@
 * MAJOR `Main` code cleanup
 * The desktop wallpaper background is now loaded in `InitState` instead of `Main`
 * `EditorState` and `SplashScreen` have been moved to a new `ui` folder
+* Dead Code Elimination is enabled on non-debug builds
 * Version suffix is now "MMV", standing for "Modified Main Version"
 * `InitState`, `SplashScreen`, `SymbolEditor`, and `UIDebugger` now have their `new()` code in `create()`
 
