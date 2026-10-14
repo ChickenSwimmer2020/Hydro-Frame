@@ -6,16 +6,14 @@
       "version": null
     },
     {
-      "name": "lime",
-      "type": "git",
-      "dir": null,
-      "ref": "develop",
-      "url": "https://github.com/ZSolarDev/cne-lime"
-    },
-    {
       "name": "format",
       "type": "haxelib",
       "version": null
+    },
+    {
+      "name": "hscript",
+      "type": "haxelib",
+      "version": "2.7.0"
     },
     {
       "name": "hxcpp",
@@ -33,6 +31,13 @@
       "name": "hxp",
       "type": "haxelib",
       "version": null
+    },
+    {
+      "name": "lime",
+      "type": "git",
+      "dir": null,
+      "ref": "develop",
+      "url": "https://github.com/ZSolarDev/cne-lime"
     },
     {
       "name": "openfl",
