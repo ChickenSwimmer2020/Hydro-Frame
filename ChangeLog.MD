@@ -3,11 +3,10 @@
 
 # CHANGELOG
 
-## 0.9.2 (OCD + Hyperfixation Update)  - By V207 / Maki
+## 0.9.2 (Minor OCD Trip)  - By V207 / Maki
 
-* One Massive cleanup
-  * The `InitState` toolbar creation is VERY optimized now
-    * The `HDropdown` option is now a class : `HDropdownOption`
+* `HDropdown` option creation is VERY optimized now
+  * The `HDropdown` option is now a class : `HDropdownOption`
 
 * [MACOS] `InitState` wallpaper background exists again
 * The editor now compiles again
