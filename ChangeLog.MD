@@ -3,6 +3,8 @@
 
 # CHANGELOG
 
+## 0.9.2 (OCD Update) 
+
 ## 0.9.1 (OCD Trip) - By V207 / Maki
 
 * `Main.instance.removeFromMainStage` has been removed (just use `Main.instance.removeChild`)
