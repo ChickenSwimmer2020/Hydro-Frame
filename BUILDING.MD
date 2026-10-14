@@ -1,31 +1,37 @@
 # BUILDING
 
-So you wanna build Hydro-Frame, go ahead
->placeholder MSG, please rewrite this.
+> MAC ONLY:
+> Make sure you have XCode installed from the app store
 
-## BUILDING[ios]
+- Install [haxe](https://haxe.org/)
+- Download Hydro-Frame's repo (skip if you already have)
+- Run:
 
->TODO
+```
+haxelib install hmm
+haxelib run hmm setup
+hmm install (This will take a bit)
+```
 
-## BUILDING[android]
+- If you are on mac run
 
->TODO
+```
+haxelib run lime rebuild mac --always 
+```
 
-## BUILDING[windows]
+- otherwise run
 
-* Install [haxe](https://haxe.org/)
-* download Hydro-Frame's repo (skip if you already have)
-* in your terminal, run `haxelib install format; haxelib install hxp; haxelib git hxcpp https://github.com/CodenameCrew/cne-hxcpp; haxelib git lime https://github.com/ZSolarDev/cne-lime develop; haxelib run lime setup -y; lime rebuild hxcpp; lime rebuild tools; haxelib git openfl https://github.com/CodenameCrew/cne-openfl develop; haxelib install svg 1.2.0; haxelib install clipper; haxelib install hxcpp-debugger` (This may take some time!)
-* run `lime` in the console and make sure it worked
-* (optional) run `haxelib setup` to set haxelib path
-* run `lime test windows -debug` (This may *also* take some time!)
+```
+haxelib run lime rebuild cpp --always
+```
 
-## BUILDING[mac]
+- And now run
 
-* Make sure you have XCode installed from the app store
-* Install [haxe](https://haxe.org/)
-* download Hydro-Frame's repo (skip if you already have)
-* in your terminal, run `haxelib install format; haxelib install hxp; haxelib git hxcpp https://github.com/CodenameCrew/cne-hxcpp; haxelib git lime https://github.com/ZSolarDev/cne-lime develop; lime rebuild mac; haxelib run lime setup -y; lime rebuild hxcpp; lime rebuild tools; haxelib git openfl https://github.com/CodenameCrew/cne-openfl develop; haxelib install svg 1.2.0; haxelib install hxcpp-debugger` (This may take some time!)
-* run `lime` in the console and make sure it worked
-* (optional) run `haxelib setup` to set haxelib path
-* run `lime test mac -debug` (This may *also* take some time!)
+```
+haxelib run lime setup
+lime rebuild hxcpp -y
+lime rebuild tools -y
+```
+
+- run `lime` in the console and make sure it worked (If it didn't please report it and you will be helped for troubleshooting)
+- run `lime test <platform>` or `lime test <platform> -debug` (This will _also_ take some time!)
