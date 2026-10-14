@@ -104,10 +104,10 @@ class Main extends Sprite {
 	static function get_startingState() {
 		#if SVG_SCREEN
 		return engine.rendering.svg.SVGScreen;
-		#else
+		#end
+
 		#if NAUTICINK_SCREEN
 		return engine.rendering.nauticink.NauticScreen;
-		#end
 		#end
 
 		return SplashScreen;
