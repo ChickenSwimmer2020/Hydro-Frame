@@ -1,33 +1,5 @@
 package backend.ui;
 
-class HDropdownOption {
-	public var text(default, null):String = 'Bob';
-	public var func(default, null):HButton->Void;
-	public var keys(default, null):Array<Int> = null;
-	public var closeOnClick(default, null):Bool = true;
-	public var disabled(default, null):Bool = false;
-
-	public function new(text:String, func:HButton->Void) {
-		this.text = text;
-		this.func = func;
-	}
-
-	public function set_closeOnClick(closeOnClick = true):HDropdownOption {
-		this.closeOnClick = closeOnClick;
-		return this;
-	}
-
-	public function set_keys(keys:Array<Int>):HDropdownOption {
-		this.keys = keys;
-		return this;
-	}
-
-	public function set_disabled(disabled = true):HDropdownOption {
-		this.disabled = disabled;
-		return this;
-	}
-}
-
 class HDropdown extends HSprite {
 	public static var members:Array<HSprite> = [];
 	public static var canCloseInstace:Bool = false;
@@ -61,30 +33,30 @@ class HDropdown extends HSprite {
 		for (t in options) {
 			var shouldCloseWhenClicked:Bool = t.closeOnClick ?? true;
 			var disabled = t.disabled ?? false;
-			var text = t.text;
 			if (t.keys != null)
-				dropdownKeys.set(t.keys, text);
+				dropdownKeys.set(t.keys, t.text);
 
-			if (text == 'seperator') {
-				var seperator:HSprite = new HSprite(targetPosition.x, targetPosition.y + increment);
-				seperator.makeGraphic(Math.floor(overWidth != null ? (overWidth / 2) : (button.width / 2)), Math.floor(button.height / 4),
-					HColor.MENUBAR_DROPDOWN_SEPERATOR);
-				dropdownButtons.push(seperator);
-				addM(seperator);
-				seperator.setAttribute("isDropdownObject", true);
-				seperator.setAttribute("closeOnClick", false);
-				increment += seperator.gHeight;
-			} else {
-				var func = t.func;
-				var button:HButton = new HButton(text,
-					new Rectangle(targetPosition.x, targetPosition.y + increment, overWidth ?? button.width, button.height), func);
-				dropdownButtons.push(button);
-				addM(button);
-				button.setAttribute("isDropdownObject", true);
-				button.setAttribute("closeOnClick", disabled ? false : shouldCloseWhenClicked);
-				button.disabled = disabled;
-				increment += button.gHeight;
+			switch (t.text) {
+				case 'seperator':
+					var seperator:HSprite = new HSprite(targetPosition.x, targetPosition.y + increment);
+					seperator.makeGraphic(Math.floor(overWidth != null ? (overWidth / 2) : (button.width / 2)), Math.floor(button.height / 4),
+						HColor.MENUBAR_DROPDOWN_SEPERATOR);
+					dropdownButtons.push(seperator);
+					addM(seperator);
+					seperator.setAttribute("isDropdownObject", true);
+					seperator.setAttribute("closeOnClick", false);
+					increment += seperator.gHeight;
+				default:
+					var button:HButton = new HButton(t.text,
+						new Rectangle(targetPosition.x, targetPosition.y + increment, overWidth ?? button.width, button.height), t.func);
+					dropdownButtons.push(button);
+					addM(button);
+					button.setAttribute("isDropdownObject", true);
+					button.setAttribute("closeOnClick", disabled ? false : shouldCloseWhenClicked);
+					button.disabled = disabled;
+					increment += button.gHeight;
 			}
+
 			ind++;
 		}
 

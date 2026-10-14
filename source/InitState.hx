@@ -219,20 +219,17 @@ class InitState extends HState {
 				size: new HPoint(50, 20),
 				onClick: (_:HButton) -> {
 					HDropdown.openDropdownMenu(_, false, [
-						// {
-						// 	text: Locale.get("title.menuBar.Help.Help"),
-						// 	text: '${Locale.get("title.menuBar.Help.ReportBug")}...',
-						// {text: 'seperator', func: null},
-						// 	text: '${Locale.get("title.menuBar.Help.OnlineTutorial")}...',
-						// 	text: '${Locale.get("title.menuBar.Help.HandsOnTutorial")}  >',
-						// {text: 'seperator', func: null},
-						// 	text: '${Locale.get("title.menuBar.Help.ManagePlugins")}...',
-						// {text: 'seperator', func: null},
+						new HDropdownOption(Locale.get("title.menuBar.Help.Help"), null).set_disabled(),
+						new HDropdownOption(Locale.get("title.menuBar.Help.ReportBug"), null).set_disabled(),
+						new HDropdownOption('seperator', null),
+						new HDropdownOption(Locale.get("title.menuBar.Help.OnlineTutorial"), null).set_disabled(),
+						new HDropdownOption(Locale.get("title.menuBar.Help.HandsOnTutorial"), null).set_disabled(),
+						new HDropdownOption('seperator', null),
+						new HDropdownOption(Locale.get("title.menuBar.Help.ManagePlugins"), null).set_disabled(),
+						new HDropdownOption('seperator', null),
 						new HDropdownOption(Locale.get("title.menuBar.Help.CheckforUpdates"), checkForUpdates),
-						// },
-						// {text: 'seperator', func: null},
+						new HDropdownOption('seperator', null),
 						new HDropdownOption(Locale.get("title.menuBar.Help.AboutHydro-Frame"), about),
-						// },
 					], 200);
 				}
 			}
