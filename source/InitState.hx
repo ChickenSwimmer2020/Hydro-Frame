@@ -26,7 +26,11 @@ class InitState extends HState {
 		HSoundManager.playMusic("assets/sounds/Vectors.wav", UPrefs.mainMenuMuted.value ? 0.0 : 0.35);
 
 		Mouse.show();
-		wallpaperBackground = new HSprite(0, 0).loadGraphic(Main.desktopbackgroundImage, true);
+
+		wallpaperBackground = new HSprite(0, 0);
+		#if (sys && !mac)
+		loadGraphic(HSprite.getDesktopWallpaper(1280, 720), true);
+		#end
 		add(wallpaperBackground);
 
 		if (!appliedDarkenOnlyOnce) { // holy shit, didnt realize there was a bug here!
@@ -629,9 +633,9 @@ class InitState extends HState {
 								var value:Int = Network.checkForUpdates();
 
 								var darkenSprite:HSprite = new HSprite(0, 0).makeGraphic(Main.pWidth, Main.pHeight, 0x6E000000);
-								Main.instance.addToMainStage(darkenSprite);
+								Main.instance.addChild(darkenSprite);
 								var loader:LoadingIndicator = new LoadingIndicator(0, 0);
-								Main.instance.addToMainStage(loader);
+								Main.instance.addChild(loader);
 								loader.screenCenter();
 
 								final time:Float = 5.0;
@@ -641,7 +645,7 @@ class InitState extends HState {
 										darkenSprite.setGraphicColor(0x6EFF0000);
 										var text:HText = new HText(0, 0, Main.pWidth, "", 48);
 										text.setFieldSize(Main.pWidth, Main.pHeight);
-										Main.instance.addToMainStage(text);
+										Main.instance.addChild(text);
 										text.text = switch (value) {
 											case -1: Locale.get("error.networking.ConnectionFailed", ["{URL}" => Network.updateCheckLocation]);
 											case -4: Locale.get("error.networking.NxDomain");
@@ -670,7 +674,7 @@ class InitState extends HState {
 											loader.destroy();
 											darkenSprite.setGraphicColor(0x6E00FF00);
 											var text:HText = new HText(0, 0, Main.pWidth, "", 48);
-											Main.instance.addToMainStage(text);
+											Main.instance.addChild(text);
 											text.text = Locale.get("autoupdater.check.runningLatest");
 											text.alignment = CENTER;
 											text.x = Main.pWidth / 2 - text.width / 2;

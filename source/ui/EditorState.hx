@@ -1,4 +1,4 @@
-package;
+package ui;
 
 /**
  * The different selectable tools of Hydro-Frame!

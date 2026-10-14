@@ -36,7 +36,7 @@ class HWindowManager {
 	 */
 	public function addWindow(win:HWindow):HWindow {
 		windows.push(win);
-		Main.instance.addToMainStage(win);
+		Main.instance.addChild(win);
 		focusWindow(win);
 		HSoundManager.playSound("assets/sounds/popup.wav", 1.0); // TODO: implement volume
 		return win;

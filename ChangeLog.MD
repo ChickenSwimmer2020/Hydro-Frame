@@ -3,10 +3,13 @@
 
 # CHANGELOG
 
-## Undetermined
+## 0.9.1 (OCD Trip) - By V207 / Maki
 
-### V207 / Maki
-
+* `Main.instance.removeFromMainStage` has been removed (just use `Main.instance.removeChild`)
+* `Main.instance.addToMainStage` instances have been replaced with `Main.instance.addChild`
+* MAJOR `Main` code cleanup
+* The desktop wallpaper background is now loaded in `InitState` instead of `Main`
+* `EditorState` and `SplashScreen` have been moved to a new `ui` folder
 * Version suffix is now "MMV", standing for "Modified Main Version"
 * `InitState`, `SplashScreen`, `SymbolEditor`, and `UIDebugger` now have their `new()` code in `create()`
 

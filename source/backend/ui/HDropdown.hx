@@ -162,7 +162,7 @@ class HDropdown extends HSprite {
 
 	private static inline function addM(a:HSprite):HSprite {
 		members.push(a);
-		Main.instance.addToMainStage(a);
+		Main.instance.addChild(a);
 		return a;
 	}
 
