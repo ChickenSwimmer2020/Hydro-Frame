@@ -5,6 +5,9 @@
 
 ## 0.9.2 (OCD Update) 
 
+### V207 / Maki
+
+* The editor now compiles again
 * The version suffix has been replaced with git information
 
 ## 0.9.1 (OCD Trip) - By V207 / Maki
