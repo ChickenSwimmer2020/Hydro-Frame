@@ -16,13 +16,7 @@ class HDropdown extends HSprite {
 	public static var subDropdownKeys:Map<Array<Int>, String> = [];
 
 	// TODO: fix the backgrounds extending past the total ammount of buttons.
-	public static function openDropdownMenu(target:HSprite, ?isSub:Bool = false, options:Array<{
-		text:String,
-		?closeOnClick:Bool,
-		?keys:Array<Int>,
-		?disabled:Bool,
-		func:HButton->Void
-	}>, ?overWidth:Int) {
+	public static function openDropdownMenu(target:HSprite, ?isSub:Bool = false, options:Array<HDropdownOption>, ?overWidth:Int) {
 		if (dropdownOpen)
 			return;
 		var button = target;
@@ -39,30 +33,30 @@ class HDropdown extends HSprite {
 		for (t in options) {
 			var shouldCloseWhenClicked:Bool = t.closeOnClick ?? true;
 			var disabled = t.disabled ?? false;
-			var text = t.text;
 			if (t.keys != null)
-				dropdownKeys.set(t.keys, text);
+				dropdownKeys.set(t.keys, t.text);
 
-			if (text == 'seperator') {
-				var seperator:HSprite = new HSprite(targetPosition.x, targetPosition.y + increment);
-				seperator.makeGraphic(Math.floor(overWidth != null ? (overWidth / 2) : (button.width / 2)), Math.floor(button.height / 4),
-					HColor.MENUBAR_DROPDOWN_SEPERATOR);
-				dropdownButtons.push(seperator);
-				addM(seperator);
-				seperator.setAttribute("isDropdownObject", true);
-				seperator.setAttribute("closeOnClick", false);
-				increment += seperator.gHeight;
-			} else {
-				var func = t.func;
-				var button:HButton = new HButton(text,
-					new Rectangle(targetPosition.x, targetPosition.y + increment, overWidth ?? button.width, button.height), func);
-				dropdownButtons.push(button);
-				addM(button);
-				button.setAttribute("isDropdownObject", true);
-				button.setAttribute("closeOnClick", disabled ? false : shouldCloseWhenClicked);
-				button.disabled = disabled;
-				increment += button.gHeight;
+			switch (t.text) {
+				case 'seperator':
+					var seperator:HSprite = new HSprite(targetPosition.x, targetPosition.y + increment);
+					seperator.makeGraphic(Math.floor(overWidth != null ? (overWidth / 2) : (button.width / 2)), Math.floor(button.height / 4),
+						HColor.MENUBAR_DROPDOWN_SEPERATOR);
+					dropdownButtons.push(seperator);
+					addM(seperator);
+					seperator.setAttribute("isDropdownObject", true);
+					seperator.setAttribute("closeOnClick", false);
+					increment += seperator.gHeight;
+				default:
+					var button:HButton = new HButton(t.text,
+						new Rectangle(targetPosition.x, targetPosition.y + increment, overWidth ?? button.width, button.height), t.func);
+					dropdownButtons.push(button);
+					addM(button);
+					button.setAttribute("isDropdownObject", true);
+					button.setAttribute("closeOnClick", disabled ? false : shouldCloseWhenClicked);
+					button.disabled = disabled;
+					increment += button.gHeight;
 			}
+
 			ind++;
 		}
 
@@ -72,14 +66,7 @@ class HDropdown extends HSprite {
 		});
 	}
 
-	public static function openSubDropdownMenu(target:HSprite, options:Array<{
-		text:String,
-		?closeOnClick:Bool,
-		?closeFullDropdown:Bool,
-		?keys:Array<Int>,
-		?disabled:Bool,
-		func:HButton->Void
-	}>, ?overWidth:Int) {
+	public static function openSubDropdownMenu(target:HSprite, options:Array<HDropdownOption>, ?overWidth:Int) {
 		if (subDropdownOpen)
 			return;
 		var button = target;

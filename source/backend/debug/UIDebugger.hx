@@ -34,108 +34,11 @@ class UIDebugger extends HState {
 				size: new HPoint(100, 20),
 				onClick: (_) -> {
 					HDropdown.openDropdownMenu(_, [
-						{
-							text: "button",
-							closeOnClick: false,
-							keys: [],
-							disabled: false,
-							func: (_) -> {
-								trace("dropdown button");
-							}
-						},
-						{
-							text: "button(Close)",
-							closeOnClick: true,
-							keys: [],
-							disabled: false,
-							func: (_) -> {
-								trace("dropdown button (closeOnClick)");
-							}
-						},
-						{
-							text: "button(Disabled)",
-							closeOnClick: false,
-							keys: [],
-							disabled: true,
-							func: (_) -> {
-								trace("dropdown button (closeOnClick)");
-							}
-						},
-						{
-							text: "seperator",
-							closeOnClick: false,
-							keys: [],
-							disabled: true,
-							func: null
-						},
-						{
-							text: "Sub dropdown",
-							closeOnClick: false,
-							keys: [],
-							disabled: false,
-							func: (b) -> {
-								HDropdown.openSubDropdownMenu(b, [
-									{
-										text: "sub button",
-										closeOnClick: false,
-										keys: [],
-										disabled: false,
-										func: (_) -> {
-											trace("sub dropdown button");
-										}
-									},
-									{
-										text: "seperator",
-										closeOnClick: false,
-										keys: [],
-										disabled: true,
-										func: null
-									},
-									{
-										text: "sub button(Close)",
-										closeOnClick: true,
-										keys: [],
-										disabled: false,
-										func: (_) -> {
-											trace("sub dropdown button (closeOnClick)");
-										}
-									},
-									{
-										text: "seperator",
-										closeOnClick: false,
-										keys: [],
-										disabled: true,
-										func: null
-									},
-									{
-										text: "sub button(Disabled)",
-										closeOnClick: false,
-										keys: [],
-										disabled: true,
-										func: (_) -> {
-											trace("sub dropdown button (closeOnClick)");
-										}
-									},
-									{
-										text: "seperator",
-										closeOnClick: false,
-										keys: [],
-										disabled: true,
-										func: null
-									},
-									{
-										text: "sub button(Close full)",
-										closeOnClick: false,
-										closeFullDropdown: true,
-										keys: [],
-										disabled: false,
-										func: (_) -> {
-											trace("sub dropdown button (close full dropdown)");
-										}
-									},
-								]);
-							}
-						},
+						new HDropdownOption('button', null),
+						new HDropdownOption('button(Close)', null).set_closeOnClick(true),
+						new HDropdownOption('button(Disabled)', null).set_disabled(),
+						new HDropdownOption('seperator', null),
+						new HDropdownOption('Sub dropdown', onSubdropdown),
 					]);
 				}
 			},
@@ -145,5 +48,17 @@ class UIDebugger extends HState {
 		add(testingInput = new HTextInputBox(80, 20, 20, 500, null, "input test!", 12, (_:String) -> {
 			trace('Submitting a textbox with text: "$_"');
 		}));
+	}
+
+	function onSubdropdown(b:HButton) {
+		HDropdown.openSubDropdownMenu(b, [
+			new HDropdownOption('sub button', null).set_closeOnClick(false),
+			new HDropdownOption('seperator', null),
+			new HDropdownOption('sub button(Close)', null).set_closeOnClick(true),
+			new HDropdownOption('seperator', null),
+			new HDropdownOption('sub button(Disabled)', null).set_disabled(true),
+			new HDropdownOption('seperator', null),
+			new HDropdownOption('sub button(Close full)', null).set_closeFullDropdown(true),
+		]);
 	}
 }

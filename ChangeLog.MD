@@ -3,10 +3,12 @@
 
 # CHANGELOG
 
-## Incomplete
+## 0.9.2 (Minor OCD Trip)  - By V207 / Maki
 
-### V207 / Maki
+* `HDropdown` option creation is VERY optimized now
+  * The `HDropdown` option is now a class : `HDropdownOption`
 
+* [MACOS] `InitState` wallpaper background exists again
 * The editor now compiles again
 * The version suffix has been replaced with git information
 
