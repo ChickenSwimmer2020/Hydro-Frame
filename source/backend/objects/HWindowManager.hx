@@ -219,14 +219,18 @@ class HWindowManager {
 					projHeight = Std.parseInt(_);
 				}));
 			premade.addContent(new HText(detailsArea.x + 2, 62, detailsArea.width - 10, "Units", 12));
+			//
+			function onProjectTypeSelected(a:HButton, b:HButton)
+				a.label.text = b.label.text;
+			// 
 			projectMeasureDropdown = cast premade.addContent(new HButton("Pixels", new Rectangle(detailsArea.x + 2, 82, 120, 20), (_:HButton) -> {
 				HDropdown.openDropdownMenu(_, false, [
-					{text: "Inches", closeOnClick: true, func: (b:HButton) -> _.label.text = "Inches"},
-					{text: "Inches (Decimal)", closeOnClick: true, func: (b:HButton) -> _.label.text = "Inches (Decimal)"},
-					{text: "Points", closeOnClick: true, func: (b:HButton) -> _.label.text = "Points"},
-					{text: "Centimeters", closeOnClick: true, func: (b:HButton) -> _.label.text = "Centimeters"},
-					{text: "Millimeters", closeOnClick: true, func: (b:HButton) -> _.label.text = "Millimeters"},
-					{text: "Pixels", closeOnClick: true, func: (b:HButton) -> _.label.text = "Pixels"},
+					new HDropdownOption('Inches', b -> onProjectTypeSelected(_, b)).set_closeOnClick(true),
+					new HDropdownOption('Inches (Decimal)', b -> onProjectTypeSelected(_, b)).set_closeOnClick(true),
+					new HDropdownOption('Points', b -> onProjectTypeSelected(_, b)).set_closeOnClick(true),
+					new HDropdownOption('Centimeters', b -> onProjectTypeSelected(_, b)).set_closeOnClick(true),
+					new HDropdownOption('Millimeters', b -> onProjectTypeSelected(_, b)).set_closeOnClick(true),
+					new HDropdownOption('Pixels', b -> onProjectTypeSelected(_, b)).set_closeOnClick(true),
 				]);
 			}));
 			premade.addContent(new HText((detailsArea.x + 2) + (((detailsArea.width - 10) / 2) - 10).floor() + 15, 62, detailsArea.width - 10, "Frame Rate",
@@ -239,9 +243,9 @@ class HWindowManager {
 			premade.addContent(new HText(detailsArea.x + 2, 102, detailsArea.width - 10, "Platform Type", 12));
 			projectTypeDropdown = cast premade.addContent(new HButton("HScript 2.7", new Rectangle(detailsArea.x + 2, 122, 120, 20), (_:HButton) -> {
 				HDropdown.openDropdownMenu(_, false, [
-					{text: "HScript 2.7", closeOnClick: true, func: (b:HButton) -> _.label.text = "HScript 2.7"},
-					{text: "seperator", func: null},
-					{text: "HTML5", closeOnClick: true, func: (b:HButton) -> _.label.text = "HTML5"},
+					new HDropdownOption('HScript 2.7', b -> onProjectTypeSelected(_, b)).set_closeOnClick(true),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption('HTML5', b -> onProjectTypeSelected(_, b)).set_closeOnClick(true),
 				]);
 			}));
 			premade.addContent(new HButton("Create", new Rectangle(((detailsArea.x + detailsArea.width) - 82), height - 42, 80, 20),

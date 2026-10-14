@@ -251,6 +251,7 @@ class InitState extends HState {
 
 		var projectScroller:ScrollableArea = new ScrollableArea(Main.pWidth - 350, 35);
 		add(projectScroller);
+		
 		for (i in 0...15) {
 			var pBox:ProjectBox = new ProjectBox(0, 0 + ((75 + 15) * i));
 			pBox.loadData(i % 2 == 0 ? "TestFlashProject" : "TestHydro-FrameProjet", i % 2 == 0 ? "Flash" : "HFPF", "Yesterday");

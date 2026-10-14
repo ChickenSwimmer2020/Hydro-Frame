@@ -66,14 +66,7 @@ class HDropdown extends HSprite {
 		});
 	}
 
-	public static function openSubDropdownMenu(target:HSprite, options:Array<{
-		text:String,
-		?closeOnClick:Bool,
-		?closeFullDropdown:Bool,
-		?keys:Array<Int>,
-		?disabled:Bool,
-		func:HButton->Void
-	}>, ?overWidth:Int) {
+	public static function openSubDropdownMenu(target:HSprite, options:Array<HDropdownOption>, ?overWidth:Int) {
 		if (subDropdownOpen)
 			return;
 		var button = target;
