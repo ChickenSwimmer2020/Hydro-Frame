@@ -66,132 +66,76 @@ class InitState extends HState {
 			add(new HButton(Locale.get('title.presetButton$i'), new Rectangle(7 + ((82 * i) + (14 * i)), 40, 82, 140), present));
 
 		toolBar = new HMenuBar(TOP, [
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.File"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					HDropdown.openDropdownMenu(_, false, [
-						new HDropdownOption('${Locale.get("title.menuBar.File.New")}...', newProject).set_keys([Keyboard.CONTROL, Keyboard.N]),
-						new HDropdownOption(Locale.get("title.menuBar.File.Open"), null),
-						new HDropdownOption(Locale.get("title.menuBar.File.OpenRecent"), null).set_closeOnClick(),
-						new HDropdownOption(Locale.get("title.menuBar.File.Close"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.File.CloseAll"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.File.Save"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.File.SaveAs"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.File.SaveAsTemplate"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.File.Revert"), null).set_disabled(),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.File.Import"), null),
-						new HDropdownOption(Locale.get("title.menuBar.File.Export"), null),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.File.ConvertTo"), null),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.File.DistrobutionSettings"), null),
-						new HDropdownOption(Locale.get("title.menuBar.File.Distrobute"), null),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.File.HScriptSettings"), null),
-						#if sys
-						new HDropdownOption('seperator', null), new HDropdownOption(Locale.get("title.menuBar.File.Exit"), (butt:HButton) -> {
-							// TODO: check for open projects and prompt user to save before actually closing
-							Sys.exit(0);
+			new HButton(Locale.get("title.menuBar.File"), new Rectangle(0, 0, 50, 20), (_:HButton)->{
+				HDropdown.openDropdownMenu(_, false, [
+					new HDropdownOption('${Locale.get("title.menuBar.File.New")}...', newProject).set_keys([Keyboard.CONTROL, Keyboard.N]),
+					new HDropdownOption(Locale.get("title.menuBar.File.Open"), null),
+					new HDropdownOption(Locale.get("title.menuBar.File.OpenRecent"), null).set_closeOnClick(),
+					new HDropdownOption(Locale.get("title.menuBar.File.Close"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.File.CloseAll"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.File.Save"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.File.SaveAs"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.File.SaveAsTemplate"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.File.Revert"), null).set_disabled(),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.File.Import"), null),
+					new HDropdownOption(Locale.get("title.menuBar.File.Export"), null),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.File.ConvertTo"), null),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.File.DistrobutionSettings"), null),
+					new HDropdownOption(Locale.get("title.menuBar.File.Distrobute"), null),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.File.HScriptSettings"), null),
+					#if sys
+					new HDropdownOption('seperator', null), new HDropdownOption(Locale.get("title.menuBar.File.Exit"), (butt:HButton) -> {
+						// TODO: check for open projects and prompt user to save before actually closing
+						Sys.exit(0);
+					}),
+					#end
+				], 200);
+			}),
+			new HButton(Locale.get("title.menuBar.Edit"), new Rectangle(0, 0, 50, 20), (_:HButton)->{
+				HDropdown.openDropdownMenu(_, [
+					new HDropdownOption(Locale.get("title.menuBar.Edit.Undo"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.Redo"), null).set_disabled(),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.Cut"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.Copy"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.PasteCenter"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.PastePlace"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.Clear"), null).set_disabled(),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.Duplicate"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.SelectAll"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.DeselectAll"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.InvertSelection"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.FindandReplace"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.FindNext"), null).set_disabled(),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.TimeLine"), timelineShit),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.EditObjects"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.EditSelected"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.EditRig"), null).set_disabled(),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.Preferences"),
+						(butt:HButton) -> {
+							var returnEater:HWindow = Main.windowManager.makePrefabWindow("preferences"); // only has a variable because otherwise the compiler complains.
 						}),
-						#end
-					], 200);
-				}
-			},
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.Edit"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					HDropdown.openDropdownMenu(_, [
-						new HDropdownOption(Locale.get("title.menuBar.Edit.Undo"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.Redo"), null).set_disabled(),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.Cut"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.Copy"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.PasteCenter"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.PastePlace"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.Clear"), null).set_disabled(),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.Duplicate"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.SelectAll"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.DeselectAll"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.InvertSelection"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.FindandReplace"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.FindNext"), null).set_disabled(),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.TimeLine"), timelineShit),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.EditObjects"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.EditSelected"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.EditRig"), null).set_disabled(),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.Preferences"),
-							(butt:HButton) -> {
-								var returnEater:HWindow = Main.windowManager.makePrefabWindow("preferences"); // only has a variable because otherwise the compiler complains.
-							}),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.FontMapping"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Edit.KeyboardShortcuts"), null).set_disabled(),
-					], 200);
-				}
-			},
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.View"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					trace("View menu");
-				}
-			},
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.Insert"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					trace("Insert menu");
-				}
-			},
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.Modify"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					trace("Modify menu");
-				}
-			},
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.Text"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					trace("Text menu");
-				}
-			},
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.Commands"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					trace("Commands menu");
-				}
-			},
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.Control"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					trace("Controls menu");
-				}
-			},
+					new HDropdownOption(Locale.get("title.menuBar.Edit.FontMapping"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Edit.KeyboardShortcuts"), null).set_disabled(),
+				], 200);
+			}),
+
+			new HButton(Locale.get("title.menuBar.View"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("View Menu");}),
+			new HButton(Locale.get("title.menuBar.Insert"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Insert Menu");}),
+			new HButton(Locale.get("title.menuBar.Modify"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Modify Menu");}),
+			new HButton(Locale.get("title.menuBar.Text"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Text Menu");}),
+			new HButton(Locale.get("title.menuBar.Commands"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Commands Menu");}),
+			new HButton(Locale.get("title.menuBar.Control"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Control Menu");}),
 			#if debug // debug exclusive options, like the UI debugger system.
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.Debug"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					/*8*/
+				new HButton(Locale.get("title.menuBar.Debug"), new Rectangle(0, 0, 50, 20), (_:HButton)->{
 					HDropdown.openDropdownMenu(_, false, [
 						new HDropdownOption(Locale.get("title.menuBar.Debug.UIDebugger"), (butt:HButton) -> {
 							Main.StateSystem.switchState(UIDebugger);
@@ -200,39 +144,26 @@ class InitState extends HState {
 							Main.StateSystem.switchState(SymbolEditor);
 						}),
 					]);
-				}
-			},
+				}),
 			#end
 			#if sys
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.Window"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					trace("Window menu");
-				}
-			},
+				new HButton(Locale.get("title.menuBar.Window"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Window Menu");}),
 			#end
-			{
-				type: HBUTTON,
-				text: Locale.get("title.menuBar.Help"),
-				size: new HPoint(50, 20),
-				onClick: (_:HButton) -> {
-					HDropdown.openDropdownMenu(_, false, [
-						new HDropdownOption(Locale.get("title.menuBar.Help.Help"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Help.ReportBug"), null).set_disabled(),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.Help.OnlineTutorial"), null).set_disabled(),
-						new HDropdownOption(Locale.get("title.menuBar.Help.HandsOnTutorial"), null).set_disabled(),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.Help.ManagePlugins"), null).set_disabled(),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.Help.CheckforUpdates"), checkForUpdates),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption(Locale.get("title.menuBar.Help.AboutHydro-Frame"), about),
-					], 200);
-				}
-			}
+			new HButton(Locale.get("title.menuBar.Help"), new Rectangle(0, 0, 50, 20), (_:HButton)->{
+				HDropdown.openDropdownMenu(_, false, [
+					new HDropdownOption(Locale.get("title.menuBar.Help.Help"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Help.ReportBug"), null).set_disabled(),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.Help.OnlineTutorial"), null).set_disabled(),
+					new HDropdownOption(Locale.get("title.menuBar.Help.HandsOnTutorial"), null).set_disabled(),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.Help.ManagePlugins"), null).set_disabled(),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.Help.CheckforUpdates"), checkForUpdates),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption(Locale.get("title.menuBar.Help.AboutHydro-Frame"), about),
+				], 200);
+			}),
 		]);
 		add(toolBar);
 

@@ -1,7 +1,7 @@
 package backend.ui;
 
 // TODO: fix the graphics on this because they're being fucky.
-class HCheckbox extends HSprite {
+class HCheckbox extends HUISprite {
 	public var label:HText;
 	public var value(default, set):Bool = false;
 
@@ -17,7 +17,7 @@ class HCheckbox extends HSprite {
 	private final _oSIZE:Int = 2;
 	private var box:HSprite; // for holding the actual checkbox and such.
 
-	public function new(x:Float, y:Float, text:String, ?oC:(Bool) -> Void) {
+	public function new(x:Float, y:Float, text:String, ?oC:(Bool) -> Void, ?defaultState:Bool = false) {
 		super(x, y);
 		if (oC != null)
 			onClick = oC;
@@ -31,6 +31,7 @@ class HCheckbox extends HSprite {
 		addChild(box);
 		addChild(label);
 		reRenderMakeGraphic();
+		value=defaultState;
 	}
 
 	function onBoxClick(_:MouseEvent, ?set:Bool = true) {

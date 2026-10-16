@@ -3,6 +3,14 @@
 
 # CHANGELOG
 
+## 0.9.3 (Logging and HMenuBar changes) - By ChickenSwimmer2020
+
+* Added a joke into files cuz I can. (Procrastination.png)
+* `BUILDING.MD` has language defined in the code blocks.
+* Logging was improved
+* `HMenuBar`'s were re-worked to NOT need a giant dynamic.
+* Crash handler now properly calls `onClosing()` when you click the exit button.
+
 ## 0.9.2 (Minor OCD Trip)  - By V207 / Maki
 
 * `HDropdown` option creation is VERY optimized now

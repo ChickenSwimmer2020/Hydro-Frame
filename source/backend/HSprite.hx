@@ -205,7 +205,7 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 					idx = getChildIndex(clearObj);
 
 		_bitmap = new Bitmap(data, null, antialiasing);
-		addChildAt(_bitmap, idx);
+		addChildAt(_bitmap, idx==-1?0:idx);
 		bitmapIsChild = true;
 	}
 

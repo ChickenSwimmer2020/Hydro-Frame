@@ -7,7 +7,7 @@
 - Download Hydro-Frame's repo (skip if you already have)
 - Run:
 
-```
+```batch
 haxelib install hmm
 haxelib run hmm setup
 hmm install (This will take a bit)
@@ -15,19 +15,19 @@ hmm install (This will take a bit)
 
 - If you are on mac run
 
-```
+```batch
 haxelib run lime rebuild mac --always 
 ```
 
 - otherwise run
 
-```
+```batch
 haxelib run lime rebuild cpp --always
 ```
 
 - And now run
 
-```
+```batch
 haxelib run lime setup
 lime rebuild hxcpp -y
 lime rebuild tools -y

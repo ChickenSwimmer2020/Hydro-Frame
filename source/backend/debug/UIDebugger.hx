@@ -20,28 +20,16 @@ class UIDebugger extends HState {
 		}));
 
 		testingDropdown = new HMenuBar(TOP, [
-			{
-				type: HBUTTON,
-				text: "Button",
-				size: new HPoint(100, 20),
-				onClick: (_) -> {
-					trace("Normal button go brr!!");
-				}
-			},
-			{
-				type: HBUTTON,
-				text: "Dropdown",
-				size: new HPoint(100, 20),
-				onClick: (_) -> {
-					HDropdown.openDropdownMenu(_, [
-						new HDropdownOption('button', null),
-						new HDropdownOption('button(Close)', null).set_closeOnClick(true),
-						new HDropdownOption('button(Disabled)', null).set_disabled(),
-						new HDropdownOption('seperator', null),
-						new HDropdownOption('Sub dropdown', onSubdropdown),
-					]);
-				}
-			},
+			new HButton("Button", new Rectangle(0, 0, 100, 20), (_:HButton)->{trace("Normal button go brr!!");}, DEFAULT),
+			new HButton("Dropdown", new Rectangle(0, 0, 100, 20), (_:HButton)->{
+				HDropdown.openDropdownMenu(_, [
+					new HDropdownOption('button', null),
+					new HDropdownOption('button(Close)', null).set_closeOnClick(true),
+					new HDropdownOption('button(Disabled)', null).set_disabled(),
+					new HDropdownOption('seperator', null),
+					new HDropdownOption('Sub dropdown', onSubdropdown),
+				]);
+			}, DEFAULT)
 		]);
 		add(testingDropdown);
 

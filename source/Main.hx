@@ -397,6 +397,9 @@ class Main extends Sprite {
 		stage.removeEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 		stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		stage.removeEventListener(Event.RESIZE, onStageResize);
+		#if PRETTY_LOGGING
+		Logger.makeLogFile();
+		#end
 		WindowUtil.window.onClose.remove(onClosing);
 	}
 
@@ -405,8 +408,10 @@ class Main extends Sprite {
 		e.preventDefault();
 		if (showCrash(e.error, CallStack.callStack(), true) == 1)
 			StateSystem.resetState();
-		else
+		else{
+			onClosing(); //actually clean up before closing.
 			Sys.exit(1);
+		}
 	}
 
 	@:unwrapSafe

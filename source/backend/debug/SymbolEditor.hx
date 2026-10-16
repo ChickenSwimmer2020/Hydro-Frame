@@ -36,65 +36,14 @@ class SymbolEditor extends HState {
 
 		try {
 			menuBar = new HMenuBar(TOP, [
-				{
-					type: HCHECKBOX,
-					text: "snap to grid",
-					enabled: true,
-					onClick: (_:Bool) -> {
-						trace('Grid should show? $_');
-					}
-				},
-				{
-					type: HCHECKBOX,
-					text: "show grid",
-					enabled: true,
-					onClick: (_:Bool) -> {
-						trace('Snap to grid? $_');
-					}
-				},
-				{
-					type: HSPRITE,
-					/*seperator*/
-					text: "seperator0",
-					size: new HPoint(2, 20),
-					color: HColor.MENUBAR_DROPDOWN_BACKGROUND
-				},
-				{ // index 3
-					type: HTEXT,
-					text: "100%",
-					size: new HPoint(35, 0) // y isnt used. and if defaulting worked correctly this wouldnt be needed here. thanks haxe.
-				},
-				{
-					type: HBUTTON,
-					size: new HPoint(75, 20),
-					text: "Reset view",
-					onClick: (_:HButton) -> {
-						trace('Attempting to reset view...');
-					}
-				},
-				{
-					type: HSPRITE,
-					/*seperator*/
-					text: "seperator0",
-					size: new HPoint(2, 20),
-					color: HColor.MENUBAR_DROPDOWN_BACKGROUND
-				},
-				{
-					type: HBUTTON,
-					text: "Undo",
-					size: new HPoint(50, 20),
-					onClick: (_:HButton) -> {
-						trace('Attempting to undo last change...');
-					}
-				},
-				{
-					type: HBUTTON,
-					size: new HPoint(50, 20),
-					text: "Clear all",
-					onClick: (_:HButton) -> {
-						trace('Attempting to clear all changes...');
-					}
-				},
+				new HCheckbox(0, 0, "Snap to grid", (_:Bool)->{trace('Grid should snap? $_');}, true),
+				new HCheckbox(0, 0, "Show grid", (_:Bool)->{trace('Grid should show? $_');}, true),
+				new HUISprite(0, 0).makeGraphic(2, 20, HColor.MENUBAR_DROPDOWN_BACKGROUND),
+				new HUIText(0, 0, 35, "100%", 12),
+				new HButton("Reset view", new Rectangle(0, 0, 75, 20), (_:HButton)->{trace('Attempting to reset view...');}, DEFAULT),
+				new HUISprite(0, 0).makeGraphic(2, 20, HColor.MENUBAR_DROPDOWN_BACKGROUND),
+				new HButton("Undo", new Rectangle(0, 0, 50, 20), (_:HButton)->{trace('Attempting to undo last change...');}, DEFAULT),
+				new HButton("Clear all", new Rectangle(0, 0, 50, 20), (_:HButton)->{trace('Attempting to clear all changes...');}, DEFAULT)
 			]);
 			add(menuBar);
 
@@ -125,24 +74,9 @@ class SymbolEditor extends HState {
 			tabMenu.addGroup("third", testGroup3);
 
 			footerBar = new HMenuBar(BOTTOM, [
-				{
-					text: "click: MOVE · drag: LINE · right-drag: move point · wheel: zoom · middle-drag: pan",
-					type: HTEXT,
-					size: new HPoint(410, 0),
-					color: HColor.MENUBAR_DROPDOWN_BACKGROUND
-				},
-				{
-					type: HSPRITE,
-					text: "seperator_footer",
-					size: new HPoint(2, 20),
-					color: HColor.MENUBAR_DROPDOWN_BACKGROUND
-				},
-				{
-					text: "x: {X}, y: {Y}",
-					type: HTEXT,
-					size: new HPoint(420, 18),
-					color: HColor.MENUBAR_DROPDOWN_BACKGROUND
-				}
+				new HUIText(0, 0, 410, "click: MOVE · drag: LINE · right-drag: move point · wheel: zoom · middle-drag: pan", 12),
+				new HUISprite(0, 0).makeGraphic(2, 20, HColor.MENUBAR_DROPDOWN_BACKGROUND),
+				new HUIText(0, 0, 420, "x: {X}, y: {Y}", 12),
 			]);
 			add(footerBar);
 		} catch (e) {
@@ -167,7 +101,7 @@ class SymbolEditor extends HState {
 			(applySnap && snap) ? Math.round((sy - origin.y) / px) : (sy - origin.y) / px);
 
 	inline function updateZoomReadout()
-		cast(footerBar.objects[2].object, HText).text = '${Std.string(Math.round(px / 16 * 100))}%';
+		cast(footerBar.members[2], HUIText).text = '${Std.string(Math.round(px / 16 * 100))}%';
 
 	function hexToRgb(hex:String) {
 		final n:Int = Std.parseInt(hex.replace('#', '').replace("0x", "").replace("0X", ""));

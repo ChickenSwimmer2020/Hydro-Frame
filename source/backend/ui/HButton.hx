@@ -6,7 +6,7 @@ enum ButtonStyle {
 }
 
 // TODO: support double clicking.
-class HButton extends HSprite {
+class HButton extends HUISprite {
 	/**
 	 * label access
 	 * @since 0.7.0
