@@ -4,7 +4,7 @@ package backend.objects;
  * the starting state of everything, this is initilized in Main
  * @since 0.0.0
  */
-class StateSystemInit extends Sprite {
+class StateSystem extends Sprite {
 	/**
 	 * the currently loaded state, as a string!
 	 * (Used for debugging)

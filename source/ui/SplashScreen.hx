@@ -1,9 +1,14 @@
 package ui;
 
+import backend.plugins.PluginController;
 import engine.project.HProjectFactory;
+import haxe.Timer as HaxeTimer;
+import sys.thread.Mutex;
+import sys.thread.Thread;
 
 class SplashScreen extends HState {
 	var introSprite:HSprite;
+	var mutex:Mutex;
 
 	override function create() {
 		super.create();
@@ -49,7 +54,7 @@ class SplashScreen extends HState {
 			loadingIndicator.y = 360;
 			new HTween().tween(loadingIndicator, {alpha: 1, y: (Main.pHeight / 2 - loadingIndicator.height / 2)}, 1.25, AEase.expoOut);
 
-			HTimer.start(5, () -> { // placeholder for how long preloading will take.
+			function complete() {
 				HTimer.start(0.75, () -> {
 					final onWindowComplete:Void->Void = () -> {
 						Mouse.hide();
@@ -94,8 +99,51 @@ class SplashScreen extends HState {
 							}));
 					}
 				});
-			});
+			}
+
+			init(complete);
 		}, AEase.quadInOut);
+	}
+
+	public function init(complete:Void->Void) {
+		mutex = new Mutex();
+		Thread.create(() -> {
+			try {
+				// Plugin loading
+				trace('INFO:Loading plugins.');
+				var controller = Main.pluginController;
+
+				var t0 = HaxeTimer.stamp();
+				mutex.acquire();
+				for (plugin in PluginController.pluginList) {
+					if (plugin.endsWith('.uhfp'))
+						controller.registerPluginFolder(plugin, plugin.replace('.uhfp', ''), plugin.replace('.uhfp', '').toLowerCase() + '_unpacked');
+					else if (plugin.endsWith('.hfp'))
+						controller.registerPlugin(plugin, plugin.replace('.hfp', ''));
+				}
+				mutex.release();
+				var t1 = HaxeTimer.stamp();
+
+				mutex.acquire();
+				controller.onPluginInit();
+				mutex.release();
+				var t2 = HaxeTimer.stamp();
+
+				trace('INFO:Loading plugins took ${(t1 - t0) * 1000} ms.');
+
+				// We're complete. Wait a bit before completing, because plugins
+				// on their own happen to load too fast, and it transitions
+				// before the sound is finished playing.
+				trace('INFO:Initializing complete.');
+				HTimer.start(0.75, () -> {
+					Safe.onNextFrame(complete);
+				});
+			} catch (e) {
+				Safe.onNextFrame(() -> {
+					throw e;
+				});
+			}
+		});
 	}
 
 	function drawHaxe() {

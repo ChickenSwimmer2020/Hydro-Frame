@@ -1,26 +1,16 @@
 {
   "dependencies": [
     {
-      "name": "clipper",
-      "type": "haxelib",
-      "version": null
-    },
-    {
       "name": "format",
       "type": "haxelib",
       "version": null
     },
     {
-      "name": "hscript",
-      "type": "haxelib",
-      "version": "2.7.0"
-    },
-    {
       "name": "hxcpp",
       "type": "git",
       "dir": null,
-      "ref": "master",
-      "url": "https://github.com/CodenameCrew/cne-hxcpp"
+      "ref": "patched-hxscript",
+      "url": "https://github.com/MeguminBOT/hxcpp"
     },
     {
       "name": "hxcpp-debugger",
@@ -50,6 +40,13 @@
       "name": "svg",
       "type": "haxelib",
       "version": "1.2.0"
+    },
+    {
+      "name": "hxscript",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/MeguminBOT/hxscript"
     }
   ]
 }

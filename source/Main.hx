@@ -1,9 +1,11 @@
 package;
 
-import backend.macro.GitMacro;
 import backend.macro.DefineMacro;
+import backend.macro.GitMacro;
+import backend.plugins.*;
 import backend.plugins.Skin;
 import backend.utils.MethodUtil;
+import engine.scripts.*;
 import haxe.CallStack;
 import openfl.display3D.textures.TextureBase;
 import openfl.events.UncaughtErrorEvent;
@@ -54,14 +56,16 @@ class Main extends Sprite {
 
 		windowManager = new HWindowManager();
 
-		addChild(StateSystem = new StateSystemInit(null));
+		UPrefs.currentSkin = new Skin("Default"); // init the skinning system.
+
+		pluginController = new PluginController();
+
+		addChild(StateSystem = new StateSystem(null));
 		StateSystem.switchState(startingState);
 
 		createDebugDisplay();
 
 		Mouse.hide();
-
-		UPrefs.currentSkin = new Skin("Default"); // init the skinning system.
 	}
 
 	/**
@@ -152,7 +156,14 @@ class Main extends Sprite {
 	 * State system, controls the actual states of Hydro-Frame, this is actually a very important thing.
 	 * @since 0.0.0
 	 */
-	public static var StateSystem:StateSystemInit; // defaults to splashscreen since thats literally the only thing it does on init
+	public static var StateSystem:StateSystem; // defaults to splashscreen since thats literally the only thing it does on init
+
+	/**
+	 * The plugin controller, controls the plugins of Hydro-Frame.
+	 * 
+	 * @since 0.10.0
+	 */
+	public static var pluginController:PluginController;
 
 	/**
 	 * For checking when global keys are pressed.
@@ -408,8 +419,8 @@ class Main extends Sprite {
 		e.preventDefault();
 		if (showCrash(e.error, CallStack.callStack(), true) == 1)
 			StateSystem.resetState();
-		else{
-			onClosing(); //actually clean up before closing.
+		else {
+			onClosing(); // actually clean up before closing.
 			Sys.exit(1);
 		}
 	}
@@ -419,17 +430,18 @@ class Main extends Sprite {
 		var error:String = '$message\nPlease report this on the github: https://github.com/ChickenSwimmer2020/Hydro-Frame/issues\n\nCall Stack:\n';
 		@:privateAccess stack.asArray().reverse();
 
+		var callstack = '';
 		function pushStack(stackItem:StackItem) {
 			switch (stackItem) {
 				case Method(classname, method):
-					error += 'Called from ${(classname == null ? '<??' + '?>' : classname)}::$method ';
+					callstack += 'Called from ${(classname == null ? '<??' + '?>' : classname)}::$method ';
 				case FilePos(s, file, line, _):
 					switch (s) {
 						case null:
-							error += '$file line $line\n';
+							callstack += '$file line $line\n';
 						case Method(_, method):
 							var finalClass = file.replace('/', '.').replace('.hx', '');
-							error += '$finalClass line $line\n    ${MethodUtil.getSig(finalClass, method)}\n';
+							callstack += '$finalClass line $line\n    ${MethodUtil.getSig(finalClass, method)}\n';
 						default:
 							pushStack(s);
 					}
@@ -441,7 +453,18 @@ class Main extends Sprite {
 		for (stackItem in stack)
 			pushStack(stackItem);
 
-		trace('\n$error');
+		var lines = callstack.split('\n');
+		var sliced = lines.length > 40;
+		if (sliced)
+			lines = lines.slice(0, 40);
+
+		var realError = error;
+		realError += callstack;
+		error += lines.join('\n');
+		if (sliced)
+			error += '\n... (truncated)';
+
+		Sys.println('\n$realError');
 
 		var options = ['Exit', 'Retry', 'Continue'];
 

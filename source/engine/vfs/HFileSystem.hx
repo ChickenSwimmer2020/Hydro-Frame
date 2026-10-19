@@ -5,6 +5,7 @@ import haxe.io.Bytes;
 import haxe.io.BytesBuffer;
 import haxe.io.BytesInput;
 import haxe.io.BytesOutput;
+import haxe.io.Path;
 
 using StringTools;
 
@@ -55,7 +56,7 @@ class HFileSystem {
 		var fileName = pathInfo?.fileName;
 
 		if (parent == null) {
-			trace('Failed to navigate to target file path to read bytes at path "$filePath". Returning null.');
+			trace('ERROR:Failed to navigate to target file path to read bytes at path "$filePath". Returning null.');
 			return null;
 		}
 
@@ -66,7 +67,7 @@ class HFileSystem {
 		if (Std.isOfType(file, HFile))
 			return cast file;
 
-		trace('Found a folder instead for requested file at path "$filePath". Returning null.');
+		trace('ERROR:Found a folder instead for requested file at path "$filePath". Returning null.');
 		return null;
 	}
 
@@ -159,7 +160,7 @@ class HFileSystem {
 		var file = getFile(startFilePath);
 
 		if (file == null) {
-			trace('Failed to find file at path "$startFilePath" to copy it to path "$targetFilePath".');
+			trace('ERROR:Failed to find file at path "$startFilePath" to copy it to path "$targetFilePath".');
 			return false;
 		}
 
@@ -167,7 +168,7 @@ class HFileSystem {
 			return true;
 
 		if (!writeFile(targetFilePath, file.contents.sub(0, file.contents.length))) {
-			trace('Failed to navigate to target file path to copy file from path "$startFilePath" to path "$targetFilePath".');
+			trace('ERROR:Failed to navigate to target file path to copy file from path "$startFilePath" to path "$targetFilePath".');
 			return false;
 		}
 
@@ -204,7 +205,7 @@ class HFileSystem {
 	 */
 	public function makeDir(dirPath:String) {
 		if (walkFolders(splitPath(dirPath), true) == null)
-			trace('Folder already exists as a file, cannot create directory: ' + dirPath);
+			trace('ERROR:Folder already exists as a file, cannot create directory: ' + dirPath);
 	}
 
 	/**
@@ -224,12 +225,12 @@ class HFileSystem {
 		var dirName = pathInfo?.fileName;
 
 		if (parent == null || !parent.contents.exists(dirName)) {
-			trace('Failed to navigate to directory "$dirPath" to remove it. It does not exist.');
+			trace('ERROR:Failed to navigate to directory "$dirPath" to remove it. It does not exist.');
 			return;
 		}
 
 		if (!Std.isOfType(parent.contents.get(dirName), HFolder)) {
-			trace('Failed to remove directory "$dirPath". It is a file.');
+			trace('ERROR:Failed to remove directory "$dirPath". It is a file.');
 			return;
 		}
 
@@ -256,12 +257,12 @@ class HFileSystem {
 		var dirName = pathInfo?.fileName;
 
 		if (parent == null) {
-			trace('Failed to set directory "$dirPath": parent directory is not a folder.');
+			trace('ERROR:Failed to set directory "$dirPath": parent directory is not a folder.');
 			return;
 		}
 
 		if (Std.isOfType(parent.contents.get(dirName), HFile)) {
-			trace('Failed to set directory "$dirPath": a file already exists there.');
+			trace('ERROR:Failed to set directory "$dirPath": a file already exists there.');
 			return;
 		}
 
@@ -297,12 +298,12 @@ class HFileSystem {
 		var folder:HFolder = navigateDirectory(path, makeDirectory);
 
 		if (folder == null) {
-			trace('Failed to navigate to directory("$path") to create file "$fullPath".${(makeDirectory ? ' Failed to create file directories.' : ' It does not exist.')}');
+			trace('ERROR:Failed to navigate to directory("$path") to create file "$fullPath".${(makeDirectory ? ' Failed to create file directories.' : ' It does not exist.')}');
 			return null;
 		}
 
 		if (Std.isOfType(folder.contents.get(name), HFolder)) {
-			trace('Failed to create file "$fullPath". A folder already exists there.');
+			trace('ERROR:Failed to create file "$fullPath". A folder already exists there.');
 			return null;
 		}
 
@@ -323,12 +324,12 @@ class HFileSystem {
 		var fileName = pathInfo?.fileName;
 
 		if (parent == null || !parent.contents.exists(fileName)) {
-			trace('Failed to navigate to file "$path" to remove it. It does not exist.');
+			trace('ERROR:Failed to navigate to file "$path" to remove it. It does not exist.');
 			return;
 		}
 
 		if (!Std.isOfType(parent.contents.get(fileName), HFile)) {
-			trace('Failed to remove file "$path". It is a folder.');
+			trace('ERROR:Failed to remove file "$path". It is a folder.');
 			return;
 		}
 
@@ -349,12 +350,12 @@ class HFileSystem {
 		var fileName = pathInfo?.fileName;
 
 		if (parent == null) {
-			trace('Failed to set file "$path": parent file is not a folder.');
+			trace('ERROR:Failed to set file "$path": parent file is not a folder.');
 			return;
 		}
 
 		if (Std.isOfType(parent.contents.get(fileName), HFolder)) {
-			trace('Failed to set file "$path": a folder already exists there.');
+			trace('ERROR:Failed to set file "$path": a folder already exists there.');
 			return;
 		}
 
@@ -370,6 +371,31 @@ class HFileSystem {
 	 */
 	public function fileExists(filePath:String):Bool
 		return Std.isOfType(lookup(filePath), HFile);
+
+	/**
+	 * Imports a real directory from disk into the file system at the given path.
+	 * All files and subdirectories are copied in recursively.
+	 * 
+	 * @param folder The path on disk to read from.
+	 * @param vfsPath The path in this file system to write to.
+	 * @since 0.10.0
+	 */
+	public function importDirectory(folder:String, vfsPath:String) {
+		if (!FileSystem.exists(folder) || !FileSystem.isDirectory(folder)) {
+			trace('ERROR:Failed to import directory "$folder": it does not exist or is not a directory.');
+			return;
+		}
+
+		for (entry in FileSystem.readDirectory(folder)) {
+			var diskEntryPath = Path.join([folder, entry]);
+			var vfsEntryPath = Path.join([vfsPath, entry]);
+
+			if (FileSystem.isDirectory(diskEntryPath))
+				importDirectory(diskEntryPath, vfsEntryPath);
+			else
+				writeFile(vfsEntryPath, File.getBytes(diskEntryPath));
+		}
+	}
 
 	// ----------------- FILE SYSTEM SAVING/LOADING ----------------- //
 
@@ -476,7 +502,7 @@ class HFileSystem {
 		}
 
 		if (!Std.isOfType(root, HFolder)) {
-			trace('Root is a file, not a folder.');
+			trace('ERROR:Root is a file, not a folder.');
 			return null;
 		}
 
@@ -537,7 +563,7 @@ class HFileSystem {
 		var fileName = pathInfo?.fileName;
 
 		if (parent == null) {
-			trace('Failed to navigate to target file path to save bytes at path "$filePath".');
+			trace('ERROR:Failed to navigate to target file path to save bytes at path "$filePath".');
 			return false;
 		}
 
@@ -547,7 +573,7 @@ class HFileSystem {
 		else if (Std.isOfType(existing, HFile))
 			(cast existing : HFile).contents = bytes;
 		else {
-			trace('Found a folder instead for requested file at path "$filePath". Not saving.');
+			trace('ERROR:Found a folder instead for requested file at path "$filePath". Not saving.');
 			return false;
 		}
 

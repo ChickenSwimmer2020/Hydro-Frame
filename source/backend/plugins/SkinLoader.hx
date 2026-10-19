@@ -1,9 +1,9 @@
 package backend.plugins;
 
-import haxe.io.BytesOutput;
+import backend.plugins.Skin.SkinData;
 import haxe.io.BytesData;
 import haxe.io.BytesInput;
-import backend.plugins.Skin.SkinData;
+import haxe.io.BytesOutput;
 
 /**
  * Allows loading skin files.
@@ -68,6 +68,9 @@ class SkinLoader {
 but solar i dont know how binary works and this is me trying my best');
 		var bytes:BytesOutput = new BytesOutput();
 		bytes.bigEndian = false;
+
+		// It's not quite a 'magic number'. I'd treat it like a header. I actually used that in the VFS just to have a better
+		// chance at not loading completely corrupt scripts. - ZSolarDev
 		bytes.writeBytes(Bytes.ofString("HFSF"), 0, Bytes.ofString("HFSF").length); // magic number, for detecting skin corruption, i think.
 
 		bytes.writeInt8(Lambda.count(data.themes)); // the first 32 bytes are the themes count, since customs are allowed.

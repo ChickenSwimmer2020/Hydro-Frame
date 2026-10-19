@@ -4,13 +4,13 @@ import engine.project.data.*;
 import engine.utils.HProjectUtils;
 
 /**
- * A writer for Hydro-Frame project files(`.hpf`).
+ * A writer for Hydro-Frame project files(`.hfpf`).
  * 
  * @since 0.8.0
  */
 class HProjectFileWriter {
 	/**
-	 * Saves a Hydro-Frame project file(`.hpf`) from a raw VFS.
+	 * Saves a Hydro-Frame project file(`.hfpf`) from a raw VFS.
 	 * 
 	 * @param project The raw VFS.
 	 * @param path The path to save the Hydro-Frame project file to.
@@ -22,7 +22,7 @@ class HProjectFileWriter {
 	}
 
 	/**
-	 * Saves a Hydro-Frame project file(`.hpf`) from a Hydro-Frame project.
+	 * Saves a Hydro-Frame project file(`.hfpf`) from a Hydro-Frame project.
 	 * Calls `writeRaw()` under the hood.
 	 * 
 	 * @param project The Hydro-Frame project.
@@ -34,7 +34,7 @@ class HProjectFileWriter {
 		writeRaw(project.raw, path);
 
 	/**
-	 * Saves a Hydro-Frame project file(`.hpf`) from a Hydro-Frame project handler.
+	 * Saves a Hydro-Frame project file(`.hfpf`) from a Hydro-Frame project handler.
 	 * Calls `writeProject()` under the hood.
 	 * 
 	 * @param project The Hydro-Frame project.

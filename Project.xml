@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 
-    <set name="VERSION" value="0.9.2" />
+    <set name="VERSION" value="0.10.0" />
 
     <meta title="Hydro-Frame" />
     <meta description="An HAXE/OPENFL based animation software made to rival Adobe Animate" />
@@ -17,11 +17,12 @@
     <window width="1280" height="720" hardware="true" allow-high-dpi="true" fps="60"
         title="Hydro-Frame: Animation Suite" vsync="false" background="#000000" />
     <assets path="assets" />
+    <assets path="plugins" />
 
     <haxelib name="lime" version="git" />
     <haxelib name="openfl" version="git" />
     <haxelib name="svg" version="1.2.0" />
-    <haxelib name="hscript" version="2.7.0" />
+    <haxelib name="hxscript" version="git" />
 
     <haxedef name="HXCPP_DEBUGGER" /> <!--alright.
     thats it, im debugging this properly.-->
@@ -30,12 +31,17 @@
     <haxedef name="HXCPP_STACK_LINE" />
     <haxedef name="HXCPP_CHECK_POINTER" />
 
+    <haxedef name="scriptable" if="cpp||mac||linux" />
+    <haxedef name="hxscript_cppia" if="cpp||mac||linux" />
+
     <undefine name="openfl-disable-handle-error" />
     <define name="openfl_enable_handle_error" />
 
     <haxeflag name="--dce" value="full" unless="debug" />
 
     <haxeflag name="--macro" value="backend.macro.Stamper.run()" />
+    <haxeflag name="--macro" value="engine.macro.AbstractsMacro.generate()" />
+    <haxeflag name="--macro" value="engine.macro.BridgeMacro.generate()" />
 
     <icon path="assets/images/ICON512.png" size="512" />
     <icon path="assets/images/ICON256.png" size="256" />

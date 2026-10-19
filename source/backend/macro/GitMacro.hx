@@ -11,12 +11,12 @@ class GitMacro {
 		var process = new Process('git', ['rev-parse', 'HEAD']);
 
 		if (process.exitCode() != 0)
-			haxe.macro.Context.info(process.stderr.readAll().toString(), Context.currentPos());
+			Context.info(process.stderr.readAll().toString(), Context.currentPos());
 
 		var commitHashSplice:String = process.stdout.readLine().substr(0, 7);
 		process.close();
 
-		haxe.macro.Context.info('Git Commit: $commitHashSplice', Context.currentPos());
+		Context.info('Git Commit: $commitHashSplice', Context.currentPos());
 		return macro $v{commitHashSplice};
 	}
 
@@ -27,12 +27,12 @@ class GitMacro {
 		var process = new Process('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
 
 		if (process.exitCode() != 0)
-			haxe.macro.Context.info(process.stderr.readAll().toString(), Context.currentPos());
+			Context.info(process.stderr.readAll().toString(), Context.currentPos());
 
 		var branch:String = process.stdout.readLine();
 		process.close();
 
-		haxe.macro.Context.info('Git Branch: $branch', Context.currentPos());
+		Context.info('Git Branch: $branch', Context.currentPos());
 		return macro $v{branch};
 	}
 }

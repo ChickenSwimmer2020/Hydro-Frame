@@ -1,0 +1,52 @@
+package;
+
+import backend.plugins.data.PluginMetadata;
+import backend.plugins.Plugin;
+
+class TestPlugin extends Plugin {
+    public function new() {
+        super();
+        trace('New plugin! I am unpacked!');
+    }
+
+    override public function onPluginInit() {
+        trace('Unpacked plugin initialized!');
+        var total:Int = 0;
+        // so im lowkey too lazy to copy every single one i made so. only 0 1 and 2
+        for (i in 0...50) total += helper0(i) + helper1(i) + helper2(i);
+        trace('unpacked init total: $total');
+    }
+
+    // I'M REALLY TRYNA PUSH THE DAMN COMPILER!!!
+    function helper0(x:Int):Int { var r = x; for (i in 0...20) r = (r * 3 + i) % 97; return r; }
+    function helper1(x:Int):Int { var r = x + 1; for (i in 0...20) r = (r * 5 + i) % 101; return r; }
+    function helper2(x:Int):Int { var r = x + 2; for (i in 0...20) r = (r * 7 + i) % 103; return r; }
+    function helper3(x:Int):Int { var r = x + 3; for (i in 0...20) r = (r * 11 + i) % 107; return r; }
+    function helper4(x:Int):Int { var r = x + 4; for (i in 0...20) r = (r * 13 + i) % 109; return r; }
+    function helper5(x:Int):Int { var r = x + 5; for (i in 0...20) r = (r * 17 + i) % 113; return r; }
+    function helper6(x:Int):Int { var r = x + 6; for (i in 0...20) r = (r * 19 + i) % 127; return r; }
+    function helper7(x:Int):Int { var r = x + 7; for (i in 0...20) r = (r * 23 + i) % 131; return r; }
+    function helper8(x:Int):Int { var r = x + 8; for (i in 0...20) r = (r * 29 + i) % 137; return r; }
+    function helper9(x:Int):Int { var r = x + 9; for (i in 0...20) r = (r * 31 + i) % 139; return r; }
+    function helper10(x:Int):Int { var r = x + 10; for (i in 0...20) r = (r * 37 + i) % 149; return r; }
+    function helper11(x:Int):Int { var r = x + 11; for (i in 0...20) r = (r * 41 + i) % 151; return r; }
+    function helper12(x:Int):Int { var r = x + 12; for (i in 0...20) r = (r * 43 + i) % 157; return r; }
+    function helper13(x:Int):Int { var r = x + 13; for (i in 0...20) r = (r * 47 + i) % 163; return r; }
+    function helper14(x:Int):Int { var r = x + 14; for (i in 0...20) r = (r * 53 + i) % 167; return r; }
+    function helper15(x:Int):Int { var r = x + 15; for (i in 0...20) r = (r * 59 + i) % 173; return r; }
+    function helper16(x:Int):Int { var r = x + 16; for (i in 0...20) r = (r * 61 + i) % 179; return r; }
+    function helper17(x:Int):Int { var r = x + 17; for (i in 0...20) r = (r * 67 + i) % 181; return r; }
+    function helper18(x:Int):Int { var r = x + 18; for (i in 0...20) r = (r * 71 + i) % 191; return r; }
+    function helper19(x:Int):Int { var r = x + 19; for (i in 0...20) r = (r * 73 + i) % 193; return r; }
+    function helper20(x:Int):Int { var r = x + 20; for (i in 0...20) r = (r * 79 + i) % 197; return r; }
+    function helper21(x:Int):Int { var r = x + 21; for (i in 0...20) r = (r * 83 + i) % 199; return r; }
+    function helper22(x:Int):Int { var r = x + 22; for (i in 0...20) r = (r * 89 + i) % 211; return r; }
+    function helper23(x:Int):Int { var r = x + 23; for (i in 0...20) r = (r * 97 + i) % 223; return r; }
+    function helper24(x:Int):Int { var r = x + 24; for (i in 0...20) r = (r * 101 + i) % 227; return r; }
+    function helper25(x:Int):Int { var r = x + 25; for (i in 0...20) r = (r * 103 + i) % 229; return r; }
+    function helper26(x:Int):Int { var r = x + 26; for (i in 0...20) r = (r * 107 + i) % 233; return r; }
+    function helper27(x:Int):Int { var r = x + 27; for (i in 0...20) r = (r * 109 + i) % 239; return r; }
+    function helper28(x:Int):Int { var r = x + 28; for (i in 0...20) r = (r * 113 + i) % 241; return r; }
+    function helper29(x:Int):Int { var r = x + 29; for (i in 0...20) r = (r * 127 + i) % 251; return r; }
+    // NO 30TH ONE, JUST TO PISS YOU OFF. we are NOT ending on an even number. just ignore 0.
+}

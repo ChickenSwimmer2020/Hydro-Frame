@@ -5,9 +5,9 @@ package backend.objects;
  * @since 0.2.0
  */
 enum abstract HTextAlign(String) {
-	var LEFT;
-	var RIGHT;
-	var CENTER;
+	var LEFT = 'l';
+	var RIGHT = 'r';
+	var CENTER = 'c';
 
 	public static function toOpenflAlign(a:HTextAlign):TextFormatAlign {
 		switch (a) {

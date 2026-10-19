@@ -13,7 +13,7 @@ import backend.*;
 // objects
 import backend.objects.*;
 import backend.objects.HTween;
-import backend.objects.InitalState;
+import backend.objects.StateSystem;
 import backend.objects.HSound;
 import backend.objects.HWindowManager;
 // utils

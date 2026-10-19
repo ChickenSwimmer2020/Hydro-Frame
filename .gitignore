@@ -3,6 +3,7 @@
 dump/
 bin
 .vscode
+export_classes.info
 
 # PR stuff
 Unreleased.md

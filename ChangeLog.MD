@@ -3,6 +3,160 @@
 
 # CHANGELOG
 
+## 0.10.0 (Scripting and Plugins) - By ZSolarDev
+
+This is genuinely one of our biggest changelog entries so far. Also, our `hxcpp` fork was switched, `hxscript` was added, and `hscript` was removed. Read this for more info!
+
+### Scripting
+
+* Added `engine.scripts`. There is ***a lot*** to cover.
+  * Added `ScriptManager`. This is mainly how you load scripts/modules, and manage the environment they live in. (MANAGEMENT, NOT CONTROL. For control, see `ScriptedClassProxy`, `ScriptedInstanceProxy`, and `ScriptHelper`.)
+    * This handles loading modules from a folder, a VFS, or a string.
+    * If you're on a target with Cppia available (`hxcpp` native targets), you can enable `jit` (Just-In-Time Cppia compiling), or when loading modules, you can even compile them into Cppia, making them run faster. Just remember, compiling is not free. It takes up a little chunk of the frame it's run on, and that's just on a simple script.
+    * You can also hand in the Cppia for already compiled modules. When loading a module with compiling enabled and available, it will return the compiled Cppia within the output. You can reuse this for the same code if you'd like, nearly erasing compile times as it removes the need to compile.
+  * Added `ModuleResult`.
+    * When loading modules from `ScriptManager`, You'll get one or more `ModuleResult`s, which contain the resulting `Module`, its `path` (only available when loading from folader or VFS), and its `compileResult` (only available if compiling, which is only available on `hxcpp` native targets).
+  * Added `ModuleRule`.
+    * These are rules for loading modules, used when loading modules from a folder or a VFS in `ScriptManager`.
+    * For info on how to use it, check its docs.
+  * Added `ScriptHelper`.
+    * This is a helper class for dealing with the result of loaded `Module`s.
+    * When you load a module, you can see the list of types it declares. What I mean by types are any classes, typedefs, enums, etc. that it declares. `ScriptHelper` helps with specificially dealing with the classes it declares. Nothing else, because I haven't needed to deal with anything else quite yet.
+    * At the moment, `ScriptHelper` enables you to check if scripted classes extend either another scripted class or another native class. If you don't know which type of class you're looking for, just use the normal `ScriptHelper.descendsFrom()`.
+    * `ScriptHelper` also has a method to let you *proxy* a class. It returns a `ScriptedClassProxy`, which makes it easier to use scripted classes.
+  * Added `ScriptedClassProxy`.
+    * This is a proxy class for `ScriptedClass`.
+    * Makes it easier to use scripted classes. You can easily access any static fields, and make new instances via `proxy.__new()`.
+    * What I mean is that, with a `ScriptedClass`, if you have a static variable named `foo`, you would normally use `sClass.reflectGetField('foo');` or `sClass.reflectSetField('foo', value);`. With a `ScriptedClassProxy`, you can just use `proxy.foo;` or `proxy.foo = value;`.
+    * If you ever need to make an instance of the class, and there's a constructor, you can use `proxy.__new()`. It returns a `ScriptedInstanceProxy`, which makes it easier to use scripted instances.
+  * Added `ScriptedInstanceProxy`.
+    * This is a proxy class for `IScriptedInstance`.
+    * Makes it easier to use scripted instances. You can easily access any instance fields.
+    * Similar to `ScriptedClassProxy`, it removes the need for `reflectGetField()`. You can simply get and set fields with `instance.foo;` and `instance.foo = value;`.
+
+### Plugins
+
+* Added example packed and unpacked plugins.
+  * `plugins/`
+    * `TestPlugin.hfp` (packed plugin example).
+    * `TestPlugin.uhfp/` (unpacked plugin example).
+      * `source/` (source folder).
+        * `TestPlugin.mhx` (plugin main).
+
+* Added `backend.plugins` and `backend.plugins.data`. There is probably even ***more*** to cover here.
+* In words, my plugin system has packed plugins (a file, `.hfp`) and unpacked plugins (a folder `.uhfp`). Each plugin has a source folder, display name, and id, which is defined in `meta.json`. In it's source folder, there is a "plugin main" file, which is the entrypoint to the plugin. It must include a class which extends `Plugin`. This "plugin main" file must end in `.mhx`, and every other source file must end in `.hx`.
+* A packed plugin is more than just a container for the code. It also contains the *compiled* source code as well. When packing a plugin, it will be compiled. When loading a packed plugin, it will load the compiled source code and run that instead of interpreting it, for speed. Compiling a packed plugin is also optional, and can be skipped with a bool.
+  * Added `Plugin`. This is the base class for plugins. To interact with plugins, this is ***not*** what you'd interface with. I know that sounds odd, but I'll get into it below.
+  * Added `PluginController`. This is mainly the class you'd want to use when interfacing with my plugin system.
+    * `PluginController` can load an unpacked plugin with `registerPluginFromSource()`, or `registerPluginFolder()`. You can also load a packed plugin with `registerPluginFromFile()`, or  `registerPlugin()`.
+    * For loading plugins in under `plugins/`, you can get each plugin via `PluginController.pluginList`, which fetches the list in a getter. You can pass these raw names straight into `registerPluginFolder()` (if the raw name ends in `.uhfp`), or `registerPlugin()` (if the raw name ends in `.hfp`).
+    * To actually control plugins, you can call the functions that are in `Plugin`. Instead of actually running the code of a custom plugin though, it just goes through every plugin that's currently registered and calls their functions instead.
+    * The actual code and info of each plugin is stored in `PluginData`.
+  * Added `PluginData`. This is the data class for plugins.
+    * Remember when I said "[`Plugin`s are] ***not*** what you'd interface with"? That's because instead, you would interface with `PluginData`.
+    * In terms of info on the plugin, `PluginData` contains the plugin's `ScriptManager`, thr actual source code of the plugin (in the form of a list of `ModuleResult`s), and the plugin's `PluginMetadata`.
+    * To actually run code, `PluginData` stores the plugin's `ScriptedClassProxy`, `ScriptedInstanceProxy`, and `Plugin`. Technically since the `ScriptedInstanceProxy` already contains the `Plugin`, the `plugin` field is redundant. I only kept it so that it was easier to logically understand when interfacing with the `PluginData`.
+  * Added `PluginMetadata`. This is the metadata typdef for plugins, containing its display name, id, and source folder.
+  * Added `PluginLoader`. Under the hood, this is what `PluginController` depends on to load plugins. It allows you to load a plugin from a file, or a folder.
+  * Added `PluginPacker`. This is how you actually pack up a `.uhfp` folder into a `.hfp` file.
+    * You can pack a folder from path by using `packPluginFromFolder()`, or by name under `plugins/` by using `packPlugin()`. Both give you optional compiling.
+    * You also get to compile plugins yourself *without* packing them, simply by running `compilePlugin()` and passing in the folder to its source code. It returns `PluginCppiaData`.
+  * Added `PluginCppiaData`. This is the data typedef for compiled plugins.
+  * Added `PluginGlobalUse` and `PluginSkip`, for internal use with the modified script compiler.
+
+#### How loading compiled plugins works
+
+You don't have to read this if you aren't curious, but I figured I would add this here, because I found it to be an interesting dive into how scripts were compiled, and what Cppia really is.
+
+To start simple, Cppia is `hxcpp`s custom bytecode, for running code at *near-native speed*. Suprisingly, it's plain text, which you'll see made the process far simpler. The scripting library we're using, `hxscript`, includes a way to compile scripts into Cppia for much faster run times, and had many haxe features such as typedefs, classes, packages, enums, etc. Now at first, I was excited, because our plugins would not only feel like you're writing genuine source code instead of scripts, but it would also run faster than standard `hscript`. But compiling isn't quite instant.
+
+Sure, it technically didn't take *that* long, but I felt like recompiling every module in every plugin every time we load the program when we know the code is going to be the same was not a necessary price to pay for speed. My mind quickly went to the idea that I could compile every module once, save the result, and just feed the Cppia back into the compiler. But as far as I could tell, there were two issues.
+
+1. The compiler doesn't return the Cppia result.
+2. The compiler doesn't accept Cppia.
+
+But as stubborn as I was, I didn't give up there. Sure, it didn't have support, but I was going to find a way to make it work. I admit, my work was quite sloppy, but the cleanliness of my added code was honestly not my priority. I should clean it soon.
+
+I started by shadowing the Cppia compiler backend (`hxscript.cppia.Backend`), and the thing that uses it (`hxscript.compile.Compiler`). In `Compiler`, I made a `compileSingular()` method, which takes in only a single module, and optionally its Cppia. It also returns the compiler report, and the Cppia result of the compile when successful. In `Backend`, I made `batch()` return the first Cppia compile result, and `run()` return the result of `batch()`. For feeding in Cppia into `Backend`, I made run take an array of `{mod:Module, lRes:Result}` (`Result` containing the Cppia bytecode), and I made `batch()` take that parameter too. In `batch()`, if there is one item and `lRes` isn't null, it attempts to pass it into `load()`. In `load()`, I simply made it take an optional `cppiaData` parameter, and it loads it if it's null.
+
+To actually save all of this inside of a packed plugin, I created `PluginCppiaData`. This is basically a JSONifyable representation of the Cppia result, which is used to reconstruct the original `Result` at runtime for reloading the Cppia.
+
+And with that, you can retrieve and load compiled modules! It's a bit iffy, and I really could've done it a lot better now that I know how it works, but it functions regardless! Running this on a single test plugin has shown apparent speed increases. I have recorded *one* test without loading compiled Cppia, and *one* test with loading compiled Cppia, and there were quite large increases.
+Before I show the results, remember, these were singular tests that I've run on a whim, so take these numbers with a huge grain of salt.
+
+| Phase                        | Compiling  | Loading   | Loading is faster by | Speed multiplier |
+|------------------------------|------------|-----------|----------------------|------------------|
+| Time starting/compiling      | 156.679 ms | 32.945 ms | 79.0% faster         | 4.76x            |
+| Time running plugin `init()` | 90.789 ms  | 39.248 ms | 56.8% faster         | 2.31x            |
+| Combined total               | 247.468 ms | 72.193 ms | 70.8% faster         | 3.43x            |
+
+This seems to be much faster *at a glance*, so I'm going to keep it. I don't feel like extensively testing it.
+
+#### How the packed plugin format works
+
+I figured I might as well explain this too, in case anyone reading is curious.
+
+The packed plugin format at the moment is simply a VFS, formatted as such:
+
+* `_cppia.json` (optional)
+* `meta.json`
+* `SRC_FOLDER_NAME_HERE/`
+  * `*.mhx` (only one per plugin)
+  * misc source code here
+
+the `meta.json` is just a stringified `PluginMetadata`. The `_cppia.json` is a stringified array of `PluginCppiaData`. The `.mhx` is the main entrypoint for the plugin, and must extend `Plugin`. `SRC_FOLDER_NAME_HERE` is defined in `meta.json`. Everything else at the moment are files invisible to the plugin system.
+
+The unpacked plugin format is just a folder with all of that, but it does not support being bundled with compiled scripts, as it assumes it's in development, and the source may change. If you ever need to ship a build, you are supposed to package/compile it.
+
+Now that I think about it, packed plugins need to be able to access their assets. They can technically find themselves under `plugins/` and parse itself, but that would be annoying, and it would also have to differentiate if it were unpacked or not, in case that is variable for the developer. I need to unify these later.
+
+### Project.xml changes
+
+* Changed libraries.
+  * Removed `hscript`.
+  * Added `hxscript`.
+  * Switched `hxcpp` forks.
+    * This was because `hscript` had an issue with Cppia, and `hxscript` hit the issue. This needed to be fixed in a different fork of `hxcpp`, which we have switched to.
+* I have updated `hmm.json`, `BUILDING.MD`
+* Added `plugins` as an asset path instead of being created at runtime.
+* Defined `scriptable` in `Project.xml` if on cpp targets, for script compiling.
+* Defined `hxscript_cppia` in `Project.xml` if on cpp targets, for script compiling.
+* Added macro flags.
+  * Added `--macro engine.macro.AbstractsMacro.generate()`.
+  * Added `--macro engine.macro.BridgeMacro.generate()`.
+
+### Changes due to scripting/plugins
+
+* `SplashScreen` now preloads all plugins under `plugins/`.
+  * Added `onNextFrame()` to `Safe`, so that when preloading is complete, it doesn't interact with the application objects outside of the main thread when switching states on completion.
+* Adjusted `BitmapDataUtil` by shadowing it, because it tried to access method `set` on `Rectangle`, which didn't exist.
+  * I assume this was caused by some change that `hxscript` made to `openfl` that was incompatible with `cne-openfl`.
+* Added `importDirectory()` to `HFileSystem` to package plugins.
+* Added special plugin tagging for prints from a plugin in `Logger`.
+* Added `Compiler` under `hscript.compile`. To see why, look at the *"How loading compiled plugins works"* section above.
+* Added `Backend` under `hscript.compile`. To see why, look at the *"How loading compiled plugins works"* section above.
+
+### Macro changes due to scripting/plugins
+
+* Added `AbstractsMacro` to `engine.macro`.
+  * This macro was needed so that scripts can interact with abstracts at runtime before they are compiled into implementations.
+  * Made `HTextAlign`'s constants have default string values, so that they were compatible with `AbstractsMacro`.
+* Added `BridgeMacro` to `engine.macro`.
+  * Usually, to build the bridge for a native class between a script and that class, you'd need to extend it, have the extension implement `IScriptable`. Doing that for every single class is not ideal to do manually. This macro does it automatically for any class it can. If it fails to resolve the type for a class, it will print a warning, and the class will not be bridged. Right now, it only fails on two classes, so it isn't much of a concern.
+
+### Other changes
+
+* Renamed `.hpf` to `.hfpf` (Hydro-Frame Project File), for consistency with `.hfp` (Hydro-Frame Plugin), `.uhfp` (Unpacked Hydro-Frame Plugin), and `.hfs` (Hydro-Frame Skin).
+  * I would use `.hfp` (Hydro-Frame Project), but it's already taken by `.hfp` (Hydro-Frame Plugin).
+  * Skins are extensions of Hydro-Frame just like plugins, so I felt like extensions like skins and plugins shouldn't have *File* at the end, unlike projects.
+* Removed invalid result handling from `HProjectFileParser` and made it hard validate, so that errors are already handled by `HProjectUtils`.
+* Errors in `HFileSystem` are now printed as errors instead of being under other.
+* The crash handler now truncates stacks over 40 lines and prints the rest in console.
+* Re-formatted `InitState`
+* Renamed `InitialState`/`StateSystemInit` to be consistently `StateSystem`.
+* Removed inline imports in `GitMacro` (`haxe.macro.Context` -> `Context`). (Maki, please stop inlining `Context` imports!!)
+* Fixed some issues with tagging in `Logger`.
+
 ## 0.9.3 (Logging and HMenuBar changes) - By ChickenSwimmer2020
 
 * Added a joke into files cuz I can. (Procrastination.png)

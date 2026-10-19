@@ -16,7 +16,7 @@ class InitState extends HState {
 		super.create();
 		FileSystem.createDirectory("plugins");
 		FileSystem.createDirectory("plugins/skins");
-		SkinLoader.write("plugins/skins/default.hfsf", Skin.defaultThemes);
+		SkinLoader.write("plugins/skins/default.hfs", Skin.defaultThemes);
 
 		// overrides for normal application actions with keys.
 		Main.addKeyPressed("toggleFullscreenWithF11", Keyboard.F11, false, (_:KeyboardEvent) -> {
@@ -66,7 +66,7 @@ class InitState extends HState {
 			add(new HButton(Locale.get('title.presetButton$i'), new Rectangle(7 + ((82 * i) + (14 * i)), 40, 82, 140), present));
 
 		toolBar = new HMenuBar(TOP, [
-			new HButton(Locale.get("title.menuBar.File"), new Rectangle(0, 0, 50, 20), (_:HButton)->{
+			new HButton(Locale.get("title.menuBar.File"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
 				HDropdown.openDropdownMenu(_, false, [
 					new HDropdownOption('${Locale.get("title.menuBar.File.New")}...', newProject).set_keys([Keyboard.CONTROL, Keyboard.N]),
 					new HDropdownOption(Locale.get("title.menuBar.File.Open"), null),
@@ -95,7 +95,7 @@ class InitState extends HState {
 					#end
 				], 200);
 			}),
-			new HButton(Locale.get("title.menuBar.Edit"), new Rectangle(0, 0, 50, 20), (_:HButton)->{
+			new HButton(Locale.get("title.menuBar.Edit"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
 				HDropdown.openDropdownMenu(_, [
 					new HDropdownOption(Locale.get("title.menuBar.Edit.Undo"), null).set_disabled(),
 					new HDropdownOption(Locale.get("title.menuBar.Edit.Redo"), null).set_disabled(),
@@ -128,28 +128,42 @@ class InitState extends HState {
 				], 200);
 			}),
 
-			new HButton(Locale.get("title.menuBar.View"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("View Menu");}),
-			new HButton(Locale.get("title.menuBar.Insert"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Insert Menu");}),
-			new HButton(Locale.get("title.menuBar.Modify"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Modify Menu");}),
-			new HButton(Locale.get("title.menuBar.Text"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Text Menu");}),
-			new HButton(Locale.get("title.menuBar.Commands"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Commands Menu");}),
-			new HButton(Locale.get("title.menuBar.Control"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Control Menu");}),
+			new HButton(Locale.get("title.menuBar.View"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
+				trace("View Menu");
+			}),
+			new HButton(Locale.get("title.menuBar.Insert"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
+				trace("Insert Menu");
+			}),
+			new HButton(Locale.get("title.menuBar.Modify"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
+				trace("Modify Menu");
+			}),
+			new HButton(Locale.get("title.menuBar.Text"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
+				trace("Text Menu");
+			}),
+			new HButton(Locale.get("title.menuBar.Commands"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
+				trace("Commands Menu");
+			}),
+			new HButton(Locale.get("title.menuBar.Control"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
+				trace("Control Menu");
+			}),
 			#if debug // debug exclusive options, like the UI debugger system.
-				new HButton(Locale.get("title.menuBar.Debug"), new Rectangle(0, 0, 50, 20), (_:HButton)->{
-					HDropdown.openDropdownMenu(_, false, [
-						new HDropdownOption(Locale.get("title.menuBar.Debug.UIDebugger"), (butt:HButton) -> {
-							Main.StateSystem.switchState(UIDebugger);
-						}),
-						new HDropdownOption(Locale.get("title.menuBar.Debug.SymbolEditor"), (butt:HButton) -> {
-							Main.StateSystem.switchState(SymbolEditor);
-						}),
-					]);
-				}),
+			new HButton(Locale.get("title.menuBar.Debug"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
+				HDropdown.openDropdownMenu(_, false, [
+					new HDropdownOption(Locale.get("title.menuBar.Debug.UIDebugger"), (butt:HButton) -> {
+						Main.StateSystem.switchState(UIDebugger);
+					}),
+					new HDropdownOption(Locale.get("title.menuBar.Debug.SymbolEditor"), (butt:HButton) -> {
+						Main.StateSystem.switchState(SymbolEditor);
+					}),
+				]);
+			}),
 			#end
 			#if sys
-				new HButton(Locale.get("title.menuBar.Window"), new Rectangle(0, 0, 50, 20), (_:HButton)->{trace("Window Menu");}),
+			new HButton(Locale.get("title.menuBar.Window"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
+				trace("Window Menu");
+			}),
 			#end
-			new HButton(Locale.get("title.menuBar.Help"), new Rectangle(0, 0, 50, 20), (_:HButton)->{
+			new HButton(Locale.get("title.menuBar.Help"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
 				HDropdown.openDropdownMenu(_, false, [
 					new HDropdownOption(Locale.get("title.menuBar.Help.Help"), null).set_disabled(),
 					new HDropdownOption(Locale.get("title.menuBar.Help.ReportBug"), null).set_disabled(),
@@ -182,7 +196,7 @@ class InitState extends HState {
 
 		var projectScroller:ScrollableArea = new ScrollableArea(Main.pWidth - 350, 35);
 		add(projectScroller);
-		
+
 		for (i in 0...15) {
 			var pBox:ProjectBox = new ProjectBox(0, 0 + ((75 + 15) * i));
 			pBox.loadData(i % 2 == 0 ? "TestFlashProject" : "TestHydro-FrameProjet", i % 2 == 0 ? "Flash" : "HFPF", "Yesterday");

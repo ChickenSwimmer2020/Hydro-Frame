@@ -4,7 +4,7 @@ import engine.project.data.*;
 import engine.utils.HProjectUtils;
 
 /**
- * A parser for Hydro-Frame project files(`.hpf`).
+ * A parser for Hydro-Frame project files(`.hfpf`).
  * 
  * @since 0.8.0
  */
@@ -27,18 +27,11 @@ class HProjectFileParser {
 	 * @since 0.8.0
 	 */
 	public static function wrap(raw:HRawProjectFile):HProject {
-		var validationResult = HProjectUtils.validateRaw(raw);
-		switch (validationResult) {
-			case NO_META:
-				throw 'No metadata found in this Hydro-Frame project file VFS.';
-			case NULL_PROJECT:
-				throw 'This Hydro-Frame project file is null.';
-			default:
-				return({
-					meta: Json.parse(raw.getContent('meta.json')),
-					raw: raw
-				} : HProject);
-		}
+		var validationResult = HProjectUtils.validateRaw(raw, true);
+		return({
+			meta: Json.parse(raw.getContent('meta.json')),
+			raw: raw
+		} : HProject);
 	}
 
 	/**

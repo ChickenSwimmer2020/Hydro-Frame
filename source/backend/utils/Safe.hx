@@ -1,7 +1,7 @@
 package backend.utils;
 
 @:dox(hide) @:noCompletion class Safe {
-	@:dox(hide) @:noCompletion public static function run(fn:Void->Void, ?label:String):Void {
+	@:dox(hide) @:noCompletion public static function run(fn:Void->Void, ?label:String) {
 		while (true) {
 			try {
 				fn();
@@ -36,5 +36,23 @@ package backend.utils;
 				}
 			}
 		}
+	}
+
+	/**
+	 * Runs the given function on the next frame on the main thread.
+	 * Use this when you want to run code on the main thread when executing
+	 * on another thread.
+	 * 
+	 * @param fn The function to run on the next frame.
+	 * @since 0.10.0
+	 */
+	public static function onNextFrame(fn:Void->Void) {
+		var listener:Event->Void = null;
+		var stage = Main.instance.stage;
+		listener = (e) -> {
+			stage.removeEventListener(Event.ENTER_FRAME, listener);
+			fn();
+		};
+		stage.addEventListener(Event.ENTER_FRAME, listener);
 	}
 }

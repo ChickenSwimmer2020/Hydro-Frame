@@ -1,25 +1,27 @@
 package backend.plugins;
 
-/**
- * Use this to actually call stuff on plugins
- * @since 0.8.6
- */
-class PluginController {
-	public function new() {}
-
-	/**
-	 * Call a function on plugins
-	 * @param func String the function to run
-	 * @param args Array<Dynamic> the arguments to pass to the function. optional
-	 * @since 0.8.6
-	 */
-	public function callOnPlugins(func:String, ?args:Array<Dynamic>) {}
-}
+import backend.plugins.data.PluginMetadata;
 
 /**
- * Wrapper class, used for actually calling stuff from a plugin file.
+ * A `Plugin` for Hydro-Frame. Meant to be extended by scripts.
+ * 
  * @since 0.8.6
  */
 class Plugin {
+	/**
+	 * Constructs a new `Plugin`.
+	 * It is not recommended to use this constructor. You should instead
+	 * use a `PluginController`, or just load one directly with `PluginLoader`.
+	 * If you use this constructor, this `Plugin` will be comeletely blank.
+	 * 
+	 * @since 0.8.6
+	 */
 	public function new() {}
+
+	/**
+	 * A function to run when this plugin should be loaded.
+	 * 
+	 * @since 0.10.0
+	 */
+	public function onPluginInit() {}
 }
