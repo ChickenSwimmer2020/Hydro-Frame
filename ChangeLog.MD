@@ -5,6 +5,25 @@
 
 ## 0.10.1 (Colors, cleanup, ) - By ChickenSwimmer2020
 
+* Parsing support for color palettes
+* * ACT
+* * GPL
+* * HEX
+* * PAL (JASC-PAL && RIFF)
+* Vectors was updated
+* List of features we need to add eventually
+* HMM doesnt pull HXScript wrong anymore.
+* `format` is actually used now
+* HBasic. finally
+* all instances of cursing (to my knowledge) have been removed
+* HAnimatableObject (Shell)
+* HEditorGizmo (also shell)
+* ATabStack was FINALLY Renamed to HTabStack
+* DrawUtil.drawOutline.
+* FileBrowser can be opened by InitState.
+* Music fade on window focus lost
+* Cleanup.PY Finds and tells you about curse words.
+
 ## 0.10.0 (Scripting and Plugins) - By ZSolarDev
 
 This is genuinely one of our biggest changelog entries so far. Also, our `hxcpp` fork was switched, `hxscript` was added, and `hscript` was removed. Read this for more info!
