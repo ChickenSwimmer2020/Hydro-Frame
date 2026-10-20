@@ -9,7 +9,7 @@ class HSoundManager {
 	 * for looping music
 	 * @since 0.2.0
 	 */
-	public static var music:Null<HSound>; // TODO: make fade in/out based on if the window is focused or not.
+	public static var music:Null<HSound>;
 
 	/**
 	 * play looping music 
@@ -122,7 +122,7 @@ class HSound implements IDestroyable {
 	public var loopTime:Float = 0; // in MS
 	public var endTime:Null<Float> = null;
 
-	// actual openfl shit that is important.
+	// actual openfl stuff that is important.
 	var _sound:Null<Sound> = null;
 	var _channel:SoundChannel;
 	var _transform:SoundTransform;

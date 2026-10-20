@@ -4,7 +4,7 @@ package backend.objects;
  * the starting state of everything, this is initilized in Main
  * @since 0.0.0
  */
-class StateSystem extends Sprite {
+class StateSystem extends HBasic {
 	/**
 	 * the currently loaded state, as a string!
 	 * (Used for debugging)
@@ -31,7 +31,7 @@ class StateSystem extends Sprite {
 	 * @since 0.0.0
 	 */
 	public function new(?initState:Null<Class<HState>>, ?args:Array<Dynamic>) {
-		super();
+		super(0, 0);
 		state = initState == null ? new HState() : switchState(initState, args);
 	}
 

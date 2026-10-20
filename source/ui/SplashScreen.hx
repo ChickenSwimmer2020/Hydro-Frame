@@ -32,7 +32,7 @@ class SplashScreen extends HState {
 	}
 
 	public function beginBetterIntro() {
-		var properSprite:HSprite = new HSprite(-640 / 2, -360 / 2, 'assets/images/splash/art.png');
+		var properSprite:HSprite = new HSprite(0, 0, 'assets/images/splash/art.png');
 		properSprite.alpha = 0;
 		add(properSprite);
 

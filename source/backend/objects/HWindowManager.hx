@@ -104,7 +104,7 @@ class HWindowManager {
 				});
 				charAnimGroup.add(button);
 			}
-			tabGroup.addGroup("Character Animation", charAnimGroup); // we dont use locales yet, fuck you copilot.
+			tabGroup.addGroup("Character Animation", charAnimGroup);
 			var socialGroup:HGroup<HButton> = new HGroup(0, 0);
 			for (i in 0...12) {
 				final names:Array<String> = [
@@ -257,8 +257,8 @@ class HWindowManager {
 			final height:Int = (775 / 2).floor();
 			var premade:HWindow = new HWindow(Locale.get("prefsWindow.title"), Main.pWidth / 2 - width / 2, Main.pHeight / 2 - height / 2, width, height,
 				false, false);
-			var tabGroup:ATabStack = new ATabStack(0, 0, new HPoint(width, height));
-			tabGroup.addGroup("General", new HGroup(0, 0)); // we dont use locales yet, fuck you copilot.
+			var tabGroup:HTabStack = new HTabStack(0, 0, new HPoint(width, height));
+			tabGroup.addGroup("General", new HGroup(0, 0));
 			tabGroup.addGroup("Code Editor", new HGroup(0, 0));
 			tabGroup.addGroup("Scripter", new HGroup(0, 0));
 			tabGroup.addGroup("Compiler", new HGroup(0, 0));

@@ -6,7 +6,7 @@ package backend.objects;
  */
 class HTimer {
 	/**
-	 * easily start a new timer, much like how Flixel does it. because timers in openfl are FUCKING. STUPID.
+	 * easily start a new timer, much like how Flixel does it. because timers in openfl are REALLY. STUPID.
 	 * @param time how long to wait
 	 * @param onComplete what to do when done.
 	 * @since 0.0.0

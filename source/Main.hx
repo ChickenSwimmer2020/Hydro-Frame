@@ -1,5 +1,7 @@
 package;
 
+import backend.palette.HPalette;
+import backend.macro.GitMacro;
 import backend.macro.DefineMacro;
 import backend.macro.GitMacro;
 import backend.plugins.*;
@@ -50,6 +52,9 @@ class Main extends Sprite {
 		initStage();
 
 		WindowUtil.window.onClose.add(onClosing);
+
+		WindowUtil.window.onFocusOut.add(onFocusLost); //these are inversed because APPARENTLY they get called in reverse??? its so weird istg.
+		WindowUtil.window.onFocusIn.add(onFocusGained);
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrashing);
 
 		WindowUtil.setTitle('${WindowUtil.window_title} [ ${Application.current.meta.get("version")}${#if GIT_INFO ' (${GitMacro.gitBranch()}/${GitMacro.gitHash()})' #else '' #end} ]');
@@ -201,6 +206,25 @@ class Main extends Sprite {
 		return false;
 	}
 
+	
+	var ducked:Bool = false;
+	var lastVolume:Float = 1.0;
+	function onFocusLost() {
+		if(ducked)return; //ignore unless onFocusGained happened
+		if(HSoundManager.music != null && HSoundManager.music.playing) {
+			lastVolume = HSoundManager.music.volume;
+			HSoundManager.music.volume = lastVolume*0.5;
+			ducked=true;
+		}
+	}
+	function onFocusGained() {
+		if(!ducked) return; //ignore unless onFocusLost happened
+		if(HSoundManager.music != null && HSoundManager.music.playing) {
+			HSoundManager.music.volume = lastVolume;
+			ducked=false;
+		}
+	}
+
 	/**
 	 * Used with the listener system for checking when a key is pressed and doing an associated action
 	 * @param e 
@@ -268,7 +292,6 @@ class Main extends Sprite {
 					HDropdown.closeDropdownMenu(); // force close any open instance.
 				continue;
 			}
-
 			var targetKeys:Array<Bool> = [];
 			var allKeys:Array<Int> = keys;
 
@@ -365,7 +388,7 @@ class Main extends Sprite {
 	}
 
 	/**
-	 * OPENFL's actual scale mode for Stage is ASS AF. so we're gonna do it properly.
+	 * OPENFL's actual scale mode for Stage is STUPID. so we're gonna do it properly.
 	 * 
 	 * Resizes the window, but also the stage properly, its based on the way that flixel sizes FlxGame.
 	 * @param _ Event, called by underlying Lime Layers
@@ -411,6 +434,8 @@ class Main extends Sprite {
 		#if PRETTY_LOGGING
 		Logger.makeLogFile();
 		#end
+		WindowUtil.window.onFocusOut.remove(onFocusLost);
+		WindowUtil.window.onFocusIn.remove(onFocusGained);   
 		WindowUtil.window.onClose.remove(onClosing);
 	}
 
@@ -428,7 +453,7 @@ class Main extends Sprite {
 	@:unwrapSafe
 	public static function showCrash(message:String, stack:CallStack, isFatal:Bool = false):Int {
 		var error:String = '$message\nPlease report this on the github: https://github.com/ChickenSwimmer2020/Hydro-Frame/issues\n\nCall Stack:\n';
-		@:privateAccess stack.asArray().reverse();
+		@:privateAccess stack.asArray();
 
 		var callstack = '';
 		function pushStack(stackItem:StackItem) {

@@ -78,7 +78,8 @@ class HTabMenu extends HSprite {
 		var w = targetWidth / order.length;
 		for (i in 0...order.length) {
 			var button = buttons.get(order[i]);
-			button.width = w; // set width first
+			var lastWidth:Float = button.width;
+			button.setScale(new HPoint(w/lastWidth, 1)); //resize the button without squashing or stretching text.
 			button.x = i * w; // then position
 		}
 	}

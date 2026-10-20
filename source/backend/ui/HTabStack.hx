@@ -1,6 +1,6 @@
 package backend.ui;
 
-class ATabStack extends HSprite {
+class HTabStack extends HSprite {
 	var order:Array<String> = []; // for positioning fixes
 	var targetWidth:Float = 0;
 

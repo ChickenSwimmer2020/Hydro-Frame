@@ -8,10 +8,9 @@ class ScrollableArea extends HGroup<HSprite> {
 	public function new(x:Float, y:Float) {
 		super(x, y);
 		Lib.current.stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseScroll);
-		addEventListener(Event.ENTER_FRAME, onEnterFrame);
 	}
 
-	public function onEnterFrame(e:Event) {
+	override public function onEnterFrame(e:Event) {
 		target = HMath.lerp(target, index, 0.1);
 		scrollRect = new Rectangle(0, 0 + target, width, height);
 	}
@@ -21,7 +20,7 @@ class ScrollableArea extends HGroup<HSprite> {
 			if (containsMouse()) {
 				final delta:Int = (e.delta * 40);
 				if (UPrefs.inverseScrollDirection.value)
-					index += delta; // delta is fucky on html.
+					index += delta;
 				else
 					index -= delta;
 				if (index < 0)

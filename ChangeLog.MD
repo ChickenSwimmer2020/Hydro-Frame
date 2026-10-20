@@ -3,6 +3,8 @@
 
 # CHANGELOG
 
+## 0.10.1 (Colors, cleanup, ) - By ChickenSwimmer2020
+
 ## 0.10.0 (Scripting and Plugins) - By ZSolarDev
 
 This is genuinely one of our biggest changelog entries so far. Also, our `hxcpp` fork was switched, `hxscript` was added, and `hscript` was removed. Read this for more info!
@@ -258,7 +260,7 @@ Now that I think about it, packed plugins need to be able to access their assets
 * `SplashScreen` now uses `WindowUtil.resizeWindow` instead of manual calls
 * buncha changes on Main
 * `InitState`'s call to enable the F11 fullscreen system now uses `WindowUtil`
-* `Import` was optimized (holy shit thanks maki)
+* `Import` was optimized (holy, thanks maki)
 * Test .svg sprites (stolen from scratch lol)
 * `Project.xml` was rewritten/reformatted
 * `gitignore` now ignores files titled `Unreleased.md`
@@ -349,7 +351,7 @@ Now that I think about it, packed plugins need to be able to access their assets
 * Renamed `reRender()` to `reRenderMakeGraphic()`. It adds nuance to the name and comment, as it only worked as intended when the sprite was made with `makeGraphic()`. This re-creates the `Bitmap`, and does not touch `clearObjects`. It does not put the `Bitmap` on top. For that, use `reRender()`.
 * Added `reRender()`, which only re-renders the `Bitmap` and puts it on top of the highest child in `clearObjects`. Does not touch `clearObjects`, and it doesn't re-create the `Bitmap`.
 
-## 0.8.1 (The fucky hotfix!) -- Build 1
+## 0.8.1 (The messy hotfix!) -- Build 1
 
 * `PULL_REQUEST_TEMPLATE.MD` was reformated/updated.
 * `AVOIDS.MD` was removed.
@@ -357,12 +359,12 @@ Now that I think about it, packed plugins need to be able to access their assets
 * `LICENSE`->`LICENSE.MD` (so it actually shows on the github)
 * `README.MD` was updated to be *hopefully* more legally protective
 
-## 0.8.1 (The fucky hotfix!)
+## 0.8.1 (The messy hotfix!)
 
 * Sadly removed the ability to compile to HTML5, due to cne-lime problems. :/ (this angers me.)
 * Reformated the new changelog entries because ZSolarDev messed it up.
 * Fixed a missing step that prevented lime from compiling.
-* This is a REALLY fucky build
+* This is a REALLY annoying build
 
 ## 0.8.0 (Project format(.hfp), Virtual File System, Crash handling, and more.) - By ZSolarDev
 
@@ -465,7 +467,7 @@ Now that I think about it, packed plugins need to be able to access their assets
 * New premade system for `HMath`
 * `HButton` has click sounds now.
 * `HColorPicker` got slightly updated
-* New Class! `ATabStack` its literally just `HTabMenu` but vertical.
+* New Class! `HTabStack` its literally just `HTabMenu` but vertical.
 * `HTextInputBox` is ***somewhat*** functional now
 * `UPrefs` is now functional on `HTML5`
 * `HColor` now has `.toString`
@@ -478,7 +480,7 @@ Now that I think about it, packed plugins need to be able to access their assets
 
 * Added popup for asking how the user wants to be referred to on first launch.
 * Added a lot of new language keys to the locale system
-* `HDropdown` was slightly fixed, backgrounds are still fucky.
+* `HDropdown` was slightly fixed, backgrounds are still broken.
 * `UPrefs` can actually read maps properly now.
 * `InitState` edit dropdown implementation
 * New popup on Splash screen for first launch to ask what you wanna be referred to.

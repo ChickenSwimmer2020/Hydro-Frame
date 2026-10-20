@@ -66,6 +66,11 @@ class HDropdown extends HSprite {
 		});
 	}
 
+	//public function openAtCursor():HDropdown {
+	//	setPosition();
+	//	return this;
+	//}
+
 	public static function openSubDropdownMenu(target:HSprite, options:Array<HDropdownOption>, ?overWidth:Int) {
 		if (subDropdownOpen)
 			return;

@@ -2,11 +2,11 @@ package backend.macro;
 
 import haxe.macro.Context;
 import sys.io.Process;
+import backend.debug.logging.Logger;
 
 class GitMacro {
 	public static macro function gitHash() {
-		if (Context.defined('display'))
-			return macro '';
+		if (Context.defined('display')) return macro '';
 
 		var process = new Process('git', ['rev-parse', 'HEAD']);
 
@@ -16,13 +16,12 @@ class GitMacro {
 		var commitHashSplice:String = process.stdout.readLine().substr(0, 7);
 		process.close();
 
-		Context.info('Git Commit: $commitHashSplice', Context.currentPos());
+		Logger.log('MACRO: Your building Hydro-Frame:${gitBranchStore}($commitHashSplice)!');
 		return macro $v{commitHashSplice};
 	}
-
+	public static var gitBranchStore:String = "";
 	public static macro function gitBranch() {
-		if (Context.defined('display'))
-			return macro '';
+		if (Context.defined('display')) return macro '';
 
 		var process = new Process('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
 
@@ -32,7 +31,8 @@ class GitMacro {
 		var branch:String = process.stdout.readLine();
 		process.close();
 
-		Context.info('Git Branch: $branch', Context.currentPos());
+		gitBranchStore = branch; 
+		//haxe.macro.Context.info('Git Branch: $branch', Context.currentPos());
 		return macro $v{branch};
 	}
 }

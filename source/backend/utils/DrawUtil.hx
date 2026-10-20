@@ -33,9 +33,45 @@ class DrawUtil {
 	}
 
 	/**
+	 * Draw an outline to a sprite
+	 * @param spr sprite to add outline too
+	 * @param thickness outline thickness
+	 * @param color the color to use
+	 * @return `HSprite` for chaining
+	 * @since 0.10.1
+	**/
+	public static function drawOutline(spr:HSprite, thickness:Int, color:HColor):HSprite {
+		@:privateAccess
+		if(spr._bitmap!=null) {
+			var bitmap:Bitmap = new Bitmap(new BitmapData(spr._bitmap.bitmapData.width+thickness, spr._bitmap.bitmapData.height+thickness, true, color));
+			bitmap.x = cast(0-thickness/2);
+			bitmap.y = cast(0-thickness/2);
+			spr.addChildAt(bitmap, 0);
+			spr.setAttribute("OutlineBitmap", bitmap);
+			spr.clearObjects.push(bitmap);
+			spr.reRender();
+		}
+		return spr;
+	}
+
+	/**
+	 * Remove an outline from a sprite
+	 * @param spr Target
+	 * @since 0.10.1
+	**/
+	public static function removeOutline(spr:HSprite) {
+		if(spr.getAttribute("OutlineBitmap") == null){
+			trace('WARN: Tried to get `OutlineBitmap` attribute but sprite doesnt have it!');
+			return spr;
+		}
+		spr.removeChild(cast(spr.getAttribute("OutlineBitmap"), Bitmap));
+		spr.removeAttribute("OutlineBitmap");
+		spr.reRender();
+		return spr;
+	}
+
+	/**
 	 * draw an icon to  Sprite
-	 * 
-	 * TODO: support scaling on the icon from the graphic
 	 * 
 	 * @param spr sprite to draw icon too
 	 * @param icon icon to draw

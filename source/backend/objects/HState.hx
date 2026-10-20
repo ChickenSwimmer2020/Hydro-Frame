@@ -4,7 +4,7 @@ package backend.objects;
  * HState, its a state. functions like FlxState from Flixel
  * @since 0.0.0
  */
-class HState extends Sprite {
+class HState extends HBasic {
 	/**
 	 * members of the state
 	 * @since 0.0.0
@@ -51,7 +51,7 @@ class HState extends Sprite {
 	 * @since 0.0.0
 	 */
 	public function new() {
-		super();
+		super(0, 0);
 	}
 
 	/**
@@ -92,7 +92,7 @@ class HState extends Sprite {
 	 * destroy the state
 	 * @since 0.0.0
 	 */
-	public function destroy() {
+	override public function destroy() {
 		// iterate a copy so removing mid-loop doesnt cause skips
 		for (thing in members.copy()) {
 			// call destroy on children that support it
@@ -112,8 +112,7 @@ class HState extends Sprite {
 		}
 		members = [];
 
-		// remove self from parent
-		if (parent != null)
-			parent.removeChild(this);
+		//removes itself from parent now.
+		super.destroy();
 	}
 }

@@ -21,7 +21,7 @@ typedef HTweenData = {
  * a tween system, yeahhh.
  * @since 0.0.0
  */
-class HTween extends Sprite {
+class HTween extends HBasic {
 	/**
 	 * active tweens
 	 * @since 0.0.0
@@ -51,7 +51,6 @@ class HTween extends Sprite {
 		lastTime = openfl.Lib.getTimer();
 		if (globalParent != null)
 			globalParent.addChild(this);
-		addEventListener(Event.ENTER_FRAME, onEnterFrame);
 	}
 
 	/**
@@ -119,16 +118,15 @@ class HTween extends Sprite {
 	 * destroy the tween.
 	 * @since 0.0.0
 	 */
-	public function destroy():Void {
-		removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+	override public function destroy():Void {
 		cancelAll();
-		if (parent != null)
-			parent.removeChild(this);
+		super.destroy();
 	}
 
-	private function onEnterFrame(e:Event):Void {
+	override public function onEnterFrame(e:Event):Void {
+		super.onEnterFrame(e);
 		var now = openfl.Lib.getTimer();
-		// ! CAUGHT YOU YOU FUCKING MEMORY LEAK!! (window movement was causing MAJOR leaks.)
+		// ! CAUGHT YOU MEMORY LEAK!! (window movement was causing MAJOR leaks.)
 		var dt = Math.min((now - lastTime) / 1000.0, 0.1); // real delta time in seconds
 		lastTime = now;
 

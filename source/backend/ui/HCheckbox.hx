@@ -1,6 +1,7 @@
 package backend.ui;
 
-// TODO: fix the graphics on this because they're being fucky.
+// TODO: fix the graphics on this because they're being annoying.
+//TODO: fix this causing errors when clicking on it or making it in a menu bar.
 class HCheckbox extends HUISprite {
 	public var label:HText;
 	public var value(default, set):Bool = false;

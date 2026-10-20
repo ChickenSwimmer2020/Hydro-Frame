@@ -61,11 +61,9 @@ class SkinLoader {
 	 * @param data skin data to save
 	 * @return Bytes
 	 * @since 0.8.6
-	 * NOTES: this is probably really fucky and bad, but i dont know how binary works so gimmie a break solar.
+	 * NOTES: this is probably really bad way to do it, but i dont know how binary works so gimmie a break solar.
 	 */
 	public static function write(path:String, data:SkinData) {
-		trace('ChickenSwimmer2020 here, this system is probably really bad and fucky and stupid.
-but solar i dont know how binary works and this is me trying my best');
 		var bytes:BytesOutput = new BytesOutput();
 		bytes.bigEndian = false;
 

@@ -60,9 +60,7 @@ class Skin {
 		if (FileSystem.exists('plugins/skins/$name.hfs')) {
 			return data = SkinLoader.load('plugins/skins/$name.hfs');
 		} else {
-			// i have a feeling that the stuff for custom throws isnt initilized when this is called first.
-			// TODO: checking system to see if throws are working.
-			trace('Couldnt find plugins/skins/$name.hfs!\nDid you type it correctly?'); // TODO: proper warning system.
+			trace('ERROR: Couldnt find plugins/skins/$name.hfsf!\nDid you type it correctly?');
 			return defaultThemes;
 		}
 		return defaultThemes;

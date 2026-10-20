@@ -1,13 +1,14 @@
 package ui;
 
+import backend.objects.editor.HAnimatableObject;
+
 /**
  * The different selectable tools of Hydro-Frame!
  * @since 0.8.0
  */
 enum abstract Tool(String) from String to String {
-	var SELECTION:String = "SELECTION";
+	var TRANSFORM:String = "SELECTION"; //MERGED WITH FREE_TRANSFORM
 	var SUBSELECTION:String = "SUBSELECTION";
-	var FREE_TRANSFORM:String = "FREE_TRANSFORM";
 	var GRADIENT_TRANSFORM:String = "GRADIENT_TRANSFORM";
 	var LASSO:String = "LASSO";
 	var POLYGON:String = "POLYGON";
@@ -57,7 +58,7 @@ class EditorState extends HState {
 	 * the currently selected tool within the editor
 	 * @since 0.8.0
 	 */
-	public var currentTool:Tool = SELECTION;
+	public static var currentTool:Tool = TRANSFORM;
 
 	/**
 	 * This is the window that contains your tools!
@@ -81,6 +82,10 @@ class EditorState extends HState {
 
 		// other init stuff
 
+		//testing stuff
+		var testObject:HAnimatableObject = new HAnimatableObject(100, 100);
+		add(testObject);
+
 		trace('editorstate made with ${width}x$height @$fps, script mode $scriptType, measure mode $measureType');
 	}
 
@@ -101,7 +106,7 @@ class EditorState extends HState {
 				trace("Failed to get last saved position of WINDOW_TOOLS!!!!");
 				return;
 			}
-			toolsTabArea.setPositionRaw(targetPos.x, targetPos.y);
+			toolsTabArea.setPosition(targetPos.x, targetPos.y);
 			// toolsTabArea.set(targetPos.x, targetPos.y); //TODO: window resizing.
 		}
 		toolsTabArea.onWindowMove = (_:HPoint) -> {

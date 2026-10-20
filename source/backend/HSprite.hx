@@ -12,52 +12,16 @@ typedef ExtraFilterParams = {
 }
 
 /**
- * HSprite is the building block of Hydro-Frame, as 90% of classes end up extending this.
+ * The basic graphics block of Hydro-Frame
  * @since 0.0.0
  */
-class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implements IDestroyable {
-	/**
-	 * attributes, currently only used for dropdowns.
-	 * @since 0.2.0
-	 */
-	public var attributes:Map<String, Dynamic>;
-
+class HSprite extends HBasic {
 	/**
 	 * The array of `DisplayObject` objects that are children of this `HSprite` object that need to be cleared on any re-render.
 	 * 
 	 * @since 0.8.2
 	 */
 	public var clearObjects:Array<DisplayObject> = [];
-
-	/**
-	 * set an attribute to this object
-	 * @param a key
-	 * @param b value
-	 * @return String
-	 * @since 0.2.0
-	 */
-	public function setAttribute(a:String, b:Dynamic):String {
-		attributes.set(a, b);
-		return a;
-	}
-
-	/**
-	 * get an attribute from this object
-	 * @param a key
-	 * @return Dynamic
-	 * @since 0.2.0
-	 */
-	public inline function getAttribute(a:String):Dynamic
-		return attributes.get(a);
-
-	/**
-	 * remove an attribute from this object
-	 * @param a key
-	 * @return Bool return attributes.remove(a)
-	 * @since 0.2.0
-	 */
-	public inline function removeAttribute(a:String):Bool
-		return attributes.remove(a);
 
 	/**
 	 * Color transform of the Sprite, affects sub-objects as well.
@@ -130,11 +94,8 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 	 * @param graphic image to load
 	 * @since 0.0.0
 	 */
-	public function new(x:Float, y:Float, ?graphic:OneOfThree<String, Image, BitmapData>) {
-		super();
-		attributes = new Map<String, Dynamic>();
-		this.x = 0;
-		this.y = 0;
+	public function new(x:Float=0, y:Float=0, ?graphic:OneOfThree<String, Image, BitmapData>) {
+		super(x, y);
 		if (graphic != null)
 			loadGraphic(graphic);
 		setPosition(x, y);
@@ -262,17 +223,6 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 	}
 
 	/**
-	 * Center the sprite on the screen
-	 * @return HSprite
-	 * @since 0.2.0
-	 */
-	public function screenCenter():HSprite {
-		x = Main.pWidth / 2 - width / 2;
-		y = Main.pHeight / 2 - height / 2;
-		return this;
-	}
-
-	/**
 	 * change the graphic size.
 	 * @param width 
 	 * @param height 
@@ -293,32 +243,10 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 	}
 
 	/**
-	 * set position
-	 * @param x 
-	 * @param y 
-	 * @since 0.0.0
-	 */
-	public function setPosition(x:Float, y:Float) {
-		this.x = x + width / 2;
-		this.y = y + height / 2;
-	}
-
-	/**
-	 * set the position without doing +width/2
-	 * @param x 
-	 * @param y 
-	 * @since 0.4.0
-	 */
-	public function setPositionRaw(x:Float, y:Float) {
-		this.x = x;
-		this.y = y;
-	}
-
-	/**
 	 * self explanitory.
 	 * @since 0.0.0
 	 */
-	public function destroy() {
+	override public function destroy() {
 		// graphics.clear();
 		// dispose our bitmap if we own it
 		if (_bitmapData != null) {
@@ -326,10 +254,9 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 			_bitmapData = null;
 		}
 
-		if (parent != null)
-			parent.removeChild(this);
 		if (bitmapIsChild)
 			removeChild(_bitmap);
+		super.destroy();
 	}
 
 	/**
@@ -425,23 +352,6 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 	}
 
 	/**
-	 * check if the sprite contains a point.
-	 * @param point point to check.
-	 * @return Bool return new Rectangle(x, y, width, height).containsPoint(point.toOpenflPoint())
-	 * @since 0.2.0 
-	 */
-	public inline function containsPoint(point:HPoint):Bool
-		return new Rectangle(x, y, width, height).containsPoint(point.toOpenflPoint());
-
-	/**
-	 * check if the mouse is contained within the object
-	 * @return Bool if the mouse is contained
-	 * @since 0.2.0
-	 */
-	public inline function containsMouse():Bool
-		return containsPoint(Main.vMouse);
-
-	/**
 	 * get the desktop wallpaper to the sprite, windows only for now.
 	 * @param maxWidth max width of the graphic
 	 * @param maxHeight max height of the graphic
@@ -449,7 +359,7 @@ class HSprite extends Sprite implements IHasAttributes<String, Dynamic> implemen
 	 * @since 0.1.0
 	 */
 	public static function getDesktopWallpaper(maxWidth:Int, maxHeight:Int):BitmapData {
-		#if windows // TODO: support getting desktop background on MacOS
+		#if windows //unsupported on mac because we either would need to require appleScript or an external file.
 		var original = BitmapData.fromFile('C:\\Users\\${Sys.getEnv("USERNAME")}\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper');
 		if (original == null)
 			return BitmapData.fromFile('assets/images/Background.png');
