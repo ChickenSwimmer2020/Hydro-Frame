@@ -19,6 +19,12 @@ hmm install (This will take a bit)
 haxelib run lime rebuild mac --always 
 ```
 
+- Otherwise run
+
+```cmd
+haxelib run lime rebuild cpp --always
+```
+
 - And now run
 
 ```cmd
