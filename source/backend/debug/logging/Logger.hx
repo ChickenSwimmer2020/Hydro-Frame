@@ -4,6 +4,7 @@ package backend.debug.logging;
 import haxe.PosInfos;
 import sys.FileSystem;
 import sys.io.File;
+import backend.utils.TerminalUtil;
 
 using StringTools;
 #end
@@ -41,27 +42,30 @@ class Logger {
 	public static function log(message:Dynamic, ?posInfos:PosInfos) {
 		var str:String = '';
 
-		var tag:String = "\x1b[38;5;61m[OTHER]\x1b[0m";
+		var tag:String = '${TerminalUtil.setColor(0xFF3b61bf)}[OTHER]${TerminalUtil.reset}';
 		if (Std.string(message).startsWith("INFO:"))
 			tag = "[INFO]";
 		if (Std.string(message).startsWith("WARNING:") || Std.string(message).startsWith("WARN:"))
-			tag = "\x1b[38;5;226m[WARNING]\x1b[0m";
+			tag = '${TerminalUtil.setColor(0xFFFFFF00)}[WARNING]${TerminalUtil.reset}';
 		if (Std.string(message).startsWith("DEBUG:"))
-			tag = "\x1b[38;5;22m[DEBUG]\x1b[0m";
+			tag = '${TerminalUtil.setColor(0xFF005F00)}[DEBUG]${TerminalUtil.reset}';
 		if (Std.string(message).startsWith("ERROR:") || Std.string(message).startsWith("ERR:"))
-			tag = "\x1b[38;5;196m[ERROR]\x1b[0m";
+			tag = '${TerminalUtil.setColor(0xFFFF0000)}[ERROR]${TerminalUtil.reset}';
 		if (Std.string(message).startsWith("FATAL:"))
-			tag = "\x1b[38;5;231;48;5;19m[FATAL]";
+			tag = '${TerminalUtil.setColor(0xFFFFFFFF, 0xFF000087)}[FATAL]';
+		if (Std.string(message).startsWith("GITHUB:"))
+			tag = '${TerminalUtil.setColor(0xFFFFFFFF, 0xFFFF00FF)}[GITHUB]';
 		// TODO: better way to detect if its a plugin. This is very easy to trip.
 		if (posInfos != null && posInfos.methodName == null)
-			tag = '\x1b[1;38;5;46m[PLUGIN::${posInfos.fileName}:${posInfos.lineNumber}]\x1b[0m';
+			tag = '${TerminalUtil.setColor(0xFF00ff03)}[PLUGIN::${posInfos.fileName}:${posInfos.lineNumber}]${TerminalUtil.reset}';
 
-		str += '$tag : $message\x1b[0m';
+		str += '$tag : $message${TerminalUtil.reset}';
 		for (toRemove in ["INFO:", "WARNING:", "WARN:", "DEBUG:", "ERROR:", "ERR:", "FATAL:"])
 			str = str.replace(toRemove, "");
 		if (posInfos != null && posInfos.methodName != null)
-			str += ' : (\x1b[38;5;79m${posInfos.fileName}\x1b[0m:${posInfos.lineNumber} {\x1b[38;5;187m${posInfos.methodName}\x1b[0m()})';
+			str += ' : (${TerminalUtil.setColor(0xFF5FD7AF)}${posInfos.fileName}${TerminalUtil.reset}:${posInfos.lineNumber} {${TerminalUtil.setColor(0xFFD7D7AF)}${posInfos.methodName}${TerminalUtil.reset}()})';
 
+		
 		logs.push(str);
 		toLog.push({
 			time: Date.now().toString(),

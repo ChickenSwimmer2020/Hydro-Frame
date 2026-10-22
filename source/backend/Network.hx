@@ -1,5 +1,7 @@
 package backend;
 
+import sys.io.Process;
+
 class Network {
 	/**
 	 * Location of the file containing the current newest version of Hydro-Frame
@@ -46,5 +48,46 @@ class Network {
 		}
 		h.request(false);
 		return r;
+	}
+
+
+
+	/**
+	 * Show the github commit information when compiling.
+	 * @since 0.10.2
+	**/
+	public static inline function showGitInfo() Logger.log('GITHUB: Building Hydro-Frame:${getGitBranch()}(${getGitCommit()})');
+
+	/**
+	 * Get the current git commit
+	 * @since 0.10.2
+	**/
+	public static function getGitCommit():String {
+		var process = new Process('git', ['rev-parse', 'HEAD']);
+		if (process.exitCode() != 0){
+			Logger.log(process.stderr.readAll().toString());
+			return '';
+		}
+		var commitHashSplice:String = process.stdout.readLine().substr(0, 7);
+		process.close();
+
+		return commitHashSplice;
+	}
+
+	/**
+	 * Get the current branch of the github
+	 * @since 0.10.2
+	**/
+	public static function getGitBranch():String {
+		var bProc = new Process('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
+		var BRANCH:String = "";
+		if (bProc.exitCode() != 0){
+			Logger.log(bProc.stderr.readAll().toString());
+			return '';
+		}
+		BRANCH = bProc.stdout.readLine();
+		bProc.close();
+
+		return BRANCH;
 	}
 }

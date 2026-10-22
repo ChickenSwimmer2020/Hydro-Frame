@@ -54,4 +54,5 @@
 
     <haxedef name="DISABLE_GIT_INFO" unless="debug" />
     <haxedef name="GIT_INFO" unless="DISABLE_GIT_INFO" />
+    <haxedef name="CLEAR_ON_START" if="true" /> <!--clear the console of build information before traces start.-->
 </project>
