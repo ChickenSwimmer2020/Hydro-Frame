@@ -77,11 +77,7 @@ class BridgeMacro {
 
 	/** Defines one bridge class per entry, plus the array that keeps them alive. */
 	public static function generate() {
-		if(Context.defined("display-details")
-			|| Context.defined("display-stdin")
-			|| Context.defined("no-compilation")
-			|| Context.getDisplayMode() != haxe.macro.DisplayMode.None) return;
-
+		if (Context.defined("display") || haxe.macro.Compiler.getConfiguration().args.indexOf("--no-output")!=-1) return;
 		var BASES:Array<String> = [for (n in scan('backend').concat(scan('engine'))) if (bridgeable(n))n];
 		var pos:Position = Context.currentPos();
 		var pack:Array<String> = PACK.split('.');

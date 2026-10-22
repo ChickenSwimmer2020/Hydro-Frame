@@ -43,10 +43,7 @@ class AbstractsMacro {
 
 	/** Applies the build macro to every abstract found under `PACKAGES`. */
 	public static function generate():Void {
-		if(Context.defined("display-details")
-			|| Context.defined("display-stdin")
-			|| Context.defined("no-compilation")
-			|| Context.getDisplayMode() != haxe.macro.DisplayMode.None) return;
+		if (Context.defined("display")) return;
 		for (pack in PACKAGES)
 			for (dir in Context.getClassPath())
 				scan(dir + pack.split('.').join('/'), pack);
