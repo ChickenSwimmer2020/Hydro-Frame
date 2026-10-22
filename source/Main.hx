@@ -1,5 +1,6 @@
 package;
 
+import backend.macro.GitMacro;
 import backend.palette.HPalette;
 import backend.macro.DefineMacro;
 import backend.plugins.*;
@@ -49,7 +50,6 @@ class Main extends Sprite {
 
 		initStage();
 		#if CLEAR_ON_START TerminalUtil.clearConsole(); #end //clear console of build information if this flag is defined
-		#if GIT_INFO Network.showGitInfo(); #end //show git information on startup if enabled.
 
 		WindowUtil.window.onClose.add(onClosing);
 
@@ -57,7 +57,7 @@ class Main extends Sprite {
 		WindowUtil.window.onFocusIn.add(onFocusGained);
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrashing);
 
-		WindowUtil.setTitle('${WindowUtil.window_title} [ ${Application.current.meta.get("version")}${#if GIT_INFO ' (${Network.getGitBranch()}/${Network.getGitCommit()})' #else '' #end} ]');
+		WindowUtil.setTitle('${WindowUtil.window_title} [ ${Application.current.meta.get("version")}${#if GIT_INFO ' (${GitMacro.gitBranch()}/${GitMacro.gitHash()})' #else '' #end} ]');
 
 		windowManager = new HWindowManager();
 
