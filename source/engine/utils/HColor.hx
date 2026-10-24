@@ -10,6 +10,7 @@ abstract HColor(Int) from Int from UInt to Int to UInt {
 	public static inline final WHITE:HColor = 0xFFFFFFFF;
 	public static inline final RED:HColor = 0xFFFF0000;
 	public static inline final MAGENTA:HColor = 0xFFFF00FF;
+	public static inline final LIME:HColor = 0xFF00FF00;
 
 	#if debug
 	public static inline final DEBUGGER_BACKGROUND:HColor = 0x99000000;

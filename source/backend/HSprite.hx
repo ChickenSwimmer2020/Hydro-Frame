@@ -37,8 +37,6 @@ class HSprite extends HBasic {
 	 */
 	public function set_color(c:HColor):HColor {
 		color = c;
-		trace(c);
-		trace('transform: ${HColor.toTransform(c)}');
 		transform.colorTransform = HColor.toTransform(c);
 		return c;
 	}

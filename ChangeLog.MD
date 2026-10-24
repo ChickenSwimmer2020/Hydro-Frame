@@ -3,6 +3,22 @@
 
 # CHANGELOG
 
+## 0.10.1 [BUILD 1] -- ChickenSwimmer2020
+
+* Fixed some `since` messages referring to `0.10.2` incorrectly.
+* `CLEAR_ON_START` is now only defined unless debug.
+* Removed some dead code from `HState` for disabling interaction, i do plan to fix it later.
+* `HState.members` is now `Array<HBasic>` instead of `Array<DisplayObject>`
+* Removed a finished TODO from `HDropdown`
+* `HTextInputBox` now changes color when selected so people can actually tell when their typing
+* Removed a TODO from `InitState`
+* Rewrote `HTimer` to be more similar to `FlxTimer` with object instancing (yes you can finally assign variables as `HTimer`'s.)
+* `InputUtil` and `InputDebugger` were added
+* `HSprite.color` no longer traces colorTransform or Color.
+* Shell attempt for making `HDropdown` key events work. i failed
+* Added `HColor.LIME`
+* `InitState` `debug` dropdown on `debug` builds now has the `InputDebugger` visible
+
 ## 0.10.1 (Colors, cleanup, ) - By ChickenSwimmer2020
 
 * Parsing support for color palettes

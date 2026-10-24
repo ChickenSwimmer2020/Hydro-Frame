@@ -1,7 +1,5 @@
 package backend.ui;
 
-// TODO: fix the bugs and make it work properly. cuz its being stupid
-// TODO: find way to not use multiple event listeners on stage.
 class HTextInputBox extends HText {
 	public var onSubmit:String->Void;
 
@@ -12,8 +10,9 @@ class HTextInputBox extends HText {
 	public function new(x:Float, y:Float, height:Float, width:Float, ?text:String, placeholder:String, fontSize:Int, oS:String->Void) {
 		super(x, y, width, text ?? "", fontSize);
 
-		makeGraphic(width.floor(), height.floor(), HColor.MAGENTA);
+		makeGraphic(width.floor(), height.floor(), HColor.WHITE);
 		placeholderText = new HText(0, 0, width, placeholder, fontSize);
+		placeholderText.color = HColor.BLACK;
 		placeholderText.mouseEnabled = false; // let clicks fall through to the box
 		addChild(placeholderText);
 
@@ -32,6 +31,7 @@ class HTextInputBox extends HText {
 
 	function onFrame(_:Event) {
 		placeholderText.visible = (text == "");
+		this.setGraphicColor(selectedTextBox==this?HColor.LOADINGIND_MAINCOLOR:HColor.WHITE);
 	}
 
 	override public function destroy() {

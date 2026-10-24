@@ -60,6 +60,7 @@ class Main extends Sprite {
 		WindowUtil.setTitle('${WindowUtil.window_title} [ ${Application.current.meta.get("version")}${#if GIT_INFO ' (${GitMacro.gitBranch()}/${GitMacro.gitHash()})' #else '' #end} ]');
 
 		windowManager = new HWindowManager();
+		InputUtil.init(); //init input manager
 
 		UPrefs.currentSkin = new Skin("Default"); // init the skinning system.
 
@@ -67,6 +68,7 @@ class Main extends Sprite {
 
 		addChild(StateSystem = new StateSystem(null));
 		StateSystem.switchState(startingState);
+		
 
 		createDebugDisplay();
 
@@ -285,7 +287,7 @@ class Main extends Sprite {
 	 * 
 	 * @since 0.9.1
 	 */
-	function dropdownCommands(e:KeyboardEvent) {
+	public static function dropdownCommands(e:KeyboardEvent) {
 		for (keys => targetOption in HDropdown.dropdownKeys) {
 			if (!keys.contains(e.keyCode) && (!e.shiftKey && (!e.altKey && !e.controlKey))) {
 				if (HDropdown.canCloseInstace)

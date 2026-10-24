@@ -181,6 +181,9 @@ class InitState extends HState {
 					new HDropdownOption(Locale.get("title.menuBar.Debug.UIDebugger"), (butt:HButton) -> {
 						Main.StateSystem.switchState(UIDebugger);
 					}),
+					new HDropdownOption(Locale.get("title.menuBar.Debug.InputDebugger"), (butt:HButton) -> {
+						Main.StateSystem.switchState(InputDebugger);
+					}),
 					new HDropdownOption(Locale.get("title.menuBar.Debug.SymbolEditor"), (butt:HButton) -> {
 						Main.StateSystem.switchState(SymbolEditor);
 					}),
@@ -448,7 +451,6 @@ class InitState extends HState {
 			infoWindow.destroy();
 		};
 		infoWindow.addEventListener(MouseEvent.CLICK, onWindowClick);
-		// Main.StateSystem.state.canInteract=false; //TODO: make this stupid thing work properly.
 
 		var logo:HSprite = new HSprite(0, 0).loadGraphic("assets/images/ICON48.png");
 		var name:HText = new HText(0 + logo.width, 5, 100, "Hydro-Frame V{MAJORVER}.{MIDVER}.{MINORVER}", 12);

@@ -20,7 +20,6 @@ class HDropdown extends HSprite {
 		if (dropdownOpen)
 			return;
 		var button = target;
-		// TODO: fix not positioning based on stage position.
 		var targetPosition:HPoint = new HPoint(0, 0);
 		targetPosition.set(target.getBounds(Main.instance).x + (isSub ? button.width : 0), target.getBounds(Main.instance).y + (isSub ? 0 : button.height));
 
@@ -63,6 +62,7 @@ class HDropdown extends HSprite {
 		dropdownOpen = true;
 		HTimer.start(0.02, () -> {
 			canCloseInstace = true;
+			Main.addKeyPressed("dropdownOnKeyPressed", "*", false, (c:KeyboardEvent)->Main.dropdownCommands(c));
 		});
 	}
 
@@ -119,6 +119,7 @@ class HDropdown extends HSprite {
 		subDropdownOpen = true;
 		HTimer.start(0.02, () -> {
 			canCloseSubInstace = true;
+			Main.addKeyPressed("subDropdownOnKeyPressed", "*", false, (c:KeyboardEvent)->Main.dropdownCommands(c));
 		});
 	}
 
@@ -132,6 +133,7 @@ class HDropdown extends HSprite {
 		}
 		for (keys => key in dropdownKeys)
 			dropdownKeys.remove(keys);
+		Main.removeKeyPressed("dropdownOnKeyPressed");
 		removeM(dropdownBG);
 		dropdownOpen = false;
 		canCloseInstace = false;
@@ -147,6 +149,7 @@ class HDropdown extends HSprite {
 		}
 		for (keys => key in subDropdownKeys)
 			subDropdownKeys.remove(keys);
+		Main.removeKeyPressed("subDropdownOnKeyPressed");
 		removeM(subDropdownBG);
 		subDropdownOpen = false;
 		canCloseSubInstace = false;

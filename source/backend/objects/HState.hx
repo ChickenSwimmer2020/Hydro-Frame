@@ -9,42 +9,7 @@ class HState extends HBasic {
 	 * members of the state
 	 * @since 0.0.0
 	 */
-	public var members:Array<Dynamic> = [];
-
-	/**
-	 * UNFINISHED
-	 * @since 0.4.0
-	 */
-	public var canInteract(default, set):Bool = true;
-
-	/**
-	 * UNFINISHED
-	 * @since 0.4.0
-	 */
-	private var lastButtonStates:Map<HButton, Bool> = new Map<HButton, Bool>();
-
-	/**
-	 * UNFINISHED
-	 * @param a UNFINISHED
-	 * @since 0.4.0
-	 */
-	public function set_canInteract(a:Bool):Bool {
-		canInteract = a;
-		for (member in members) {
-			if (member is HButton) {
-				if (a) {
-					(member : HButton).disabled = lastButtonStates.get((member : HButton));
-					(member : HButton).doDisabledColor = false;
-					lastButtonStates.remove((member : HButton));
-				} else {
-					lastButtonStates.set((member : HButton), (member : HButton).disabled);
-					(member : HButton).doDisabledColor = false;
-					(member : HButton).disabled = true;
-				}
-			}
-		}
-		return canInteract;
-	}
+	public var members:Array<HBasic> = [];
 
 	/**
 	 * make a new state
@@ -66,7 +31,7 @@ class HState extends HBasic {
 	 * @return Dynamic the basic that was added
 	 * @since 0.0.0
 	 */
-	public function add(basic:Dynamic):Dynamic {
+	public function add(basic:HBasic):HBasic {
 		trace('added basic $basic');
 		addChild(basic);
 		members.push(basic);
@@ -79,7 +44,7 @@ class HState extends HBasic {
 	 * @return Bool was it removed successfully
 	 * @since 0.0.0
 	 */
-	public function remove(basic:Dynamic):Bool {
+	public function remove(basic:HBasic):Bool {
 		if (basic == null)
 			return false;
 		if (contains(basic))
