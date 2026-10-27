@@ -7,3 +7,6 @@
 * batch/sh autobuilder for every supported platform
 * fix building for android/ios. also find ios tester. also also find android tester.
 * Add setting to toggle on/off using desktop wallpaper on background for main menu
+* block plugins from accessing other plugins.
+  * Block creation of `PluginIOMethod`
+  * Block FS access to everything in plugins/ except plugins/skins/

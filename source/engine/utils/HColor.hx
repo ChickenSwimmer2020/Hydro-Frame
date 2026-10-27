@@ -18,10 +18,10 @@ abstract HColor(Int) from Int from UInt to Int to UInt {
 	#end
 
 	private static function getColorFromSkin(a:String):Null<HColor> {
-		if ((UPrefs.currentSkin.data.themes[UPrefs.getSelected(UPrefs.uiTheme.value)].get(a)) != null)
-			return(UPrefs.currentSkin.data.themes[UPrefs.getSelected(UPrefs.uiTheme.value)].get(a));
+		if ((UPrefUtils.getCurrentSkin().data.themes[UPrefUtils.getSelected(UPrefs.uiTheme)].get(a)) != null)
+			return(UPrefUtils.getCurrentSkin().data.themes[UPrefUtils.getSelected(UPrefs.uiTheme)].get(a));
 		else
-			throw 'Failed to get color $a from ${UPrefs.currentSkin.toString()}[${UPrefs.getSelected(UPrefs.uiTheme.value)}]!!';
+			throw 'Failed to get color $a from ${UPrefs.currentSkin.toString()}[${UPrefUtils.getSelected(UPrefs.uiTheme)}]!!';
 		return null;
 	}
 

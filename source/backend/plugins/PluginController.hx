@@ -1,6 +1,7 @@
 package backend.plugins;
 
 import backend.plugins.data.PluginData;
+import backend.plugins.data.PluginMetadata;
 import engine.scripts.ScriptHelper;
 import engine.scripts.ScriptManager;
 import haxe.io.Path;
@@ -36,6 +37,8 @@ class PluginController extends Plugin {
 		return finalRes;
 	}
 
+	public static var boundPlugins:Map<Plugin, {name:String, data:PluginData}> = [];
+
 	/**
 	 * The plugins belonging to this `PluginController`.
 	 * 
@@ -69,25 +72,34 @@ class PluginController extends Plugin {
 
 	/**
 	 * Registers a plugin into this `PluginController` via its name.
-	 * Uses `registerPluginFromSource()` under the hood.
+	 * Uses `registerPluginFromSource()` under the hood, but also binds it to
+	 * the global plugin list.
 	 * 
 	 * @param name The plugin's name. Must be under `plugins/`.
 	 * @param displayName The plugin's display name. Used if there's no `meta.json`.
 	 * Defaults to `Unknown`.
 	 * @param id The plugin's ID. Used if there's no `meta.json`.
 	 * Defaults to `unknown`.
+	 * @param sourceFolder The plugin's source folder. Used if there's no `meta.json`.
+	 * Defaults to `source`.
 	 * @return `PluginData` The registered plugin.
 	 * @since 0.10.0
 	 */
-	public function registerPluginFolder(name:String, ?pluginName:String = 'Unknown', ?id:String = 'unknown'):PluginData {
+	public function registerPluginFolder(name:String, ?pluginName:String = 'Unknown', ?id:String = 'unknown', ?sourceFolder:String = 'source'):PluginData {
 		var pId = id;
 		var pName = pluginName;
+		var source = sourceFolder;
+		var meta:PluginMetadata = null;
 		if (FileSystem.exists(Path.join(['plugins', name, 'meta.json']))) {
-			var meta = Json.parse(File.getContent(Path.join(['plugins', name, 'meta.json'])));
+			meta = Json.parse(File.getContent(Path.join(['plugins', name, 'meta.json'])));
 			pId = meta.id;
-			pName = meta.name;
+			pName = meta.displayName;
+			source = meta.sourceFolder;
 		}
-		return registerPluginFromSource(Path.join(['plugins', name, 'source']), pName, id);
+		var res = registerPluginFromSource(Path.join(['plugins', name, source]), pName, pId);
+		res.meta = meta;
+		boundPlugins[res.plugin] = {name: name, data: res};
+		return res;
 	}
 
 	/**
@@ -105,15 +117,19 @@ class PluginController extends Plugin {
 	}
 
 	/**
-	 * Registers a plugin.
+	 * Registers a plugin. Uses `registerPluginFromFile()` under the hood,
+	 * but also binds it to the global plugin list.
 	 * 
 	 * @param name The plugin to register
 	 * @param pluginName The name of the plugin, used for error reporting
 	 * until `meta.json` is loaded.
 	 * @return `PluginData` The registered plugin.
 	 */
-	public function registerPlugin(name:String, pluginName:String):PluginData
-		return registerPluginFromFile(Path.join(['plugins', name]), pluginName);
+	public function registerPlugin(name:String, pluginName:String):PluginData {
+		var res = registerPluginFromFile('plugins/$name', pluginName);
+		boundPlugins[res.plugin] = {name: name, data: res};
+		return res;
+	}
 
 	/**
 	 * Initializes all registered plugins.

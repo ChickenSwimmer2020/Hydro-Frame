@@ -19,7 +19,7 @@ class ScrollableArea extends HGroup<HSprite> {
 		if (interactable) {
 			if (containsMouse()) {
 				final delta:Int = (e.delta * 40);
-				if (UPrefs.inverseScrollDirection.value)
+				if (UPrefs.inverseScrollDirection)
 					index += delta;
 				else
 					index -= delta;

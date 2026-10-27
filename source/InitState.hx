@@ -1,9 +1,9 @@
 package;
 
-import lime.ui.FileDialogFilter;
-import lime.ui.FileDialog;
 import backend.plugins.Skin;
 import backend.plugins.SkinLoader;
+import lime.ui.FileDialog;
+import lime.ui.FileDialogFilter;
 
 class InitState extends HState {
 	var wallpaperBackground:HSprite;
@@ -25,7 +25,7 @@ class InitState extends HState {
 			WindowUtil.toggleFullscreen();
 		});
 		// we have to do these here so they dont start on the splash screen.
-		HSoundManager.playMusic("assets/sounds/Vectors.wav", UPrefs.mainMenuMuted.value ? 0.0 : 0.35);
+		HSoundManager.playMusic("assets/sounds/Vectors.wav", UPrefs.mainMenuMuted ? 0.0 : 0.35);
 
 		Mouse.show();
 
@@ -33,7 +33,7 @@ class InitState extends HState {
 		wallpaperBackground.loadGraphic(HSprite.getDesktopWallpaper(1280, 720), true);
 		add(wallpaperBackground);
 
-		//didnt realize there was a bug here!
+		// didnt realize there was a bug here!
 		if (!appliedDarkenOnlyOnce)
 			reapplyDarken();
 
@@ -49,16 +49,19 @@ class InitState extends HState {
 		}));
 
 		function openFileBrowser() {
-			//ik it looks weird, but `getCwd` already adds a trailing slash.
-			if(!FileSystem.exists('${Sys.getCwd()}projects\\')) FileSystem.createDirectory('${Sys.getCwd()}projects\\'); //make projects folder if missing.
+			// ik it looks weird, but `getCwd` already adds a trailing slash.
+			if (!FileSystem.exists('${Sys.getCwd()}projects\\'))
+				FileSystem.createDirectory('${Sys.getCwd()}projects\\'); // make projects folder if missing.
 			FileDialog.openFile(Application.current.window, (files, filter) -> {
 				if (files.length > 0) {
 					var selectedFile:String = files[0];
-					if(!selectedFile.endsWith('.fla') && !selectedFile.endsWith('.hfp')) {
+					if (!selectedFile.endsWith('.fla') && !selectedFile.endsWith('.hfp')) {
 						WindowUtil.window.alert(ERROR, "The selected file is not a Hydro-Frame project, or Adobe Animate Flash file!", 'Error!', ['Whoops']);
 					}
-					if(selectedFile.endsWith(".fla")) {
-						switch(WindowUtil.window.alert(WARNING, "You have selected an Adobe Animate Flash project.\nPlease note, for legal reasons you cannot save back into this format!\nWould you like to continue?", 'Heads up!', ['Yes', 'No'])) {
+					if (selectedFile.endsWith(".fla")) {
+						switch (WindowUtil.window.alert(WARNING,
+							"You have selected an Adobe Animate Flash project.\nPlease note, for legal reasons you cannot save back into this format!\nWould you like to continue?",
+							'Heads up!', ['Yes', 'No'])) {
 							case 1: return;
 						}
 					}
@@ -75,8 +78,6 @@ class InitState extends HState {
 		add(new HButton(Locale.get("title.loadProject"), new Rectangle(90, 235, 80, 20), (_:HButton) -> {
 			openFileBrowser();
 		}));
-
-
 
 		function createPresent(width:Int, height:Int, fps:Int, platformType:String, units:String) {
 			return Main.StateSystem.switchState(EditorState, [width, height, fps, platformType, units]);
@@ -98,7 +99,7 @@ class InitState extends HState {
 			new HButton(Locale.get("title.menuBar.File"), new Rectangle(0, 0, 50, 20), (_:HButton) -> {
 				HDropdown.openDropdownMenu(_, false, [
 					new HDropdownOption('${Locale.get("title.menuBar.File.New")}...', newProject).set_keys([Keyboard.CONTROL, Keyboard.N]),
-					new HDropdownOption(Locale.get("title.menuBar.File.Open"), (_:HButton)->openFileBrowser()),
+					new HDropdownOption(Locale.get("title.menuBar.File.Open"), (_:HButton) -> openFileBrowser()),
 					new HDropdownOption(Locale.get("title.menuBar.File.OpenRecent"), null).set_closeOnClick(),
 					new HDropdownOption(Locale.get("title.menuBar.File.Close"), null).set_disabled(),
 					new HDropdownOption(Locale.get("title.menuBar.File.CloseAll"), null).set_disabled(),
@@ -218,9 +219,9 @@ class InitState extends HState {
 			isMuted = !isMuted;
 			_.changeSymbol(isMuted ? "MUTE" : "SOUND");
 			HSoundManager.music.volume = isMuted ? 0.0 : 0.35;
-			UPrefs.mainMenuMuted.value = isMuted;
+			UPrefs.mainMenuMuted = isMuted;
 		});
-		if (UPrefs.mainMenuMuted.value) { // auto mute and shtuff.
+		if (UPrefs.mainMenuMuted) { // auto mute and shtuff.
 			isMuted = true;
 			muteButton.changeSymbol("MUTE");
 		}

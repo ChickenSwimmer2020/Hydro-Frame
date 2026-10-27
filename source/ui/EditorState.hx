@@ -7,7 +7,7 @@ import backend.objects.editor.HAnimatableObject;
  * @since 0.8.0
  */
 enum abstract Tool(String) from String to String {
-	var TRANSFORM:String = "SELECTION"; //MERGED WITH FREE_TRANSFORM
+	var TRANSFORM:String = "SELECTION"; // MERGED WITH FREE_TRANSFORM
 	var SUBSELECTION:String = "SUBSELECTION";
 	var GRADIENT_TRANSFORM:String = "GRADIENT_TRANSFORM";
 	var LASSO:String = "LASSO";
@@ -82,7 +82,7 @@ class EditorState extends HState {
 
 		// other init stuff
 
-		//testing stuff
+		// testing stuff
 		var testObject:HAnimatableObject = new HAnimatableObject(100, 100);
 		add(testObject);
 
@@ -100,8 +100,8 @@ class EditorState extends HState {
 			toolsTabArea.addContent(butt);
 		}
 
-		if (UPrefs.getWorkspaceFile() != "{}") {
-			var targetPos:HPoint = ((UPrefs.getFromWorkspace("WINDOW_TOOLS") : Map<String, Dynamic>).get("position") : HPoint);
+		if (UPrefUtils.getWorkspaceFile() != "{}") {
+			var targetPos:HPoint = ((UPrefUtils.getFromWorkspace("WINDOW_TOOLS") : Map<String, Dynamic>).get("position") : HPoint);
 			if (targetPos == null) {
 				trace("Failed to get last saved position of WINDOW_TOOLS!!!!");
 				return;
@@ -110,7 +110,7 @@ class EditorState extends HState {
 			// toolsTabArea.set(targetPos.x, targetPos.y); //TODO: window resizing.
 		}
 		toolsTabArea.onWindowMove = (_:HPoint) -> {
-			UPrefs.writeToWorkspace("WINDOW_TOOLS", {size: new HPoint(295, Main.pHeight - 20), position: _});
+			UPrefUtils.writeToWorkspace("WINDOW_TOOLS", {size: new HPoint(295, Main.pHeight - 20), position: _});
 		};
 	}
 }

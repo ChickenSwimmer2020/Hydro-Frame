@@ -3,6 +3,60 @@
 
 # CHANGELOG
 
+## 0.10.2 (Macros, PluginAPI, Plugin permissions) - By ZSolarDev
+
+### Plugins
+
+* Added `backend.plugins.api`.
+  * Added `PluginAPI`.
+    * This is how you actually use the plugin API from a plugin. Due to how it's automatically hooked up, anywhere in or after `onPluginInit()`, you can simply run `var api = new PluginAPI(this);` inside of your plugin main to gain access to the plugin API. Eventually, I plan to lock down all class imports and only whitelist PluginAPI along with a couple of other classes needed as a plugin developer, so that you can't do anything outside of the plugin API. This does mean the pluginAPI needs to be extensive enough to satisfy the wants of the plugin developer, but I think doing this will restrict developers to having to go under the permission system to do anything that actually interacts with Hydro-Frame.
+    * The reason it has to be on `onPluginInit()` or after is because the plugin API needs to be able to access the plugin data, and a plugin instance is only bound to its data in `PluginController` the moment before `onPluginInit()` is run. This can't be avoided to my knowledge, cause to bind a plugin instance, I need to run it's constructor first to get the instance to be bound. You can't bind an instance that doesn't exist, yet, not unless I made plugins bind themselves. That wouldn't work either, because `PluginData` is built using the plugin instance. Unless I made plugin developers in charge of binding themselves, this limitation will exist.
+  * Added `backend.plugins.permission`.
+    * This is mainly where permissions live.
+    * Added `PluginPermission`.
+      * This is just an enum with all permissions that plugins can have.
+    * Added `Enforcer`.
+      * This is actually what plugin api calls 'ask' to see if that call can run. If the plugin doesn't have permissions for that call, the api call will be blocked, return a placeholder value, and print a warning. Because `Enforcer` looks at posInfos to see who's calling and from where, you don't need to worry about identifying yourself as the caller, as long as you exist in `Enforcer.permissionMap` and `Enforcer.nameMap`. It's as simple as `if (!Enforcer.enforce(api)) return;`.
+    * Added `Requester`.
+      * This is what the api asks to grant any permissions it can out of the plugins requested permission list. At the moment it doesn't have much in it, as right now it simply returns the default permissions in the users preferences. But this will be fleshed out in the future.
+  * Added `backend.plugins.api.process`.
+    * Added `PluginProcessHelper`. Locked behind the `ProcessAccess` permission.
+      * Basically just `sys.io.Process`. I need to get to adding restrictions for this eventually.
+  * Added `backend.plugins.api.io`. IO works specifically under the plugins local files. For packed plugins, this is fine, but for unpacked plugins, this does allow path escaping to access files outside of the local files, hence why you usually DON'T bilindly install unpacked plugins. I do still plan to look into preventing this, though. IO is locked under `FileReadAccess` and `FileWriteAccess` permissions. This is the unified file system access I mentioned I needed to add back in 0.10.0.
+    * Added `PluginFileHelper`.
+      * This is basically `sys.io.File` but for plugins.
+    * Added `PluginFSHelper`.
+      * This is basically `sys.FileSystem` but for plugins.
+    * Added `PluginIOMethod`.
+      * This is used internally, to let `PluginFileHelper` and `PluginFSHelper` know where to look for the plugins local files.
+* Added `requestedPermissions` in `PluginMetadata`.
+  * This means plugins can request what permissions from the API they'd like to use.
+* Removed the example packed plugin.
+* Updated the example unpacked plugin(`TestPlugin.uhfp`) with an example of how to use the new API.
+* In `PluginPacker`, the `meta.json` and `cppia.json` inside of packed plugins are now pretty-printed.
+
+### Preferences
+
+* Reworked preferences.
+  * This was done because the old system was manual/sloppy in my opinion. At first, I thought abstracts and operator overlolading would suffice. But then ChickenSwimmer told me instead of `UPrefs.preferences.preference`, he wanted much more direct `UPrefs.preference` access. At first, I thought maybe draping an abstract around `UPrefs` and moving implementation functionality into `UPrefsImpl` would fix it, but it turns out that you can't run operator overloads on `Class` objects the way I had imagined it. Either, you make a global `UPrefs` instance, or I find another way. Because I wanted to satisfy ChickenSwimmer, I decided for the latter. I figured I could manufacture a new class with a macro based on defaults, and the implementation functionality could be in `UPrefUtils`. This worked, and caused the following changes:
+  * Removed `UPrefs` from `backend`.
+  * Added `UPrefsUtils` under `backend`.
+  * Reworked anything using `UPrefs` to ommit `.value` as a postfix and to use `UPrefsUtils` when needed.
+* Added `defaultPluginPermissions`.
+  * It's funny, I never really thought about `UPrefs` cause I never needed to use it, but the moment I tried to add one, I realized how much I hated how it was. So I just rewrote it.
+
+### Macros
+
+* Added `PreferencesMacro` under `backend.macro`.
+  * This is what auto-generates `backend.UPrefs`, literally making a class at compile time. The generated class consists of `currentSkin:Null<Dynamic>`, and all preferences with getters and setters, build from `GlobalPrefs.DEFAULT_PREFERENCES`. Intellisense works on this generated class, too.
+    * Writing this macro also made me realize that manufacturing classes on the fly isn't actually that bad. I just went through every single preference, pushed a private static getter via `FFun`, private static setter via `FFun`, and the field marked as `(get, set)` via `FProp` using the compilers inferred type as its type. I also manually added `currentSkin` via `FVar`, but it isnt a `Null<Skin>` like it used to be.
+    * `currentSkin` used to be of `Null<Skin>`, and used to be in the original `backend.UPrefs` class. I tried to simple refreate the field in the macro, but quickly ran into a hard limitation that I can't find my way around. I would do `Null<Skin>`, but using `Skin` means forcing the resolution of `Skin` and everything it needs, but since `Import.hx` isn't available at macro time, everything that would be auto imported is not available yet, and so its imported types are missing. And even if we were to import everything in `Skin`, every import of `Skin` would also need to be forcefully resolved so we'd have to import everything in all of those classes, and so on. It'd be an extremely tedious thing. In fact, if it were to ever import something from a library that doesnt have every file imported or resolvable at macro time, unless we explicitly shadow the library, there's nothing we can do. I already spotted this case at a glance, as `Skin` uses `engine.utils.HColor` and `engine.utils.HColor` uses openfl's `openfl.geom.ColorTransform`, which isn't in our source folder unless we shadow that. For simplicities sake, I just used a `Null<Dynamic>`.
+      * To temporarily avoid this, I simply added `getCurrentSkin()` under `UPrefUtils` to get `currentSkin` as a `Skin`.
+* Combined `AbstractsMacro` and `BridgeMacro` into one `BridgeMacro`.
+  * Reworked this new `BridgeMacro` to stop scanning files, and to instead use `Context.onAfterTyping` to scan for types.
+    * This allowed for scanning a much more in depth for types for bridging. This did however cause `hxscript`s macro to scan before my own, causing simply adding classes implementing `IScriptable` to not be enough. It was a simple fix as adding metadata and making it visible to `hxscript` manually.
+  * Made consistent warning logging across the combined `BridgeMacro`.
+
 ## 0.10.1 [BUILD 1] -- ChickenSwimmer2020
 
 * Fixed some `since` messages referring to `0.10.2` incorrectly.
@@ -34,7 +88,7 @@
 * all instances of cursing (to my knowledge) have been removed
 * HAnimatableObject (Shell)
 * HEditorGizmo (also shell)
-* ATabStack was FINALLY Renamed to HTabStack
+* ATabStack was FINALLY Renamed to HTabStack *(OOH, that's why my macro was complaining.. - ZSolarDev)*
 * DrawUtil.drawOutline.
 * FileBrowser can be opened by InitState.
 * Music fade on window focus lost
@@ -255,7 +309,7 @@ Now that I think about it, packed plugins need to be able to access their assets
 * On 0.8.0, MacOS stopped building. It would crash on startup.
   * This was due to an issue with `cne-lime`'s `develop` branch. It wouldn't request any specific version. On my and others Windows machines, this would default to the highest available version. But on MacOS, it would unfortunately do the opposite, loading up OpenGL 2.1 Metal. Obviously, this is not supported by `lime`, causing a crash the moment an unavailable gl function was called, which unfortunately was the very first call made.
   * I would have simple moved to the `cne` branch, but it didn't build on Windows due to a missing `imgui` header. Not only that, but it only would go as high as OpenGL 4.1.0 on Windows targets. Thus, I made a fork that started at newest OpenGL versions and downgraded until it could succesfully initialize. Based on the `develop` branch. It went as high as 4.6.0 on Windows, and as high as 4.1.0 on MacOS.
-  * This means, to update, simply run `haxelib git lime https://github.com/ZSolarDev/cne-lime develop; haxelib run lime setup -y`. I have it ship with the `cpp` and `hl` binaries already. It doesn't currently ship with the `mac` binaries, so those still need to be build locally. I do need to get to getting them built from Rex eventually.
+  * This means, to update, simply run `haxelib git lime https://github.com/ZSolarDev/cne-lime develop; haxelib run lime setup -y`. I have it ship with the `cpp` and `hl` binaries already. It doesn't currently ship with the `mac` binaries, so those still need to be built locally. I do need to get to getting them built from Rex eventually.
 * The colors on my `cne-lime` branch didn't show correctly. I fixed this by adding some code to manually fix it in the beginning of `Main`, before `super()` is called.
 * ***MACOS IS NOT FULLY SUPPORTED.*** Images don't seem to be loading from file properly, and the stage doesn't scale with the window correctly. Those should be the final bugs to fix, on MacOS.
 

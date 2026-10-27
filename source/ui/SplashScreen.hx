@@ -62,7 +62,7 @@ class SplashScreen extends HState {
 						Main.StateSystem.switchState(InitState);
 					};
 					Mouse.show(); // so you can see what ur doing.
-					if (UPrefs.perferredReference.value.get("NOT SELECTED") == false) {
+					if (UPrefs.perferredReference.get("NOT SELECTED") == false) {
 						onWindowComplete(); // if its been selected before, then we want to skip all this.
 					} else {
 						var referallWindow:HWindow = Main.windowManager.makeWindow(Locale.get("splash.referall.windowTitle"), (640 / 2 - 320 / 2).floor(),
@@ -80,20 +80,20 @@ class SplashScreen extends HState {
 						referallWindow.addContent(new HButton('"${Sys.getEnv(#if (windows)"COMPUTERNAME" #else "HOSTNAME" #end)}"',
 							new Rectangle(0, 145, 106, 20), (_:HButton) -> {
 								trace('User wants to be referred to as: "${Sys.getEnv(#if (windows)"COMPUTERNAME" #else "HOSTNAME" #end)}"!');
-								UPrefs.perferredReference.value = ["Custom" => false, "WINUser" => false, "PCName" => true, "NOT SELECTED" => false];
+								UPrefs.perferredReference = ["Custom" => false, "WINUser" => false, "PCName" => true, "NOT SELECTED" => false];
 								referallWindow.destroy();
 								onWindowComplete();
 							}));
 						referallWindow.addContent(new HButton('"${Sys.getEnv("USERNAME")}"', new Rectangle(106, 145, 106, 20), (_:HButton) -> {
-							UPrefs.perferredReference.value = ["Custom" => false, "WINUser" => true, "PCName" => false, "NOT SELECTED" => false];
+							UPrefs.perferredReference = ["Custom" => false, "WINUser" => true, "PCName" => false, "NOT SELECTED" => false];
 							referallWindow.destroy();
 							onWindowComplete();
 						}));
 						#end
 						referallWindow.addContent(new HButton("Custom", new Rectangle(#if (sys)214 #else 0 #end, 145, #if (sys)106 #else 180 #end, 20),
 							(_:HButton) -> {
-								UPrefs.perferredReference.value = ["Custom" => true, "WINUser" => false, "PCName" => false, "NOT SELECTED" => false];
-								UPrefs.customReferenceName.value = customtextInput.text;
+								UPrefs.perferredReference = ["Custom" => true, "WINUser" => false, "PCName" => false, "NOT SELECTED" => false];
+								UPrefs.customReferenceName = customtextInput.text;
 								referallWindow.destroy();
 								onWindowComplete();
 							}));
@@ -117,7 +117,8 @@ class SplashScreen extends HState {
 				mutex.acquire();
 				for (plugin in PluginController.pluginList) {
 					if (plugin.endsWith('.uhfp'))
-						controller.registerPluginFolder(plugin, plugin.replace('.uhfp', ''), plugin.replace('.uhfp', '').toLowerCase() + '_unpacked');
+						controller.registerPluginFolder(plugin, plugin.replace('.uhfp', ''), plugin.replace('.uhfp', '').toLowerCase()
+							+ '_unpacked', 'source');
 					else if (plugin.endsWith('.hfp'))
 						controller.registerPlugin(plugin, plugin.replace('.hfp', ''));
 				}

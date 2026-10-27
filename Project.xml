@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 
-    <set name="VERSION" value="0.10.1" />
+    <set name="VERSION" value="0.10.2" />
 
     <meta title="Hydro-Frame" />
     <meta description="An HAXE/OPENFL based animation software made to rival Adobe Animate" />
@@ -38,10 +38,11 @@
     <undefine name="openfl-disable-handle-error" />
     <define name="openfl_enable_handle_error" />
 
-    <haxeflag name="--dce" value="full" unless="debug" />
+    <haxeflag name="--dce" value="no" />
 
+    <haxeflag name="--macro" value="include('backend.plugins')" />
     <haxeflag name="--macro" value="backend.macro.Stamper.generate()" />
-    <haxeflag name="--macro" value="engine.macro.AbstractsMacro.generate()" />
+    <haxeflag name="--macro" value="backend.macro.PreferencesMacro.generate()" />
     <haxeflag name="--macro" value="engine.macro.BridgeMacro.generate()" />
 
     <icon path="assets/images/ICON512.png" size="512" />

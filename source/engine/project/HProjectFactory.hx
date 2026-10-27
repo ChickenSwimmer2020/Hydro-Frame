@@ -23,7 +23,7 @@ class HProjectFactory {
 			name: name,
 			version: version,
 			authors: []
-		}));
+		}, null, '    '));
 		return vfs;
 	}
 

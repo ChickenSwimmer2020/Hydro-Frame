@@ -23,11 +23,11 @@ class PluginPacker {
 		var vfs = new HFileSystem();
 		vfs.importDirectory(folder, '/');
 		if (!vfs.fileExists('meta.json'))
-			vfs.saveContent('meta.json', Json.stringify(pluginMeta));
+			vfs.saveContent('meta.json', Json.stringify(pluginMeta, null, '    '));
 		else
 			pluginMeta = Json.parse(vfs.getContent('meta.json'));
 		if (!vfs.fileExists('_cppia.json') && compile)
-			vfs.saveContent('_cppia.json', Json.stringify(compilePlugin(Path.join([folder, pluginMeta.sourceFolder]))));
+			vfs.saveContent('_cppia.json', Json.stringify(compilePlugin(Path.join([folder, pluginMeta.sourceFolder])), null, '    '));
 		return vfs;
 	}
 

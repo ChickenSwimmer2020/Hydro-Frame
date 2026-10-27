@@ -42,7 +42,7 @@ class Locale { // overrall, very simple system. for now.
 	 * @since 0.7.0
 	 */
 	public static function getUser():String {
-		for (target => enabled in UPrefs.perferredReference.value) {
+		for (target => enabled in UPrefs.perferredReference) {
 			if (enabled) {
 				switch (target) {
 					case "WINUser":
@@ -50,7 +50,7 @@ class Locale { // overrall, very simple system. for now.
 					case "PCName":
 						return Sys.getEnv(#if (windows)"COMPUTERNAME" #else "HOSTNAME" #end);
 					case "Custom":
-						return UPrefs.customReferenceName.value ?? "[[USER]]";
+						return UPrefs.customReferenceName ?? "[[USER]]";
 					default:
 						return "[[USER]]";
 				}

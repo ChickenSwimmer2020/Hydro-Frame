@@ -1,0 +1,10 @@
+{
+    "sourceFolder":"source",
+    "id":"testplugin",
+    "displayName":"Test Plugin",
+    "requestedPermissions":[
+        "FileReadAccess",
+        "FileWriteAccess",
+        "ProcessAccess"
+    ]
+}

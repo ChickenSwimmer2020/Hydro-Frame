@@ -1,8 +1,8 @@
 package;
 
+import backend.macro.DefineMacro;
 import backend.macro.GitMacro;
 import backend.palette.HPalette;
-import backend.macro.DefineMacro;
 import backend.plugins.*;
 import backend.plugins.Skin;
 import backend.utils.MethodUtil;
@@ -49,11 +49,11 @@ class Main extends Sprite {
 		HTween.globalParent = this; // so that new Tween() will auto-destroy and not cause memory leaks.
 
 		initStage();
-		#if CLEAR_ON_START TerminalUtil.clearConsole(); #end //clear console of build information if this flag is defined
+		#if CLEAR_ON_START TerminalUtil.clearConsole(); #end // clear console of build information if this flag is defined
 
 		WindowUtil.window.onClose.add(onClosing);
 
-		WindowUtil.window.onFocusOut.add(onFocusLost); //these are inversed because APPARENTLY they get called in reverse??? its so weird istg.
+		WindowUtil.window.onFocusOut.add(onFocusLost); // these are inversed because APPARENTLY they get called in reverse??? its so weird istg.
 		WindowUtil.window.onFocusIn.add(onFocusGained);
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrashing);
 
@@ -116,7 +116,7 @@ class Main extends Sprite {
 		stage.addChild(stats); // add to stage directly so it's always on top
 		stats.x = 10;
 		stats.y = 10;
-		stats.visible = UPrefs.debuggerVisible.value;
+		stats.visible = UPrefs.debuggerVisible;
 		#end
 	}
 
@@ -208,22 +208,25 @@ class Main extends Sprite {
 		return false;
 	}
 
-	
 	var ducked:Bool = false;
 	var lastVolume:Float = 1.0;
+
 	function onFocusLost() {
-		if(ducked)return; //ignore unless onFocusGained happened
-		if(HSoundManager.music != null && HSoundManager.music.playing) {
+		if (ducked)
+			return; // ignore unless onFocusGained happened
+		if (HSoundManager.music != null && HSoundManager.music.playing) {
 			lastVolume = HSoundManager.music.volume;
-			HSoundManager.music.volume = lastVolume*0.5;
-			ducked=true;
+			HSoundManager.music.volume = lastVolume * 0.5;
+			ducked = true;
 		}
 	}
+
 	function onFocusGained() {
-		if(!ducked) return; //ignore unless onFocusLost happened
-		if(HSoundManager.music != null && HSoundManager.music.playing) {
+		if (!ducked)
+			return; // ignore unless onFocusLost happened
+		if (HSoundManager.music != null && HSoundManager.music.playing) {
 			HSoundManager.music.volume = lastVolume;
-			ducked=false;
+			ducked = false;
 		}
 	}
 
@@ -236,7 +239,7 @@ class Main extends Sprite {
 		#if (debug) // whoops.
 		if (e.keyCode == Keyboard.F1) {
 			stats.visible = !stats.visible;
-			UPrefs.debuggerVisible.value = stats.visible;
+			UPrefs.debuggerVisible = stats.visible;
 		}
 		#end
 
@@ -437,7 +440,7 @@ class Main extends Sprite {
 		Logger.makeLogFile();
 		#end
 		WindowUtil.window.onFocusOut.remove(onFocusLost);
-		WindowUtil.window.onFocusIn.remove(onFocusGained);   
+		WindowUtil.window.onFocusIn.remove(onFocusGained);
 		WindowUtil.window.onClose.remove(onClosing);
 	}
 
