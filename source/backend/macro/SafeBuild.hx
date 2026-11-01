@@ -2,7 +2,6 @@ package backend.macro;
 
 #if macro
 import backend.utils.Safe;
-import engine.macro.MacroUtil.*;
 import haxe.macro.*;
 import haxe.macro.Expr.ComplexType.TPath;
 import haxe.macro.Expr.Field;
@@ -26,7 +25,7 @@ using StringTools;
 		if (classesToIgnore.contains(cls.name))
 			return null;
 
-		if (extendsHaxeUI(cls))
+		if (cls.module.endsWith('View'))
 			return null;
 
 		switch (cls.kind) {
