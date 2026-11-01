@@ -3,6 +3,7 @@ package engine.macro;
 import sys.io.File;
 #if macro
 import backend.debug.logging.Logger;
+import engine.macro.MacroUtil.*;
 import haxe.Serializer;
 import haxe.Unserializer;
 import haxe.macro.Compiler;
@@ -47,7 +48,7 @@ class BridgeMacro {
 					case TClassDecl(c):
 						var cData = c.get();
 						for (PACK in PACKAGES) {
-							if (cData.pack.join('.').startsWith(PACK)) {
+							if (cData.pack.join('.').startsWith(PACK) && !extendsHaxeUI(cData)) {
 								var finalModule = cData.module;
 								var finalName = cData.name;
 								var finalTypeName = finalModule + (finalModule.endsWith(finalName) ? '' : '.' + finalName);

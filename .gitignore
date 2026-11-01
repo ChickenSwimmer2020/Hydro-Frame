@@ -2,6 +2,7 @@
 .haxelsp/recording/
 dump/
 bin
+build
 .vscode
 export_classes.info
 

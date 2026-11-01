@@ -1,10 +1,14 @@
 package backend.macro;
 
 #if macro
-import haxe.macro.Context;
-import haxe.macro.Expr;
-import haxe.macro.ExprTools;
-import haxe.macro.Type;
+import backend.utils.Safe;
+import engine.macro.MacroUtil.*;
+import haxe.macro.*;
+import haxe.macro.Expr.ComplexType.TPath;
+import haxe.macro.Expr.Field;
+import haxe.macro.Type.ClassType;
+
+using StringTools;
 
 @:dox(hide) @:noCompletion class SafeBuild {
 	/**
@@ -20,6 +24,9 @@ import haxe.macro.Type;
 
 		var cls = local.get();
 		if (classesToIgnore.contains(cls.name))
+			return null;
+
+		if (extendsHaxeUI(cls))
 			return null;
 
 		switch (cls.kind) {
@@ -47,10 +54,10 @@ import haxe.macro.Type;
 					var ret = fn.ret;
 
 					if (isVoid(ret))
-						fn.expr = macro backend.utils.Safe.run(function():Void$body, $v{label});
+						fn.expr = macro Safe.run(function():Void$body, $v{label});
 					else {
 						var fallback = fallbackFor(ret);
-						fn.expr = macro return backend.utils.Safe.runR(function():$ret$body, $fallback, $v{label}); // line 38
+						fn.expr = macro return Safe.runR(function():$ret$body, $fallback, $v{label}); // line 38
 					}
 				default:
 			}
