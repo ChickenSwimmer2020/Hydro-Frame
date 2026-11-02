@@ -1,8 +1,8 @@
 package backend.macro;
 
 #if macro
-import backend.utils.Safe;
 import haxe.macro.*;
+import haxe.macro.Expr.ComplexType;
 import haxe.macro.Expr.ComplexType.TPath;
 import haxe.macro.Expr.Field;
 import haxe.macro.Type.ClassType;
@@ -53,10 +53,10 @@ using StringTools;
 					var ret = fn.ret;
 
 					if (isVoid(ret))
-						fn.expr = macro Safe.run(function():Void$body, $v{label});
+						fn.expr = macro backend.utils.Safe.run(function():Void$body, $v{label});
 					else {
 						var fallback = fallbackFor(ret);
-						fn.expr = macro return Safe.runR(function():$ret$body, $fallback, $v{label}); // line 38
+						fn.expr = macro return backend.utils.Safe.runR(function():$ret$body, $fallback, $v{label}); // line 38
 					}
 				default:
 			}
