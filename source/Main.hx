@@ -1,5 +1,6 @@
 package;
 
+import haxe.ui.Toolkit;
 import backend.macro.DefineMacro;
 import backend.macro.GitMacro;
 import backend.palette.HPalette;
@@ -36,6 +37,7 @@ class Main extends Sprite {
 	 */
 	public function new() {
 		fixColorFlipping();
+		
 
 		super();
 
@@ -66,6 +68,7 @@ class Main extends Sprite {
 
 		pluginController = new PluginController();
 
+		Toolkit.init();
 		addChild(StateSystem = new StateSystem(null));
 		StateSystem.switchState(startingState);
 		
@@ -98,7 +101,7 @@ class Main extends Sprite {
 		stage.align = StageAlign.TOP_LEFT;
 
 		stage.addEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
-		stage.addEventListener(Event.RESIZE, onStageResize);
+		//stage.addEventListener(Event.RESIZE, onStageResize);
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		stage.addEventListener(MouseEvent.CLICK, onMouseClick);
 

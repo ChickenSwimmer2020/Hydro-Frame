@@ -47,6 +47,7 @@ class HGroup<T:HSprite> extends HSprite {
 	public function add(a:T):T {
 		if (maxSize == -1 || members.length < maxSize) {
 			members.push(a);
+			trace('Added basic $a to an HGroup');
 			addChild(a);
 		} else {
 			trace('Couldnt add, group is full!');
@@ -67,6 +68,7 @@ class HGroup<T:HSprite> extends HSprite {
 		}
 		var b = members.remove(a);
 		removeChild(a);
+		trace('Removed $a from an HGroup');
 		return b;
 	}
 

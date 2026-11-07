@@ -17,7 +17,7 @@ abstract HColor(Int) from Int from UInt to Int to UInt {
 	public static inline final DEBUGGER_CONSOLE_TEXT:HColor = 0xFF00FF00;
 	#end
 
-	private static function getColorFromSkin(a:String):Null<HColor> {
+	public static function getColorFromSkin(a:String):Null<HColor> {
 		if ((UPrefUtils.getCurrentSkin().data.themes[UPrefUtils.getSelected(UPrefs.uiTheme)].get(a)) != null)
 			return(UPrefUtils.getCurrentSkin().data.themes[UPrefUtils.getSelected(UPrefs.uiTheme)].get(a));
 		else

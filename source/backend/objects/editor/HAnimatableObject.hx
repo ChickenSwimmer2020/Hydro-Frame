@@ -55,7 +55,7 @@ class HAnimatableObject extends HSprite {
         makeGizmos();
 
 
-		loadGraphic("assets/images/Procrastination.png"); // this is PURELY for testing purposes.
+		loadGraphic(AssetLoader.getImage("Procrastination")); // this is PURELY for testing purposes.
 
 		Main.instance.addEventListener(MouseEvent.CLICK, onClick);
 	}

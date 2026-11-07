@@ -1,0 +1,57 @@
+<window title="New Project" width="775" height="370">
+    <window-title width="100%" height="10%">
+        <button id="openAPresetButton" text="Load a preset..." width="150" height="20"/>
+    </window-title>
+    
+    <hbox width="100%" height="100%">
+        <vbox width="50%" height="100%">
+            <section-header text="Details" />
+            <vbox width="100%" height="100%">
+                <grid columns="2" width="100%" height="50%">
+                    <vbox width="100%" height="50%">
+                        <label text="Width"/>
+                        <textfield id="projectWidthInput" placeholder="1280" width="100%" height="100%"/>
+                    </vbox>
+                    <vbox width="100%" height="50%">
+                        <label text="Height" />
+                        <textfield id="projectHeightInput" placeholder="720" width="100%" height="100%"/>
+                    </vbox>
+                    <vbox width="100%" height="20%">
+                        <label text="Frames Per Second" />
+                        <number-stepper id="projectFPSInput" pos="24" step="1" min="1" max="120" />
+                    </vbox>
+                </grid>
+                <vbox width="100%" height="100%">
+                    <label text="Description" />
+                    <textarea id="projectDescription" placeholder="Description..." width="100%" height="38%"/>
+                </vbox>
+            </vbox>
+        </vbox>
+
+        <label text="TODO: something here." horizontalAlign="center" verticalAlign="center"/>
+    </hbox>
+    
+    <window-footer top="-75" width="100%" height="50" style="margin-bottom: 25px;">
+        <dropdown id="projectPlatformInput" text="Platform..." width="100">
+            <data>
+                <item text="HScript 2.7" />
+                <item text="HTML5" />
+            </data>
+        </dropdown>
+        <spacer width="5%"/>
+        <dropdown id="projectMeasurementInput" text="Select Units..." width="150">
+            <data>
+                <item text="Pixels" />
+                <item text="Inches (Decimal)" />
+                <item text="Points" />
+                <item text="Centimeters" />
+                <item text="Millimeters" />
+            </data>
+        </dropdown>
+        <spacer width="5%"/>
+        <textfield id="projectNameInput" placeholder="Project name..." width="300" height="100%"/>
+        <spacer width="90%" />
+        <button id="cancelCreation" text="Cancel" />
+        <button id="createProject" text="Create" />
+    </window-footer>
+</window>

@@ -21,7 +21,7 @@ class SplashScreen extends HState {
 	}
 
 	public function startIntro() {
-		HSoundManager.playSound("assets/sounds/Startup.wav");
+		HSoundManager.playSound(AssetLoader.getSound("Startup"));
 		WindowUtil.resizeWindow(640, 360);
 		introSprite.screenCenter();
 
@@ -32,7 +32,7 @@ class SplashScreen extends HState {
 	}
 
 	public function beginBetterIntro() {
-		var properSprite:HSprite = new HSprite(0, 0, 'assets/images/splash/art.png');
+		var properSprite:HSprite = new HSprite(0, 0, AssetLoader.getImage("splash/art"));
 		properSprite.alpha = 0;
 		add(properSprite);
 

@@ -1,10 +1,10 @@
 package backend.ui;
 
-enum HMenuBarAlignment {
-	TOP;
-	BOTTOM;
-	LEFT;
-	RIGHT;
+enum abstract HMenuBarAlignment(String) from String to String {
+	var TOP:String = "TOP";
+	var BOTTOM:String = "BOTTOM";
+	var LEFT:String = "LEFT";
+	var RIGHT:String = "RIGHT";
 }
 
 class HMenuBar extends HSprite {

@@ -3,6 +3,18 @@
 
 # CHANGELOG
 
+## 0.10.3 (UI Rework and others) - By ChickenSwimmer2020
+
+* Reworked audio folder
+* Added HaxeUI Xml's for title screen, new project window, and presets popup, 90% non-functional
+* added a new Background for night time (unimplemented atm)
+* new icons, not final.
+* different branch for HXScript in HMM
+* Added haxeui-core and haxeui-openfl to the hmm json file
+* AssetLoader.hx
+* HBasic now has an index
+* added some todos to PluginPermission.hx
+
 ## 0.10.2 (Macros, PluginAPI, Plugin permissions) - By ZSolarDev
 
 ### Plugins

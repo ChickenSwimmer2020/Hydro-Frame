@@ -75,7 +75,7 @@ class EditorState extends HState {
 	 * @param measureType stage measurement type
 	 * @since 0.8.0
 	 */
-	public function new(width:Float, height:Float, fps:Int, scriptType:String, measureType:String) {
+	public function new(name:String, description:String, width:Float, height:Float, fps:Int, scriptType:String, measureType:String) {
 		super();
 		// init the windows.
 		makeToolsWindow();
@@ -86,7 +86,7 @@ class EditorState extends HState {
 		var testObject:HAnimatableObject = new HAnimatableObject(100, 100);
 		add(testObject);
 
-		trace('editorstate made with ${width}x$height @$fps, script mode $scriptType, measure mode $measureType');
+		trace('EDITORSTATE: Created ${name} with ${width}x$height @$fps, script mode $scriptType, measure mode $measureType, and a description of $description');
 	}
 
 	private function makeToolsWindow() {

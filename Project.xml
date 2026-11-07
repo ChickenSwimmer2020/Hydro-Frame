@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 
-    <set name="VERSION" value="0.10.2" />
+    <set name="VERSION" value="0.10.3" />
 
     <meta title="Hydro-Frame" />
     <meta description="An HAXE/OPENFL based animation software made to rival Adobe Animate" />
@@ -24,6 +24,8 @@
     <haxelib name="openfl" version="git" />
     <haxelib name="svg" version="1.2.0" />
     <haxelib name="hxscript" version="git" />
+    <haxelib name="haxeui-core" version="git"/>
+    <haxelib name="haxeui-openfl" version="git"/>
 
     <haxedef name="HXCPP_DEBUGGER" /> <!--alright.
     thats it, im debugging this properly.-->
@@ -37,6 +39,9 @@
 
     <undefine name="openfl-disable-handle-error" />
     <define name="openfl_enable_handle_error" />
+    
+    <define name="hxscript_setup_skip" value="haxeui-core" /> <!--make the HXScript ignore haxe.ui-->
+
 
     <haxeflag name="--dce" value="no" />
 

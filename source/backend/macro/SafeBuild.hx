@@ -1,6 +1,7 @@
 package backend.macro;
 
 #if macro
+import haxe.macro.Expr.ComplexType;
 import haxe.macro.*;
 import haxe.macro.Expr.ComplexType;
 import haxe.macro.Expr.ComplexType.TPath;

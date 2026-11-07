@@ -55,6 +55,14 @@ class HBasic extends Sprite implements IHasAttributes<String, Dynamic> implement
 	**/
 	function onEnterFrame(event:Event) {}
 
+
+	/**
+	 * Get the parent's index of this HBasic
+	 * @since 0.10.2
+	**/
+	public var index(get, never):Int;
+	public function get_index():Int return ((parent?.getChildIndex(this))??-1);
+
 	/**
 	 * Center the sprite on the screen
 	 * @return HSprite

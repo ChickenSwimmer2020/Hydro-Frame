@@ -47,6 +47,27 @@
       "name": "svg",
       "type": "haxelib",
       "version": "1.2.0"
+    },
+    {
+      "name": "hxscript",
+      "type": "git",
+      "dir": null,
+      "ref": "main",
+      "url": "https://github.com/MeguminBOT/hxscript"
+    },
+    {
+      "name": "haxeui-core",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/haxeui/haxeui-core"
+    },
+    {
+      "name": "haxeui-openfl",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/haxeui/haxeui-openfl"
     }
   ]
 }

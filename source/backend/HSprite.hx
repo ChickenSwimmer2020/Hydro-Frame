@@ -269,7 +269,7 @@ class HSprite extends HBasic {
 		var list = filters.copy(); // filters can be null on some versions, see below
 		list.push(filter);
 		filters = list; // the assignment is what actually applies it
-		trace('Added a global filter to sprite (SPRITE INDEX IN MEMBERS) with a filter index of ${filters.indexOf(filter)}');
+		trace('Added a global filter to sprite $index with a filter index of ${filters.indexOf(filter)}');
 		return this;
 	}
 
@@ -360,11 +360,11 @@ class HSprite extends HBasic {
 		#if windows //unsupported on mac because we either would need to require appleScript or an external file.
 		var original = BitmapData.fromFile('C:\\Users\\${Sys.getEnv("USERNAME")}\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper');
 		if (original == null)
-			return BitmapData.fromFile('assets/images/Background.png');
+			return BitmapData.fromFile(AssetLoader.getImage("Background"));
 
 		// if the bitmap isnt 16:9
 		if (!(Math.abs((original.width / original.height) - (16 / 9)) < 0.01))
-			return BitmapData.fromFile('assets/images/Background.png');
+			return BitmapData.fromFile(AssetLoader.getImage("Background"));
 
 		var scaleX = maxWidth / original.width;
 		var scaleY = maxHeight / original.height;
@@ -378,6 +378,6 @@ class HSprite extends HBasic {
 		original.dispose(); // always dispose the 4k original
 		return scaled;
 		#end
-		return Assets.getBitmapData('assets/images/Background.png'); // return this as a default fallback.
+		return Assets.getBitmapData(AssetLoader.getImage("Background")); // return this as a default fallback.
 	}
 }

@@ -38,7 +38,7 @@ class HWindowManager {
 		windows.push(win);
 		Main.instance.addChild(win);
 		focusWindow(win);
-		HSoundManager.playSound("assets/sounds/popup.wav", 1.0); // TODO: implement volume
+		HSoundManager.playSound(AssetLoader.getSound("popup"), 1.0); // TODO: implement volume
 		return win;
 	}
 

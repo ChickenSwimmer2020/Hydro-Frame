@@ -2,7 +2,7 @@ package backend.ui;
 
 class ScrollableArea extends HGroup<HSprite> {
 	public var interactable:Bool = true;
-	public var index:Int = 0;
+	public var scrollIndex:Int = 0;
 	public var target:Float = 0.0;
 
 	public function new(x:Float, y:Float) {
@@ -11,7 +11,7 @@ class ScrollableArea extends HGroup<HSprite> {
 	}
 
 	override public function onEnterFrame(e:Event) {
-		target = HMath.lerp(target, index, 0.1);
+		target = HMath.lerp(target, scrollIndex, 0.1);
 		scrollRect = new Rectangle(0, 0 + target, width, height);
 	}
 
@@ -20,11 +20,11 @@ class ScrollableArea extends HGroup<HSprite> {
 			if (containsMouse()) {
 				final delta:Int = (e.delta * 40);
 				if (UPrefs.inverseScrollDirection)
-					index += delta;
+					scrollIndex += delta;
 				else
-					index -= delta;
-				if (index < 0)
-					index = 0;
+					scrollIndex -= delta;
+				if (scrollIndex < 0)
+					scrollIndex = 0;
 			}
 		}
 	}

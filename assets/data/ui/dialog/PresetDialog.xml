@@ -1,0 +1,103 @@
+<dialog width="387" height="385" title="Select a Preset">
+    <scrollview id="presetsList" width="100%" height="100%">
+        <grid columns="4">
+            <hbox>
+                <image resource="assets/images/icons/presetCharacterTab.png"/>
+                <label text="Character"/>
+            </hbox>
+            <label text="Animation"/>
+            <spacer/>
+            <spacer/>
+
+            <button width="82" height="82" text="SD" icon="assets/images/icons/presets/video.png" tooltip="640x480" userData="CharAnimTab"/>
+            <button width="82" height="82" text="HD" icon="assets/images/icons/presets/video.png" tooltip="1280x720" userData="CharAnimTab"/>
+            <button width="82" height="82" text="Full HD" icon="assets/images/icons/presets/video.png" tooltip="1920x1080" userData="CharAnimTab"/>
+            <button width="82" height="82" text="4K" icon="assets/images/icons/presets/video.png" tooltip="3840x2160" userData="CharAnimTab"/>
+
+
+            
+            <hbox>
+                <image resource="assets/images/icons/presetSocialTab.png"/>
+                <label text="Social"/>
+            </hbox>
+            <spacer/>
+            <spacer/>
+            <spacer/>
+
+            <button width="82" height="82" text="Small" icon="assets/images/icons/presets/FaceBook.png" tooltip="256x144" userData="SocialTab"/>
+            <button width="82" height="82" text="Large" icon="assets/images/icons/presets/FaceBook.png" tooltip="3840x2160" userData="SocialTab"/>
+            <button width="82" height="82" text="Landscape" icon="assets/images/icons/presets/FaceBook.png" tooltip="600x315" userData="SocialTab"/>
+            <button width="82" height="82" text="Square" icon="assets/images/icons/presets/FaceBook.png" tooltip="600x600" userData="SocialTab"/>
+
+            <button width="82" height="82" text="Vertical" icon="assets/images/icons/presets/FaceBook.png" tooltip="600x750" userData="SocialTab"/>
+            <button width="82" height="82" text="In-stream Photo" icon="assets/images/icons/presets/Twitter.png" tooltip="44x220" userData="SocialTab"/>
+            <button width="82" height="82" text="Profile Photo" icon="assets/images/icons/presets/Twitter.png" tooltip="400x400" userData="SocialTab"/>
+            <button width="82" height="82" text="Header Photo" icon="assets/images/icons/presets/Twitter.png" tooltip="1500x500" userData="SocialTab"/>
+
+
+
+            <hbox>
+                <image resource="assets/images/icons/presetGameTab.png"/>
+                <label text="Game"/>
+            </hbox>
+            <spacer/>
+            <spacer/>
+            <spacer/>
+            
+            <button width="82" height="82" text="Low" icon="assets/images/icons/presets/Web.png" tooltip="640x480" userData="GameTab"/>
+            <button width="82" height="82" text="Medium" icon="assets/images/icons/presets/Web.png" tooltip="800x600" userData="GameTab"/>
+            <button width="82" height="82" text="High" icon="assets/images/icons/presets/Web.png" tooltip="960x640" userData="GameTab"/>
+            <button width="82" height="82" text="Very High" icon="assets/images/icons/presets/Web.png" tooltip="1024x768" userData="GameTab"/>
+
+            <button width="82" height="82" text="iPhone-5" icon="assets/images/icons/presets/Phone.png" tooltip="1136x640" userData="GameTab"/>
+            <button width="82" height="82" text="iPhone-4" icon="assets/images/icons/presets/Phone.png" tooltip="960x640" userData="GameTab"/>
+            <button width="82" height="82" text="iPhone 1-3 Gen" icon="assets/images/icons/presets/Phone.png" tooltip="480x320" userData="GameTab"/>
+            <button width="82" height="82" text="Android 16:9" icon="assets/images/icons/presets/Phone.png" tooltip="1280x720" userData="GameTab"/>
+
+            <button width="82" height="82" text="Android 16:10" icon="assets/images/icons/presets/Phone.png" tooltip="1680x1050" userData="GameTab"/>
+            <button width="82" height="82" text="Android 5:3" icon="assets/images/icons/presets/Phone.png" tooltip="1280x768" userData="GameTab"/>
+            <button width="82" height="82" text="Android 3:2" icon="assets/images/icons/presets/Phone.png" tooltip="960x640" userData="GameTab"/>
+            <button width="82" height="82" text="Android 4:3" icon="assets/images/icons/presets/Phone.png" tooltip="1024x768" userData="GameTab"/>
+
+            <button width="82" height="82" text="iPad 3-4 Gen" icon="assets/images/icons/presets/Tablet.png" tooltip="2048x1536" userData="GameTab"/>
+            <button width="82" height="82" text="iPad 1-3 Gen" icon="assets/images/icons/presets/Tablet.png" tooltip="1024x768" userData="GameTab"/>
+            <spacer/>
+            <spacer/>
+
+
+
+            <hbox>
+                <image resource="assets/images/icons/presetWebTab.png"/>
+                <label text="Web"/>
+            </hbox>
+            <spacer/>
+            <spacer/>
+            <spacer/>
+
+            <button width="82" height="82" text="Low" icon="assets/images/icons/presets/Web.png" tooltip="640x480" userData="WebTab"/>
+            <button width="82" height="82" text="Medium" icon="assets/images/icons/presets/Web.png" tooltip="800x600" userData="WebTab"/>
+            <button width="82" height="82" text="High" icon="assets/images/icons/presets/Web.png" tooltip="960x640" userData="WebTab"/>
+            <button width="82" height="82" text="Very High" icon="assets/images/icons/presets/Web.png" tooltip="1024x768" userData="WebTab"/>
+
+            <button width="82" height="82" text="iPhone-5" icon="assets/images/icons/presets/Phone.png" tooltip="1136x640" userData="WebTab"/>
+            <button width="82" height="82" text="iPhone-4" icon="assets/images/icons/presets/Phone.png" tooltip="960x640" userData="WebTab"/>
+            <button width="82" height="82" text="iPhone 1-3 Gen" icon="assets/images/icons/presets/Phone.png" tooltip="480x320" userData="WebTab"/>
+            <button width="82" height="82" text="Android 16:9" icon="assets/images/icons/presets/Phone.png" tooltip="1280x720" userData="WebTab"/>
+
+            <button width="82" height="82" text="Android 16:10" icon="assets/images/icons/presets/Phone.png" tooltip="1680x1050" userData="WebTab"/>
+            <button width="82" height="82" text="Android 5:3" icon="assets/images/icons/presets/Phone.png" tooltip="1280x768" userData="WebTab"/>
+            <button width="82" height="82" text="Android 3:2" icon="assets/images/icons/presets/Phone.png" tooltip="960x640" userData="WebTab"/>
+            <button width="82" height="82" text="Android 4:3" icon="assets/images/icons/presets/Phone.png" tooltip="1024x768" userData="WebTab"/>
+
+            <button width="82" height="82" text="iPad 3-4 Gen" icon="assets/images/icons/presets/Tablet.png" tooltip="2048x1536" userData="WebTab"/>
+            <button width="82" height="82" text="iPad 1-3 Gen" icon="assets/images/icons/presets/Tablet.png" tooltip="1024x768" userData="WebTab"/>
+            <spacer/>
+            <spacer/>
+        </grid>
+    </scrollview>
+
+    <window-footer>
+        <label text="Hover over an preset to see details!" width="80%"/>
+        <button id="selectPresetButton" text="select" height="100%" width="20%"/>
+    </window-footer>
+</dialog>
